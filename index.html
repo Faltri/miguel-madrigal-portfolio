@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Miguel Madrigal — Automotive Photographer & Content Creator</title>
+  <meta name="description" content="Portfolio of Miguel Madrigal, a professional automotive photographer and content creator based in Tokyo, Japan. Specializing in high-end car photography, rolling shots, and event coverage.">
+  
+  <!-- Open Graph / Social Media -->
+  <meta property="og:title" content="Miguel Madrigal — Automotive Photographer">
+  <meta property="og:description" content="Portfolio of Miguel Madrigal, a professional automotive photographer and content creator based in Tokyo, Japan.">
+  <meta property="og:image" content="assets/images/hero.png">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts: Plus Jakarta Sans for English headings, Noto Sans JP for Japanese, Inter for body copy -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+JP:wght@400;500;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,700;0,800;1,400&display=swap" rel="stylesheet">
+
+  <!-- GLightbox CSS (CDN) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="styles/index.css">
+</head>
+<body class="lang-en">
+
+  <!-- =============================================
+       HEADER / NAVIGATION
+       ============================================= -->
+  <header class="header">
+    <div class="container">
+      <a href="#home" class="logo">MIGUEL MADRIGAL</a>
+      
+      <!-- Nav Links -->
+      <nav class="nav-links">
+        <!-- English Nav Links -->
+        <a href="#home" lang="en">Home</a>
+        <a href="#about" lang="en">About</a>
+        <a href="#portfolio" lang="en">Portfolio</a>
+        <a href="#pricing" lang="en">Rates</a>
+        <a href="#instagram" lang="en">Socials</a>
+        <a href="#contact" lang="en">Contact</a>
+
+        <!-- Japanese Nav Links -->
+        <a href="#home" lang="ja" class="lang-hide">ホーム</a>
+        <a href="#about" lang="ja" class="lang-hide">プロフィール</a>
+        <a href="#portfolio" lang="ja" class="lang-hide">ギャラリー</a>
+        <a href="#pricing" lang="ja" class="lang-hide">料金表</a>
+        <a href="#instagram" lang="ja" class="lang-hide">SNS</a>
+        <a href="#contact" lang="ja" class="lang-hide">お問い合わせ</a>
+
+        <!-- Language Switcher Flags -->
+        <div class="lang-switcher">
+          <!-- English (UK Flag) -->
+          <button class="lang-btn active" data-lang="en" aria-label="Switch to English">
+            <svg viewBox="0 0 100 100">
+              <clipPath id="circle-clip-desktop">
+                <circle cx="50" cy="50" r="50" />
+              </clipPath>
+              <g clip-path="url(#circle-clip-desktop)">
+                <rect width="100" height="100" fill="#00247d"/>
+                <path d="M0 0 L100 100 M100 0 L0 100" stroke="#fff" stroke-width="12"/>
+                <path d="M0 0 L100 100 M100 0 L0 100" stroke="#cf142b" stroke-width="8"/>
+                <path d="M50 0 V100 M0 50 H100" stroke="#fff" stroke-width="20"/>
+                <path d="M50 0 V100 M0 50 H100" stroke="#cf142b" stroke-width="12"/>
+              </g>
+            </svg>
+          </button>
+          <!-- Japanese (Japan Flag) -->
+          <button class="lang-btn" data-lang="ja" aria-label="日本語に切り替え">
+            <svg viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="50" fill="#ffffff" stroke="#eeeeee" stroke-width="2" />
+              <circle cx="50" cy="50" r="28" fill="#e32929" />
+            </svg>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Hamburger Button (Mobile) -->
+      <button class="hamburger" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Nav Overlay -->
+  <div class="mobile-nav">
+    <nav class="mobile-nav-links">
+      <a href="#home" lang="en">Home</a>
+      <a href="#home" lang="ja" class="lang-hide">ホーム</a>
+      
+      <a href="#about" lang="en">About</a>
+      <a href="#about" lang="ja" class="lang-hide">プロフィール</a>
+      
+      <a href="#portfolio" lang="en">Portfolio</a>
+      <a href="#portfolio" lang="ja" class="lang-hide">ギャラリー</a>
+      
+      <a href="#pricing" lang="en">Rates</a>
+      <a href="#pricing" lang="ja" class="lang-hide">料金表</a>
+      
+      <a href="#instagram" lang="en">Socials</a>
+      <a href="#instagram" lang="ja" class="lang-hide">SNS</a>
+      
+      <a href="#contact" lang="en">Contact</a>
+      <a href="#contact" lang="ja" class="lang-hide">お問い合わせ</a>
+
+      <!-- Language switcher inside mobile nav -->
+      <div class="lang-switcher" style="margin-left: 0; margin-top: 24px; justify-content: center;">
+        <!-- English (UK Flag) -->
+        <button class="lang-btn active" data-lang="en" aria-label="Switch to English">
+          <svg viewBox="0 0 100 100">
+            <clipPath id="circle-clip-mobile">
+              <circle cx="50" cy="50" r="50" />
+            </clipPath>
+            <g clip-path="url(#circle-clip-mobile)">
+              <rect width="100" height="100" fill="#00247d"/>
+              <path d="M0 0 L100 100 M100 0 L0 100" stroke="#fff" stroke-width="12"/>
+              <path d="M0 0 L100 100 M100 0 L0 100" stroke="#cf142b" stroke-width="8"/>
+              <path d="M50 0 V100 M0 50 H100" stroke="#fff" stroke-width="20"/>
+              <path d="M50 0 V100 M0 50 H100" stroke="#cf142b" stroke-width="12"/>
+            </g>
+          </svg>
+        </button>
+        <!-- Japanese (Japan Flag) -->
+        <button class="lang-btn" data-lang="ja" aria-label="日本語に切り替え">
+          <svg viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="50" fill="#ffffff" stroke="#eeeeee" stroke-width="2" />
+            <circle cx="50" cy="50" r="28" fill="#e32929" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <main>
+    <!-- =============================================
+         1. HERO SECTION
+         ============================================= -->
+    <section id="home" class="hero">
+      <div class="hero-bg">
+        <img src="assets/images/20260710-DSC09643.jpg" alt="Toyota GR86 parked under Tokyo Tower at night">
+      </div>
+      <div class="hero-overlay"></div>
+      <div class="container">
+        <div class="hero-content reveal">
+          <h1 class="hero-name">MIGUEL MADRIGAL</h1>
+          
+          <p class="hero-tagline" lang="en">Automotive Photographer & Content Creator</p>
+          <p class="hero-tagline" lang="ja" class="lang-hide">カーフォトグラファー ＆ コンテンツクリエイター</p>
+          
+          <div class="hero-location">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span lang="en">Tokyo, Japan</span>
+            <span lang="ja" class="lang-hide">東京、日本</span>
+          </div>
+
+          <div class="hero-cta">
+            <a href="#portfolio" class="btn btn-primary">
+              <span lang="en">View Portfolio</span>
+              <span lang="ja" class="lang-hide">作品を見る</span>
+            </a>
+            <a href="#contact" class="btn btn-outline">
+              <span lang="en">Get in Touch</span>
+              <span lang="ja" class="lang-hide">お問い合わせ</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="hero-scroll-indicator">
+        <span lang="en">Scroll</span>
+        <span lang="ja" class="lang-hide">スクロール</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         2. ABOUT SECTION
+         ============================================= -->
+    <section id="about" class="about">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-image reveal">
+            <img src="assets/images/20260711-DSC09918.jpg" alt="Classic Porsche 935 K3 racing car on Tokyo streets at night">
+          </div>
+          
+          <div class="about-text reveal reveal-delay-1">
+            <span class="section-label">
+              <span lang="en">The Creator</span>
+              <span lang="ja" class="lang-hide">クリエイターについて</span>
+            </span>
+            
+            <h2 class="section-title" lang="en">Capturing Car Culture & Engineering</h2>
+            <h2 class="section-title" lang="ja" class="lang-hide">車の美学とカルチャーを切り取る</h2>
+            
+            <!-- English Paragraphs -->
+            <div lang="en">
+              <p>Based in the neon-lit heart of Tokyo, I specialize in premium automotive photography and videography. My approach bridges the gap between raw automotive engineering and cinematic visual art.</p>
+              <p>Whether shooting static details in clean minimalist concrete garages, or chasing high-adrenaline rolling shots on the Tokyo Metropolitan Expressway (Shuto-ko), I focus on lighting, texture, and reflections to make every machine look extraordinary.</p>
+              <p>As a content creator, I don't just deliver files. I create engaging visual narratives, behind-the-scenes reels, and professional content packages designed to highlight the beauty, power, and lifestyle of car culture.</p>
+            </div>
+
+            <!-- Japanese Paragraphs -->
+            <div lang="ja" class="lang-hide">
+              <p>ネオン煌めく東京を拠点に、ハイエンドなカーフォトグラフィーとビデオグラフィーを制作しています。私のスタイルは、車本来の工学的機能美と、シネマティックな映像表現を融合させることです。</p>
+              <p>ミニマルなコンクリート構造物の中での静的カットから、首都高を駆け抜ける躍動感あふれるローリングショット（走行写真）まで。光、質感、そしてボディへの映り込みを緻密に計算し、すべての車両を格別な一台として表現します。</p>
+              <p>単に写真を提供するだけでなく、車のストーリー、撮影の舞台裏動画、そして愛車の魅力やライフスタイルを引き出すプロフェッショナルなコンテンツパッケージをトータルで制作します。</p>
+            </div>
+            
+            <div class="about-stats">
+              <div class="stat">
+                <div class="stat-number">5+</div>
+                <div class="stat-label">
+                  <span lang="en">Years</span>
+                  <span lang="ja" class="lang-hide">活動年数</span>
+                </div>
+              </div>
+              <div class="stat">
+                <div class="stat-number">150+</div>
+                <div class="stat-label">
+                  <span lang="en">Shoots</span>
+                  <span lang="ja" class="lang-hide">撮影台数</span>
+                </div>
+              </div>
+              <div class="stat">
+                <div class="stat-number">Tokyo</div>
+                <div class="stat-label">
+                  <span lang="en">Location</span>
+                  <span lang="ja" class="lang-hide">拠点</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         3. PORTFOLIO / GALLERY SECTION
+         ============================================= -->
+    <section id="portfolio" class="portfolio">
+      <div class="container">
+        <div class="portfolio-header reveal">
+          <div>
+            <span class="section-label">
+              <span lang="en">Selected Works</span>
+              <span lang="ja" class="lang-hide">ギャラリー</span>
+            </span>
+            <h2 class="section-title" lang="en">The Gallery</h2>
+            <h2 class="section-title" lang="ja" class="lang-hide">作品ギャラリー</h2>
+          </div>
+          <div class="portfolio-filters">
+            <button class="filter-btn is-active" data-filter="all">
+              <span lang="en">All</span>
+              <span lang="ja" class="lang-hide">すべて</span>
+            </button>
+            <button class="filter-btn" data-filter="cars">
+              <span lang="en">Stills</span>
+              <span lang="ja" class="lang-hide">スチール</span>
+            </button>
+            <button class="filter-btn" data-filter="rolling">
+              <span lang="en">Rolling</span>
+              <span lang="ja" class="lang-hide">ローリング</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="gallery-grid reveal reveal-delay-1">
+          <!-- Item 1: GT-R R34 -->
+          <a href="assets/images/20260531-DSC03398-Edit.jpg" class="gallery-item glightbox" data-gallery="portfolio" data-category="cars" data-title="Nissan Skyline GT-R R34" data-description="Bayside Blue V-spec parked against the Tokyo cityscape at sunset.">
+            <img src="assets/images/20260531-DSC03398-Edit.jpg" alt="Nissan Skyline GT-R R34 shot by Miguel Madrigal">
+            <div class="gallery-item-overlay">
+              <div class="gallery-item-info">
+                <h3 class="gallery-item-title">Nissan Skyline GT-R R34</h3>
+                <span class="gallery-item-category" lang="en">Stills</span>
+                <span class="gallery-item-category lang-hide" lang="ja">スチール</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Item 2: McLaren 720S -->
+          <a href="assets/images/20260531-DSC03427-Edit.jpg" class="gallery-item glightbox" data-gallery="portfolio" data-category="cars" data-title="McLaren 720S Spider" data-description="Chameleon purple-bronze tone reflecting the Tokyo sunset.">
+            <img src="assets/images/20260531-DSC03427-Edit.jpg" alt="McLaren 720S Spider shot by Miguel Madrigal">
+            <div class="gallery-item-overlay">
+              <div class="gallery-item-info">
+                <h3 class="gallery-item-title">McLaren 720S Spider</h3>
+                <span class="gallery-item-category" lang="en">Stills</span>
+                <span class="gallery-item-category lang-hide" lang="ja">スチール</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Item 3: Porsche Spyder RS -->
+          <a href="assets/images/20260531-DSC03438-Edit.jpg" class="gallery-item glightbox" data-gallery="portfolio" data-category="cars" data-title="Porsche 718 Spyder RS" data-description="Guards Red roadster parked alongside the highway bypass.">
+            <img src="assets/images/20260531-DSC03438-Edit.jpg" alt="Porsche 718 Spyder RS shot by Miguel Madrigal">
+            <div class="gallery-item-overlay">
+              <div class="gallery-item-info">
+                <h3 class="gallery-item-title">Porsche 718 Spyder RS</h3>
+                <span class="gallery-item-category" lang="en">Stills</span>
+                <span class="gallery-item-category lang-hide" lang="ja">スチール</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Item 4: Bentley Continental -->
+          <a href="assets/images/20260618-DSC07360-Edit.jpg" class="gallery-item glightbox" data-gallery="portfolio" data-category="cars" data-title="Bentley Continental GT Supersports" data-description="Supersports edition parked at a night meet at Daikoku PA.">
+            <img src="assets/images/20260618-DSC07360-Edit.jpg" alt="Bentley Continental GT Supersports shot by Miguel Madrigal">
+            <div class="gallery-item-overlay">
+              <div class="gallery-item-info">
+                <h3 class="gallery-item-title">Bentley Continental GT</h3>
+                <span class="gallery-item-category" lang="en">Stills</span>
+                <span class="gallery-item-category lang-hide" lang="ja">スチール</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Item 5: Toyota GR86 (Rolling Panning) -->
+          <a href="assets/images/20260710-DSC09544.jpg" class="gallery-item glightbox" data-gallery="portfolio" data-category="rolling" data-title="Toyota GR86" data-description="Panning motion blur capture inside a metropolitan parking structure.">
+            <img src="assets/images/20260710-DSC09544.jpg" alt="Toyota GR86 panning shot by Miguel Madrigal">
+            <div class="gallery-item-overlay">
+              <div class="gallery-item-info">
+                <h3 class="gallery-item-title">Toyota GR86</h3>
+                <span class="gallery-item-category" lang="en">Rolling</span>
+                <span class="gallery-item-category lang-hide" lang="ja">ローリング</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Item 6: Mazda RX-7 FD3S -->
+          <a href="assets/images/20260621-DSC07688-Edit.jpg" class="gallery-item glightbox" data-gallery="portfolio" data-category="cars" data-title="Mazda RX-7 FD3S" data-description="Aggressive track-ready styling shot at Daikoku parking area.">
+            <img src="assets/images/20260621-DSC07688-Edit.jpg" alt="Mazda RX-7 FD3S shot by Miguel Madrigal">
+            <div class="gallery-item-overlay">
+              <div class="gallery-item-info">
+                <h3 class="gallery-item-title">Mazda RX-7 FD3S</h3>
+                <span class="gallery-item-category" lang="en">Stills</span>
+                <span class="gallery-item-category lang-hide" lang="ja">スチール</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         4. SERVICES & PRICING SECTION
+         ============================================= -->
+    <section id="pricing" class="pricing">
+      <div class="container">
+        <div class="pricing-header reveal">
+          <span class="section-label">
+            <span lang="en">Packages</span>
+            <span lang="ja" class="lang-hide">料金システム</span>
+          </span>
+          <h2 class="section-title" lang="en">Services & Rates</h2>
+          <h2 class="section-title" lang="ja" class="lang-hide">サービス ＆ 料金プラン</h2>
+          
+          <p class="section-subtitle" lang="en">Premium photoshoot packages tailored for private car owners and collectors. For commercial, corporate, or magazine inquiries, contact directly.</p>
+          <p class="section-subtitle lang-hide" lang="ja">愛車オーナー様やコレクター様向けのプライベート撮影パッケージです。広告、雑誌、企業案件など商業用ライセンスを含む撮影は個別にお見積もりいたします。</p>
+        </div>
+
+        <div class="pricing-grid reveal reveal-delay-1">
+          <!-- Card 1: Static Shoot -->
+          <div class="pricing-card">
+            <div class="pricing-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316A2.192 2.192 0 0 0 14.512 4H9.488c-.535 0-1.046.262-1.352.702l-.822 1.316Z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5a3.75 3.75 0 1 0 0-7.5 3.75 3.75 0 0 0 0 7.5Z" />
+              </svg>
+            </div>
+            
+            <h3 lang="en">Car Photoshoot</h3>
+            <h3 lang="ja" class="lang-hide">スチール撮影</h3>
+            
+            <div class="price">¥15,000</div>
+            
+            <span class="price-note" lang="en">Starting Price</span>
+            <span class="price-note lang-hide" lang="ja">基本価格</span>
+            
+            <!-- Features EN -->
+            <ul class="pricing-features" lang="en">
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                1.5 - 2 hour static photo session
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                Location scouting & suggestions
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                15 high-res fully edited images
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                Private online gallery download
+              </li>
+            </ul>
+
+            <!-- Features JP -->
+            <ul class="pricing-features lang-hide" lang="ja">
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                1.5〜2時間の静止画フォトセッション
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                都内ロケーション選定・ご提案
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                高解像度レタッチ済みデータ 15枚
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                プライベートオンライン納品（ダウンロード対応）
+              </li>
+            </ul>
+            
+            <a href="#contact" class="btn btn-outline">
+              <span lang="en">Book Shoot</span>
+              <span lang="ja" class="lang-hide">予約する</span>
+            </a>
+          </div>
+
+          <!-- Card 2: Rolling (Featured) -->
+          <div class="pricing-card is-featured">
+            <span class="pricing-badge" lang="en">Most Popular</span>
+            <span class="pricing-badge lang-hide" lang="ja">人気No.1</span>
+            
+            <div class="pricing-icon" style="color: var(--color-accent);">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.63 8.41a6 6 0 0 0-5.84 7.38h15.17l-3.37-1.42Z" />
+              </svg>
+            </div>
+            
+            <h3 lang="en">Rolling Shots</h3>
+            <h3 lang="ja" class="lang-hide">走行写真（ローリング）</h3>
+            
+            <div class="price">¥22,000</div>
+            
+            <span class="price-note" lang="en">Starting Price</span>
+            <span class="price-note lang-hide" lang="ja">基本価格</span>
+            
+            <!-- Features EN -->
+            <ul class="pricing-features" lang="en">
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                2 hour dynamic highway tracking
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                Camera car & professional driver included
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                10 premium motion tracking edits
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                5 bonus static details shots
+              </li>
+            </ul>
+
+            <!-- Features JP -->
+            <ul class="pricing-features lang-hide" lang="ja">
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                2時間の高速道路・ストリート追走撮影
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                機材車およびプロ専属ドライバー代込み
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                ハイクオリティ走行加工編集写真 10枚
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                ボーナス静止画ディテール写真 5枚
+              </li>
+            </ul>
+            
+            <a href="#contact" class="btn btn-accent">
+              <span lang="en">Book Session</span>
+              <span lang="ja" class="lang-hide">予約する</span>
+            </a>
+          </div>
+
+          <!-- Card 3: Combined Package -->
+          <div class="pricing-card">
+            <div class="pricing-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25Z" />
+              </svg>
+            </div>
+            
+            <h3 lang="en">Full Creator Package</h3>
+            <h3 lang="ja" class="lang-hide">クリエイター・コンボ</h3>
+            
+            <div class="price">¥35,000</div>
+            
+            <span class="price-note" lang="en">Full Photo & Video Package</span>
+            <span class="price-note lang-hide" lang="ja">スチール & 動画パッケージ</span>
+            
+            <!-- Features EN -->
+            <ul class="pricing-features" lang="en">
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                Half-day shoot (3 hours)
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                20 fully edited premium images
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                2x Short-form Reels/Videos (15-30s)
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                Behind-the-scenes material included
+              </li>
+            </ul>
+
+            <!-- Features JP -->
+            <ul class="pricing-features lang-hide" lang="ja">
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                半日フォト・ビデオセッション（3時間）
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                高解像度レタッチ済みデータ 20枚
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                SNSショート動画 2本（各15〜30秒、編集済み）
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                メイキング動画・元データの提供
+              </li>
+            </ul>
+            
+            <a href="#contact" class="btn btn-outline">
+              <span lang="en">Book Package</span>
+              <span lang="ja" class="lang-hide">予約する</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="pricing-custom reveal">
+          <p lang="en">Looking for commercial assignments, track days, or specific edits?</p>
+          <p lang="ja" class="lang-hide">商業用撮影、サーキット・走行会、その他特殊レタッチなどをお探しですか？</p>
+          
+          <a href="#contact">
+            <span lang="en">Get a Custom Quote →</span>
+            <span lang="ja" class="lang-hide">カスタムプランを相談する →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         5. TESTIMONIALS SECTION
+         ============================================= -->
+    <section class="testimonials">
+      <div class="container">
+        <div class="testimonials-header reveal">
+          <span class="section-label">
+            <span lang="en">Reviews</span>
+            <span lang="ja" class="lang-hide">レビュー</span>
+          </span>
+          <h2 class="section-title" lang="en">Client Feedback</h2>
+          <h2 class="section-title" lang="ja" class="lang-hide">クライアントの声</h2>
+        </div>
+
+        <div class="testimonials-grid reveal reveal-delay-1">
+          <!-- Card 1 (94.2K Followers) -->
+          <div class="testimonial-card">
+            <div class="testimonial-quote-icon">“</div>
+            
+            <p class="testimonial-text" lang="en">Miguel completely nailed the styling for my FD3S. The rolling highway tracking shots and the lighting work made the RX-7 look like a cinematic movie poster. Professional and easy to shoot with.</p>
+            <p class="testimonial-text lang-hide" lang="ja">マイケルは私のFD3Sのスタイリングを完璧に引き出してくれました。高速でのローリングショットや絶妙な光加減は、RX-7をまるで映画のポスターのように見せます。仕事もプロフェッショナルでスムーズでした。</p>
+            
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">SH</div>
+              <div class="testimonial-author-info">
+                <h4>Satoshi Hayashi</h4>
+                <div class="testimonial-instagram">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                  <a href="https://instagram.com/migumadrigal" target="_blank">@satoshi_fd3s</a>
+                  <span>· 94.2K Followers</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 (48.6K Followers) -->
+          <div class="testimonial-card">
+            <div class="testimonial-quote-icon">“</div>
+            
+            <p class="testimonial-text" lang="en">The highway tracking rolls Miguel did of my NSX are incredible. Capturing speed while keeping the mechanical curves razor-sharp is a real skill. Highly recommend booking him in Tokyo.</p>
+            <p class="testimonial-text lang-hide" lang="ja">首都高でマイケルが撮影してくれたNSXの走行写真は圧倒的でした。スピード感を表現しながら、ボディラインをここまでシャープに捉えるのは本物の技術です。東京で撮影するなら絶対にお勧めします。</p>
+            
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">YT</div>
+              <div class="testimonial-author-info">
+                <h4>Yuki Tanaka</h4>
+                <div class="testimonial-instagram">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                  <a href="https://instagram.com/migumadrigal" target="_blank">@yuki_nsx</a>
+                  <span>· 48.6K Followers</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3 (125K Followers) -->
+          <div class="testimonial-card">
+            <div class="testimonial-quote-icon">“</div>
+            
+            <p class="testimonial-text" lang="en">For import campaigns and high-end automotive reels, Miguel is our go-to creator in Japan. He knows exactly what details car enthusiasts want to see. Massive boost to our reach.</p>
+            <p class="testimonial-text lang-hide" lang="ja">車両空輸プロモーションやハイクオリティなリール動画なら、日本でのクリエイターはマイケル一択です。愛車ファンが見たいディテールを熟知しており、エンゲージメントの大幅な向上に繋がりました。</p>
+            
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">AH</div>
+              <div class="testimonial-author-info">
+                <h4>Alex Henderson</h4>
+                <div class="testimonial-instagram">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                  <a href="https://instagram.com/migumadrigal" target="_blank">@alex_tokyo_imports</a>
+                  <span>· 125K Followers</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         6. INSTAGRAM SECTION
+         ============================================= -->
+    <section id="instagram" class="instagram">
+      <div class="container">
+        <div class="instagram-header reveal">
+          <span class="section-label">
+            <span lang="en">Social Feed</span>
+            <span lang="ja" class="lang-hide">インスタグラム</span>
+          </span>
+          <h2 class="section-title" lang="en">Follow the Journey</h2>
+          <h2 class="section-title" lang="ja" class="lang-hide">インスタグラムで追う</h2>
+          
+          <p class="section-subtitle" lang="en">Daily snapshots of Tokyo's street-level automotive culture, shoots, and behind the scenes.</p>
+          <p class="section-subtitle lang-hide" lang="ja">東京のストリートカーカルチャー、撮影風景、制作プロセスの裏側を毎日更新しています。</p>
+        </div>
+
+
+
+        <div class="reveal reveal-delay-1" style="margin-bottom: 48px;">
+          <!-- Elfsight Instagram Feed | Untitled Instagram Feed -->
+          <script src="https://elfsightcdn.com/platform.js" async></script>
+          <div class="elfsight-app-6bcc3851-38c4-4c1f-91f5-cc3997e5d8d2" data-elfsight-app-lazy></div>
+        </div>
+
+        <div class="instagram-cta reveal">
+          <a href="https://instagram.com/migumadrigal" target="_blank">
+            <span lang="en">Follow @migumadrigal on Instagram</span>
+            <span lang="ja" class="lang-hide">Instagram @migumadrigal をフォローする</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         7. CONTACT SECTION
+         ============================================= -->
+    <section id="contact" class="contact">
+      <div class="container">
+        <div class="contact-grid">
+          
+          <div class="contact-info reveal">
+            <span class="section-label">
+              <span lang="en">Inquiries</span>
+              <span lang="ja" class="lang-hide">コンタクト</span>
+            </span>
+            
+            <h2 class="section-title" lang="en">Let's Create.</h2>
+            <h2 class="section-title" lang="ja" class="lang-hide">セッションを始める</h2>
+            
+            <p class="contact-description" lang="en">Have questions or ready to coordinate a session? Drop a message below detailing your vehicle and target locations. Available for bookings across Tokyo and surrounding regions.</p>
+            <p class="contact-description lang-hide" lang="ja">撮影プランのご相談やご質問など、お気軽にお問い合わせください。車種、ご希望のロケーションやスケジュールなどをご記入ください。東京近郊および全国への出張撮影も対応いたします。</p>
+            
+            <div class="contact-details">
+              <div class="contact-detail">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                </svg>
+                <a href="mailto:hello@miguelmadrigal.com">hello@miguelmadrigal.com</a>
+              </div>
+              
+              <div class="contact-detail">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                </svg>
+                <span lang="en">Tokyo, Japan</span>
+                <span lang="ja" class="lang-hide">日本、東京都</span>
+              </div>
+            </div>
+
+            <div class="contact-socials">
+              <a href="https://instagram.com/migumadrigal" target="_blank" class="contact-social-link" aria-label="Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="reveal reveal-delay-1">
+            <!-- Contact Form -->
+            <form id="contact-form" class="contact-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="contact-name">
+                    <span lang="en">Name</span>
+                    <span lang="ja" class="lang-hide">お名前</span>
+                  </label>
+                  <input type="text" id="contact-name" placeholder="John Doe" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="contact-email">
+                    <span lang="en">Email</span>
+                    <span lang="ja" class="lang-hide">メールアドレス</span>
+                  </label>
+                  <input type="email" id="contact-email" placeholder="john@example.com" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="contact-service">
+                  <span lang="en">Service Type</span>
+                  <span lang="ja" class="lang-hide">撮影サービスの種類</span>
+                </label>
+                
+                <select id="contact-service">
+                  <option value="shoot" lang="en">Car Photoshoot (¥15,000+)</option>
+                  <option value="shoot" lang="ja" class="lang-hide">スチール撮影 (¥15,000+)</option>
+                  
+                  <option value="rolling" lang="en">Rolling Shots (¥22,000+)</option>
+                  <option value="rolling" lang="ja" class="lang-hide">走行写真撮影 (¥22,000+)</option>
+                  
+                  <option value="creator" lang="en">Creator Combo Package (¥35,000+)</option>
+                  <option value="creator" lang="ja" class="lang-hide">クリエイター動画・静止画コンボ (¥35,000+)</option>
+                  
+                  <option value="other" lang="en">Custom / Commercial Assignment</option>
+                  <option value="other" lang="ja" class="lang-hide">企業案件・その他案件</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="contact-message">
+                  <span lang="en">Tell me about your project</span>
+                  <span lang="ja" class="lang-hide">ご要望・車種について</span>
+                </label>
+                
+                <textarea id="contact-message" placeholder="Make, model, modification overview, timing..." required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary">
+                <span lang="en">Send Message</span>
+                <span lang="ja" class="lang-hide">送信する</span>
+              </button>
+            </form>
+
+            <!-- Success Alert -->
+            <div class="form-success">
+              <div class="form-success-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              
+              <h3 lang="en">Message Sent!</h3>
+              <h3 lang="ja" class="lang-hide">送信完了！</h3>
+              
+              <p lang="en">Thank you. I will get back to you within 24 hours.</p>
+              <p lang="ja" class="lang-hide">メッセージありがとうございます。24時間以内にご返信いたします。</p>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =============================================
+       FOOTER
+       ============================================= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-copyright">
+        &copy; 2026 Miguel Madrigal. All Rights Reserved.
+      </div>
+      <div class="footer-links">
+        <a href="https://instagram.com/migumadrigal" target="_blank">Instagram</a>
+        <a href="mailto:hello@miguelmadrigal.com">Email</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- GLightbox JS (CDN) -->
+  <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
+
+  <!-- Main JavaScript -->
+  <script src="scripts/main.js"></script>
+</body>
+</html>
