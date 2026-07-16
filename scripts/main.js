@@ -285,7 +285,9 @@ function initContactForm() {
 
     const name = form.querySelector('#contact-name');
     const email = form.querySelector('#contact-email');
+    const service = form.querySelector('#contact-service');
     const message = form.querySelector('#contact-message');
+    const submitBtn = form.querySelector('button[type="submit"]');
 
     let isValid = true;
 
@@ -305,15 +307,56 @@ function initContactForm() {
 
     if (!isValid) return;
 
-    // Display success
-    form.style.display = 'none';
-    formSuccess.classList.add('is-visible');
-    form.reset();
+    // Show loading state
+    const originalText = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span lang="en">Sending...</span><span lang="ja" class="lang-hide">送信中...</span>';
+    
+    // Support translation states inside button loading text
+    const activeLang = localStorage.getItem('portfolio-lang') || 'en';
+    const activeLoadingSpan = submitBtn.querySelector(`span[lang="${activeLang}"]`);
+    if (activeLoadingSpan) {
+      submitBtn.querySelectorAll('span').forEach(s => s.classList.add('lang-hide'));
+      activeLoadingSpan.classList.remove('lang-hide');
+    }
 
-    setTimeout(() => {
-      formSuccess.classList.remove('is-visible');
-      form.style.display = 'flex';
-    }, 6000);
+    // Send AJAX request to FormSubmit.co
+    fetch('https://formsubmit.co/ajax/miguelmadrigalwork@gmail.com', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        Name: name.value,
+        Email: email.value,
+        Service: service ? service.value : 'N/A',
+        Message: message.value
+      })
+    })
+    .then(response => {
+      if (response.ok) {
+        // Display success alert
+        form.style.display = 'none';
+        formSuccess.classList.add('is-visible');
+        form.reset();
+
+        setTimeout(() => {
+          formSuccess.classList.remove('is-visible');
+          form.style.display = 'flex';
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        }, 8000);
+      } else {
+        throw new Error('Form submission failed.');
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
+      alert('Failed to send message. Please try emailing directly to miguelmadrigalwork@gmail.com.');
+    });
   });
 }
 

@@ -756,7 +756,7 @@
                     <span lang="en">Name</span>
                     <span lang="ja" class="lang-hide">お名前</span>
                   </label>
-                  <input type="text" id="contact-name" placeholder="John Doe" required>
+                  <input type="text" id="contact-name" name="Name" placeholder="John Doe" required>
                 </div>
                 
                 <div class="form-group">
@@ -764,7 +764,7 @@
                     <span lang="en">Email</span>
                     <span lang="ja" class="lang-hide">メールアドレス</span>
                   </label>
-                  <input type="email" id="contact-email" placeholder="john@example.com" required>
+                  <input type="email" id="contact-email" name="Email" placeholder="john@example.com" required>
                 </div>
               </div>
 
@@ -774,7 +774,7 @@
                   <span lang="ja" class="lang-hide">撮影サービスの種類</span>
                 </label>
                 
-                <select id="contact-service">
+                <select id="contact-service" name="Service">
                   <option value="shoot" lang="en">Car Photoshoot (¥15,000+)</option>
                   <option value="shoot" lang="ja" class="lang-hide">スチール撮影 (¥15,000+)</option>
                   
@@ -795,7 +795,7 @@
                   <span lang="ja" class="lang-hide">ご要望・車種について</span>
                 </label>
                 
-                <textarea id="contact-message" placeholder="Make, model, modification overview, timing..." required></textarea>
+                <textarea id="contact-message" name="Message" placeholder="Make, model, modification overview, timing..." required></textarea>
               </div>
 
               <button type="submit" class="btn btn-primary">
