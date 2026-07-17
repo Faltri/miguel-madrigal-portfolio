@@ -671,9 +671,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .gallery-grid {
-  column-count: 3;
-  column-gap: 20px;
-  display: block;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 }
 
 .gallery-item {
@@ -681,22 +681,19 @@ h1, h2, h3, h4, h5, h6 {
   overflow: hidden;
   border-radius: var(--radius-lg);
   cursor: pointer;
+  aspect-ratio: 3 / 2;
   border: 1px solid var(--color-border-dark);
   background-color: var(--color-dark-surface);
-  display: inline-block;
-  width: 100%;
-  margin-bottom: 20px;
-  aspect-ratio: auto;
 }
 
 .gallery-item.is-hidden {
-  display: none !important;
+  display: none;
 }
 
 .gallery-item img {
   width: 100%;
-  height: auto;
-  display: block;
+  height: 100%;
+  object-fit: cover;
   transition: transform var(--transition-slow);
 }
 
@@ -1423,8 +1420,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .gallery-grid {
-    column-count: 2;
-    column-gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .pricing-grid {
@@ -1493,8 +1489,8 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .gallery-grid {
-    column-count: 1;
-    column-gap: 0;
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 
   .portfolio-header {
