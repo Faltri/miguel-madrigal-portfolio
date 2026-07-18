@@ -1377,29 +1377,27 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: var(--shadow-md);
 }
 
-.insta-dm-icon {
+.insta-dm-avatar-container {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.03);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-white-text);
+  overflow: hidden;
   border: 1px solid var(--color-border-dark);
   flex-shrink: 0;
   transition: all var(--transition-base);
 }
 
-.insta-dm-card:hover .insta-dm-icon {
-  background: var(--color-white-text);
-  color: var(--color-dark-bg);
-  border-color: var(--color-white-text);
+.insta-dm-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-.insta-dm-icon svg {
-  width: 22px;
-  height: 22px;
+.insta-dm-card:hover .insta-dm-avatar-container {
+  border-color: var(--color-white-text);
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
 }
 
 .insta-dm-text {
