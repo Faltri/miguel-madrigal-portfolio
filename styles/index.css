@@ -1625,8 +1625,20 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .gallery-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .gallery-item-tag {
+    top: 10px;
+    left: 10px;
+    padding: 3px 8px;
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+  }
+
+  .pricing-hover-previews {
+    display: none;
   }
 
   .portfolio-header {
