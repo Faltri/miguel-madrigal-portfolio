@@ -1238,6 +1238,83 @@ h1, h2, h3, h4, h5, h6 {
 
 
 /* =============================================
+   11b. GUARANTEE / TRUST SECTION
+   ============================================= */
+.guarantee {
+  padding: 80px 0;
+  background: var(--color-dark-bg);
+  border-top: 1px solid var(--color-border-dark);
+  border-bottom: 1px solid var(--color-border-dark);
+}
+
+.guarantee-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.guarantee-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 32px;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid var(--color-border-dark);
+  transition: all var(--transition-base);
+}
+
+.guarantee-card:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.02);
+  transform: translateY(-4px);
+}
+
+.guarantee-icon {
+  width: 48px;
+  height: 48px;
+  color: var(--color-grey-dark);
+  transition: all var(--transition-base);
+}
+
+.guarantee-card:hover .guarantee-icon {
+  transform: scale(1.1);
+  color: var(--color-white-text);
+}
+
+.guarantee-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.guarantee-info h3 {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-white-text);
+  margin-bottom: 12px;
+}
+
+.guarantee-info p {
+  font-size: 0.85rem;
+  color: var(--color-grey-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (max-width: 992px) {
+  .guarantee-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .guarantee {
+    padding: 60px 0;
+  }
+}
+
+
+/* =============================================
    12. CONTACT SECTION
    ============================================= */
 .contact {
