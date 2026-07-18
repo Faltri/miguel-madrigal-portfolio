@@ -818,6 +818,150 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
+
+/* Highlight of the Day */
+.highlight-of-the-day {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 48px;
+  background: var(--color-dark-surface);
+  border: 1px solid var(--color-border-dark);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  margin-bottom: 56px;
+  align-items: center;
+}
+
+.highlight-image-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  aspect-ratio: 3 / 4;
+  display: block;
+}
+
+.highlight-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.highlight-image-wrapper:hover img {
+  transform: scale(1.03);
+}
+
+.highlight-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.highlight-tag {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--color-white-text);
+  font-family: var(--font-heading);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 50px;
+}
+
+.highlight-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--color-white-text);
+  line-height: 1.1;
+}
+
+.highlight-desc {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-grey-muted);
+}
+
+.highlight-details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  border-top: 1px solid var(--color-border-dark);
+  padding-top: 20px;
+  margin-top: 10px;
+}
+
+.highlight-spec-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.highlight-spec-label {
+  font-size: 9px;
+  color: var(--color-grey-dark);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.highlight-spec-value {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-white-text);
+}
+
+.highlight-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-white-text);
+  background: var(--color-dark-bg);
+  border: 1px solid var(--color-border-dark);
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  margin-top: 8px;
+  text-decoration: none;
+}
+
+.highlight-cta-btn:hover {
+  background: var(--color-white-text);
+  color: var(--color-dark-bg);
+  border-color: var(--color-white-text);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .highlight-of-the-day {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding: 24px;
+    margin-bottom: 40px;
+  }
+  
+  .highlight-details {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+
 /* =============================================
    9. SERVICES & PRICING SECTION
    ============================================= */
