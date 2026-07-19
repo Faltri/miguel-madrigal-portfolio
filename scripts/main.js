@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initLightbox();
   initContactForm();
   initSmoothScroll();
+  initPricingButtons();
+  initAmbientParallax();
 });
 
 
@@ -380,3 +382,42 @@ function isValidEmail(email) {
     }
   }, { passive: true });
 })();
+
+/* =============================================
+   10. PRICING BUTTONS — Form Auto-Select
+   ============================================= */
+function initPricingButtons() {
+  const bookBtns = document.querySelectorAll('a[data-service]');
+  const contactServiceSelect = document.getElementById('contact-service');
+
+  if (!bookBtns.length || !contactServiceSelect) return;
+
+  bookBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const service = btn.getAttribute('data-service');
+      if (service) {
+        contactServiceSelect.value = service;
+      }
+    });
+  });
+}
+
+/* =============================================
+   11. AMBIENT BACKGROUND — Subtle scroll parallax
+   ============================================= */
+function initAmbientParallax() {
+  const glow1 = document.querySelector('.ambient-glow-1');
+  const glow2 = document.querySelector('.ambient-glow-2');
+  const grid = document.querySelector('.ambient-grid');
+
+  if (!glow1 && !grid) return;
+
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    
+    // Very subtle translations
+    if (glow1) glow1.style.transform = `translate3d(0, ${scrolled * 0.15}px, 0)`;
+    if (glow2) glow2.style.transform = `translate3d(0, ${scrolled * -0.1}px, 0)`;
+    if (grid) grid.style.transform = `translate3d(0, ${scrolled * 0.05}px, 0)`;
+  }, { passive: true });
+}
