@@ -26,8 +26,12 @@ function initLanguageSwitcher() {
   
   if (!langButtons.length) return;
 
-  // Load saved preference or default to English
-  const savedLang = localStorage.getItem('portfolio-lang') || 'en';
+  // Load saved preference, or detect browser language, or default to English
+  let defaultLang = 'en';
+  if (navigator.language && navigator.language.toLowerCase().startsWith('ja')) {
+    defaultLang = 'ja';
+  }
+  const savedLang = localStorage.getItem('portfolio-lang') || defaultLang;
   setLanguage(savedLang);
 
   langButtons.forEach(btn => {
