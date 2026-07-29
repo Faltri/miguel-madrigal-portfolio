@@ -2183,3 +2183,29 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+
+/* Highlight Slideshow Dots */
+.highlight-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 32px;
+}
+.highlight-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  opacity: 0.3;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.highlight-dot.active {
+  background: var(--accent);
+  opacity: 1;
+  transform: scale(1.3);
+}
+.highlight-dot:hover {
+  opacity: 0.8;
+}

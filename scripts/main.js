@@ -432,12 +432,42 @@ function initAmbientParallax() {
    ============================================= */
 function initHighlightSlideshow() {
   const slides = document.querySelectorAll('.highlight-slide');
+  const dots = document.querySelectorAll('.highlight-dot');
   if (slides.length <= 1) return;
 
   let currentIndex = 0;
-  setInterval(() => {
+  let intervalId;
+
+  function goToSlide(index) {
     slides[currentIndex].classList.remove('active');
-    currentIndex = (currentIndex + 1) % slides.length;
+    if (dots.length > currentIndex) dots[currentIndex].classList.remove('active');
+    
+    currentIndex = index;
+    
     slides[currentIndex].classList.add('active');
-  }, 5000);
+    if (dots.length > currentIndex) dots[currentIndex].classList.add('active');
+  }
+
+  function nextSlide() {
+    goToSlide((currentIndex + 1) % slides.length);
+  }
+
+  function startSlideshow() {
+    intervalId = setInterval(nextSlide, 5000);
+  }
+
+  function stopSlideshow() {
+    clearInterval(intervalId);
+  }
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      stopSlideshow();
+      goToSlide(index);
+      startSlideshow();
+    });
+  });
+
+  startSlideshow();
 }
+
