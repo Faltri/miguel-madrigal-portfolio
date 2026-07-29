@@ -434,6 +434,8 @@ function initHighlightSlideshow() {
   const container = document.querySelector('.highlight-slides-container');
   const slides = document.querySelectorAll('.highlight-slide');
   const dots = document.querySelectorAll('.highlight-dot');
+  const prevBtn = document.querySelector('.highlight-nav-prev');
+  const nextBtn = document.querySelector('.highlight-nav-next');
   if (slides.length <= 1 || !container) return;
 
   let currentIndex = 0;
@@ -457,8 +459,13 @@ function initHighlightSlideshow() {
     scrollToSlide(currentIndex);
   }
 
+  function prevSlide() {
+    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+    scrollToSlide(currentIndex);
+  }
+
   function startSlideshow() {
-    intervalId = setInterval(nextSlide, 6000);
+    intervalId = setInterval(nextSlide, 3500);
   }
 
   function stopSlideshow() {
@@ -484,6 +491,22 @@ function initHighlightSlideshow() {
     });
   });
 
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      stopSlideshow();
+      prevSlide();
+      startSlideshow();
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      stopSlideshow();
+      nextSlide();
+      startSlideshow();
+    });
+  }
+
   container.addEventListener('touchstart', stopSlideshow, { passive: true });
   container.addEventListener('touchend', startSlideshow, { passive: true });
   container.addEventListener('mouseenter', stopSlideshow);
@@ -491,5 +514,6 @@ function initHighlightSlideshow() {
 
   startSlideshow();
 }
+
 
 

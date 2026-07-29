@@ -2236,3 +2236,46 @@ h1, h2, h3, h4, h5, h6 {
     gap: 28px;
   }
 }
+
+/* Highlight Nav Buttons */
+.highlight-of-the-day {
+  position: relative;
+}
+.highlight-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.highlight-nav:hover {
+  background: var(--accent);
+  transform: translateY(-50%) scale(1.1);
+  border-color: var(--accent);
+}
+.highlight-nav-prev {
+  left: -22px;
+}
+.highlight-nav-next {
+  right: -22px;
+}
+@media (max-width: 1200px) {
+  .highlight-nav-prev { left: 16px; }
+  .highlight-nav-next { right: 16px; }
+}
+@media (max-width: 768px) {
+  .highlight-nav { display: none; }
+}
