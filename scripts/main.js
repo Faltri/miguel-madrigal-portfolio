@@ -431,43 +431,65 @@ function initAmbientParallax() {
    12. HIGHLIGHT SLIDESHOW
    ============================================= */
 function initHighlightSlideshow() {
+  const container = document.querySelector('.highlight-slides-container');
   const slides = document.querySelectorAll('.highlight-slide');
   const dots = document.querySelectorAll('.highlight-dot');
-  if (slides.length <= 1) return;
+  if (slides.length <= 1 || !container) return;
 
   let currentIndex = 0;
   let intervalId;
 
-  function goToSlide(index) {
-    slides[currentIndex].classList.remove('active');
-    if (dots.length > currentIndex) dots[currentIndex].classList.remove('active');
-    
-    currentIndex = index;
-    
-    slides[currentIndex].classList.add('active');
-    if (dots.length > currentIndex) dots[currentIndex].classList.add('active');
+  function updateDots(index) {
+    dots.forEach(d => d.classList.remove('active'));
+    if (dots.length > index) dots[index].classList.add('active');
+  }
+
+  function scrollToSlide(index) {
+    container.scrollTo({
+      left: slides[index].offsetLeft - container.offsetLeft,
+      behavior: 'smooth'
+    });
+    updateDots(index);
   }
 
   function nextSlide() {
-    goToSlide((currentIndex + 1) % slides.length);
+    currentIndex = (currentIndex + 1) % slides.length;
+    scrollToSlide(currentIndex);
   }
 
   function startSlideshow() {
-    intervalId = setInterval(nextSlide, 5000);
+    intervalId = setInterval(nextSlide, 6000);
   }
 
   function stopSlideshow() {
     clearInterval(intervalId);
   }
 
+  container.addEventListener('scroll', () => {
+    const scrollLeft = container.scrollLeft;
+    const slideWidth = container.clientWidth;
+    const newIndex = Math.round(scrollLeft / slideWidth);
+    if (newIndex !== currentIndex && newIndex < slides.length) {
+      currentIndex = newIndex;
+      updateDots(currentIndex);
+    }
+  }, { passive: true });
+
   dots.forEach((dot, index) => {
     dot.addEventListener('click', () => {
       stopSlideshow();
-      goToSlide(index);
+      currentIndex = index;
+      scrollToSlide(currentIndex);
       startSlideshow();
     });
   });
 
+  container.addEventListener('touchstart', stopSlideshow, { passive: true });
+  container.addEventListener('touchend', startSlideshow, { passive: true });
+  container.addEventListener('mouseenter', stopSlideshow);
+  container.addEventListener('mouseleave', startSlideshow);
+
   startSlideshow();
 }
+
 

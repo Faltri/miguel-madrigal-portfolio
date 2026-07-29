@@ -2209,3 +2209,30 @@ h1, h2, h3, h4, h5, h6 {
 .highlight-dot:hover {
   opacity: 0.8;
 }
+.highlight-slides-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.highlight-slides-container::-webkit-scrollbar {
+  display: none;
+}
+.highlight-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+  opacity: 1 !important;
+  visibility: visible !important;
+  grid-area: auto !important;
+  display: grid;
+  gap: 32px;
+  grid-template-columns: 1fr 1.2fr;
+  align-items: center;
+}
+@media (max-width: 900px) {
+  .highlight-slide {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
