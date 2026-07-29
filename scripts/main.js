@@ -1,4 +1,4 @@
-/* =============================================
+﻿/* =============================================
    MIGUEL MADRIGAL — AUTOMOTIVE PHOTOGRAPHY
    Main JavaScript with Bilingual System
    ============================================= */
@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initPricingButtons();
   initAmbientParallax();
+  initHighlightSlideshow();
 });
 
 
@@ -70,7 +71,7 @@ function initLanguageSwitcher() {
     const msgField = document.getElementById('contact-message');
     if (msgField) {
       if (lang === 'ja') {
-        msgField.placeholder = "メーカー、モデル、カスタム概要、希望�-�程など...";
+        msgField.placeholder = "メーカー、モデル、カスタム概要、希望�-�程など...";
       } else {
         msgField.placeholder = "Make, model, modification overview, timing...";
       }
@@ -424,4 +425,19 @@ function initAmbientParallax() {
     if (glow2) glow2.style.transform = `translate3d(0, ${scrolled * -0.1}px, 0)`;
     if (grid) grid.style.transform = `translate3d(0, ${scrolled * 0.05}px, 0)`;
   }, { passive: true });
+}
+
+/* =============================================
+   12. HIGHLIGHT SLIDESHOW
+   ============================================= */
+function initHighlightSlideshow() {
+  const slides = document.querySelectorAll('.highlight-slide');
+  if (slides.length <= 1) return;
+
+  let currentIndex = 0;
+  setInterval(() => {
+    slides[currentIndex].classList.remove('active');
+    currentIndex = (currentIndex + 1) % slides.length;
+    slides[currentIndex].classList.add('active');
+  }, 5000);
 }
