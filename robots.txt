@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://migumadrigal.com/sitemap.xml

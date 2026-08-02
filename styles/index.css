@@ -2295,3 +2295,215 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 768px) {
   .highlight-nav { display: none; }
 }
+
+/* =============================================
+   12. SEO LOCATION PAGES & FOOTER DIRECTORY
+   ============================================= */
+.footer-locations {
+  padding-bottom: 36px;
+  margin-bottom: 36px;
+  border-bottom: 1px solid var(--color-border-dark);
+}
+.footer-locations-title {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-grey-muted);
+  margin-bottom: 16px;
+}
+.footer-locations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px 24px;
+}
+.footer-location-link {
+  color: var(--color-white-text);
+  font-size: 0.88rem;
+  text-decoration: none;
+  opacity: 0.75;
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+}
+.footer-location-link:hover {
+  opacity: 1;
+  color: var(--color-accent);
+  transform: translateX(4px);
+}
+.footer-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Location Page Hero */
+.location-hero {
+  padding: 160px 0 80px;
+  position: relative;
+  overflow: hidden;
+}
+.location-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--color-grey-muted);
+  margin-bottom: 24px;
+}
+.location-breadcrumb a {
+  color: var(--color-grey-muted);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+.location-breadcrumb a:hover {
+  color: var(--color-accent);
+}
+.location-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(227, 41, 41, 0.12);
+  border: 1px solid rgba(227, 41, 41, 0.25);
+  color: var(--color-accent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.location-title {
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+}
+.location-subtitle {
+  font-size: 1.15rem;
+  color: var(--color-grey-muted);
+  max-width: 720px;
+  line-height: 1.6;
+  margin-bottom: 36px;
+}
+.location-cta-group {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Location Spot Cards */
+.spots-section {
+  padding: 80px 0;
+  border-top: 1px solid var(--color-border-dark);
+}
+.spots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 28px;
+  margin-top: 40px;
+}
+.spot-card {
+  background: var(--color-dark-card);
+  border: 1px solid var(--color-border-dark);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
+  display: flex;
+  flex-direction: column;
+}
+.spot-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(227, 41, 41, 0.4);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.5);
+}
+.spot-card-img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+}
+.spot-card-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.spot-card-tag {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-bottom: 8px;
+}
+.spot-card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.spot-card-desc {
+  font-size: 0.9rem;
+  color: var(--color-grey-muted);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+.spot-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border-dark);
+  font-size: 0.8rem;
+  color: var(--color-grey-muted);
+}
+
+/* FAQ Section */
+.faq-section {
+  padding: 100px 0;
+  border-top: 1px solid var(--color-border-dark);
+}
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 24px;
+  margin-top: 48px;
+}
+.faq-card {
+  background: var(--color-dark-surface);
+  border: 1px solid var(--color-border-dark);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  transition: border-color var(--transition-fast);
+}
+.faq-card:hover {
+  border-color: rgba(227, 41, 41, 0.3);
+}
+.faq-question {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--color-white-text);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.faq-question svg {
+  width: 20px;
+  height: 20px;
+  color: var(--color-accent);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.faq-answer {
+  font-size: 0.92rem;
+  color: var(--color-grey-muted);
+  line-height: 1.65;
+}
