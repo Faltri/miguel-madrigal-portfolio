@@ -1,4 +1,4 @@
-﻿/* =============================================
+/* =============================================
    MIGUEL MADRIGAL — AUTOMOTIVE PHOTOGRAPHY
    Main JavaScript with Bilingual System
    ============================================= */
@@ -71,16 +71,31 @@ function initLanguageSwitcher() {
     const msgField = document.getElementById('contact-message');
     if (msgField) {
       if (lang === 'ja') {
-        msgField.placeholder = "メーカー、モデル、カスタム概要、希望�-�程など...";
+        msgField.placeholder = "メーカー、モデル、カスタム概要、希望-程など...";
       } else {
         msgField.placeholder = "Make, model, modification overview, timing...";
       }
     }
 
-    // 4. Force refresh scroll reveal observations as heights change
+    // 4. Update Calendly widget language (EN / JA)
+    updateCalendlyLocale(lang);
+
+    // 5. Force refresh scroll reveal observations as heights change
     if (window.ScrollRevealObserver) {
       window.ScrollRevealObserver.disconnect();
       initScrollReveal();
+    }
+  }
+
+  function updateCalendlyLocale(lang) {
+    const calendlyWidget = document.querySelector('.calendly-inline-widget');
+    if (!calendlyWidget) return;
+    const targetLocale = lang === 'ja' ? 'ja' : 'en';
+    const targetUrl = `https://calendly.com/migueldcmadrigal?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=0e1013&text_color=ffffff&primary_color=e32929&locale=${targetLocale}`;
+    calendlyWidget.setAttribute('data-url', targetUrl);
+    const iframe = calendlyWidget.querySelector('iframe');
+    if (iframe && iframe.src !== targetUrl) {
+      iframe.src = targetUrl;
     }
   }
 }
