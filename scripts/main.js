@@ -587,7 +587,7 @@ function initHighlightSlideshow() {
 
 
 /* =============================================
-   12. POV VIDEO CAROUSEL & AUTO-ROTATION
+   12. POV VIDEO CAROUSEL & AUTO-ROTATION (INFINITE LOOP)
    ============================================= */
 function initPovCarousel() {
   const track = document.getElementById('pov-carousel-track');
@@ -595,12 +595,37 @@ function initPovCarousel() {
   const nextBtn = document.querySelector('.pov-nav-next');
   if (!track) return;
 
+  // Clone all initial video cards to enable an infinite seamless loop
+  const originalCards = Array.from(track.children);
+  originalCards.forEach(card => {
+    const clone = card.cloneNode(true);
+    track.appendChild(clone);
+  });
+
   let isDown = false;
   let startX = 0;
   let scrollLeft = 0;
   let autoScrollActive = true;
-  const scrollSpeed = 0.8; // px per frame
+  const scrollSpeed = 0.85; // smooth px per frame
   let animId = null;
+
+  function ensureVideosPlay() {
+    track.querySelectorAll('video').forEach(v => {
+      if (v.paused) {
+        v.play().catch(() => {});
+      }
+    });
+  }
+
+  function handleInfiniteBounds() {
+    const halfWidth = track.scrollWidth / 2;
+    if (halfWidth <= 0) return;
+    if (track.scrollLeft >= halfWidth) {
+      track.scrollLeft -= halfWidth;
+    } else if (track.scrollLeft <= 0) {
+      track.scrollLeft += halfWidth;
+    }
+  }
 
   // Drag & Swipe handling
   track.addEventListener('mousedown', (e) => {
@@ -623,8 +648,9 @@ function initPovCarousel() {
     if (!isDown) return;
     e.preventDefault();
     const x = e.pageX - track.offsetLeft;
-    const walk = (x - startX) * 1.6;
+    const walk = (x - startX) * 1.5;
     track.scrollLeft = scrollLeft - walk;
+    handleInfiniteBounds();
   });
 
   // Pause on hover/touch interaction
@@ -644,7 +670,10 @@ function initPovCarousel() {
       e.preventDefault();
       stopAutoScroll();
       track.scrollBy({ left: -260, behavior: 'smooth' });
-      setTimeout(startAutoScroll, 2500);
+      setTimeout(() => {
+        handleInfiniteBounds();
+        startAutoScroll();
+      }, 500);
     });
   }
 
@@ -653,16 +682,20 @@ function initPovCarousel() {
       e.preventDefault();
       stopAutoScroll();
       track.scrollBy({ left: 260, behavior: 'smooth' });
-      setTimeout(startAutoScroll, 2500);
+      setTimeout(() => {
+        handleInfiniteBounds();
+        startAutoScroll();
+      }, 500);
     });
   }
 
-  // Smooth continuous auto-rotation loop
+  // Smooth continuous infinite auto-rotation loop
   function step() {
     if (autoScrollActive && !isDown) {
       track.scrollLeft += scrollSpeed;
-      if (track.scrollLeft >= track.scrollWidth - track.clientWidth - 2) {
-        track.scrollLeft = 0;
+      const halfWidth = track.scrollWidth / 2;
+      if (halfWidth > 0 && track.scrollLeft >= halfWidth) {
+        track.scrollLeft -= halfWidth;
       }
     }
     animId = requestAnimationFrame(step);
@@ -670,6 +703,7 @@ function initPovCarousel() {
 
   function startAutoScroll() {
     autoScrollActive = true;
+    ensureVideosPlay();
   }
 
   function stopAutoScroll() {
@@ -682,16 +716,18 @@ function initPovCarousel() {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           startAutoScroll();
-          track.querySelectorAll('video').forEach(v => {
-            if (v.paused) v.play().catch(() => {});
-          });
+          ensureVideosPlay();
         } else {
           stopAutoScroll();
         }
       });
     }, { threshold: 0.15 });
     observer.observe(track);
+  } else {
+    startAutoScroll();
   }
 
   animId = requestAnimationFrame(step);
+  ensureVideosPlay();
 }
+
