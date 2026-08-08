@@ -836,19 +836,21 @@ h1, h2, h3, h4, h5, h6 {
   overflow: hidden;
   background: var(--color-dark-surface);
   border: 1px solid var(--color-border-dark);
-  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.35s, box-shadow 0.35s;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s;
   cursor: pointer;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .pov-card:hover {
-  transform: translateY(-6px) scale(1.02);
+  transform: translateY(-4px);
   border-color: var(--color-accent);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 77, 0, 0.25);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
 .pov-card.is-active-card {
   border-color: var(--color-accent);
-  box-shadow: 0 0 24px rgba(255, 77, 0, 0.4);
+  box-shadow: 0 0 20px rgba(255, 77, 0, 0.4);
 }
 
 .pov-card-media {

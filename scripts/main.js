@@ -614,7 +614,8 @@ function initPovCarousel() {
   let isDragging = false;
   let userPaused = false; // toggled ONLY when user clicks on a video
   let autoScrollActive = true;
-  const scrollSpeed = 0.9; // Smooth px per frame
+  let lastTimestamp = null;
+  const SCROLL_SPEED_PPS = 32; // Smooth, relaxed cinematic speed (32 pixels per second)
   let animId = null;
 
   function ensureVideosPlay() {
@@ -742,10 +743,14 @@ function initPovCarousel() {
     });
   }
 
-  // Smooth continuous infinite auto-rotation loop
-  function step() {
+  // Smooth continuous infinite auto-rotation loop (frame-rate independent)
+  function step(timestamp) {
+    if (!lastTimestamp) lastTimestamp = timestamp;
+    const delta = Math.min((timestamp - lastTimestamp) / 1000, 0.1);
+    lastTimestamp = timestamp;
+
     if (autoScrollActive && !isDown && !userPaused) {
-      track.scrollLeft += scrollSpeed;
+      track.scrollLeft += SCROLL_SPEED_PPS * delta;
       const cycle = getCycleWidth();
       if (cycle > 0 && track.scrollLeft >= cycle * 2) {
         track.scrollLeft -= cycle;
@@ -760,6 +765,7 @@ function initPovCarousel() {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           autoScrollActive = true;
+          lastTimestamp = null;
           ensureVideosPlay();
         } else {
           autoScrollActive = false;
