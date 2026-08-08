@@ -658,11 +658,13 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid var(--color-border-dark);
 }
 
-.about-image img {
+.about-image img,
+.about-image video {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 15%;
+  object-position: center;
+  display: block;
 }
 
 .about-text h2 {
@@ -878,6 +880,7 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: var(--radius-lg);
   padding: 32px;
   margin-bottom: 56px;
+  position: relative;
 }
 
 .highlight-slides-container {
@@ -893,12 +896,16 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.8s ease-in-out, visibility 0.8s;
+  pointer-events: none;
+  transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
+  transform: translateY(6px);
 }
 
 .highlight-slide.active {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
   z-index: 2;
 }
 
@@ -1014,6 +1021,156 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--color-white-text);
   color: var(--color-dark-bg);
   border-color: var(--color-white-text);
+}/* Highlight Sub-gallery Navigation Bar Below Image */
+.highlight-subgallery {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.highlight-subgallery-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.highlight-subgallery-title {
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-grey-muted);
+}
+
+.highlight-dots-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.highlight-dots {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.highlight-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  position: relative;
+}
+
+.highlight-dot:hover {
+  background: rgba(255, 255, 255, 0.7);
+  transform: scale(1.2);
+}
+
+.highlight-dot.active {
+  width: 28px;
+  border-radius: 6px;
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 14px rgba(227, 41, 41, 0.6);
+}
+
+.highlight-nav-btns {
+  display: flex;
+  gap: 8px;
+}
+
+.highlight-nav {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--color-white-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all var(--transition-fast);
+}
+
+.highlight-nav:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 12px rgba(227, 41, 41, 0.4);
+  transform: translateY(-2px);
+}
+
+/* 3-Photo Sub-gallery Thumbnails */
+.highlight-thumbnails {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.highlight-thumb {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  overflow: hidden;
+}
+
+.highlight-thumb:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.highlight-thumb.active {
+  background: rgba(227, 41, 41, 0.08);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 16px rgba(227, 41, 41, 0.25);
+}
+
+.highlight-thumb img {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.highlight-thumb-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+}
+
+.highlight-thumb-num {
+  font-family: var(--font-heading);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-accent);
+  letter-spacing: 1px;
+}
+
+.highlight-thumb-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-white-text);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 /* Responsive adjustments */
@@ -2185,6 +2342,201 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 0.78rem;
   color: var(--color-grey-muted);
   line-height: 1.4;
+    grid-template-columns: 1fr;
+    gap: 56px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  :root {
+    --section-padding: 72px 0;
+    --container-padding: 0 24px;
+    --header-height: 72px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .mobile-nav {
+    display: flex;
+  }
+
+  .hero-content {
+    padding-bottom: 80px;
+  }
+
+  .hero-name {
+    font-size: clamp(2.2rem, 9vw, 3.2rem);
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .about-image {
+    aspect-ratio: 4 / 5;
+  }
+
+  .about-stats {
+    gap: 32px;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .gallery-item-tag {
+    top: 10px;
+    left: 10px;
+    padding: 3px 8px;
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+  }
+
+  .pricing-hover-previews {
+    display: none;
+  }
+
+  .portfolio-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .instagram-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer .container {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .about-stats {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .hero-cta {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-cta .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* =============================================
+   17. INSTAGRAM & INFLUENCER SOCIAL PROOF STYLES
+   ============================================= */
+.testimonial-instagram {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  margin-top: 4px;
+  color: var(--color-grey-muted);
+}
+
+.testimonial-instagram svg {
+  width: 12px;
+  height: 12px;
+  color: var(--color-accent);
+}
+
+.testimonial-instagram a {
+  color: var(--color-white-text);
+  font-weight: 500;
+}
+
+.testimonial-instagram a:hover {
+  color: var(--color-accent);
+}
+
+.testimonial-instagram span {
+  opacity: 0.6;
+}
+
+/* Instagram Profile Card */
+.insta-profile-card {
+  background: var(--color-dark-surface);
+  border: 1px solid var(--color-border-dark);
+  border-radius: var(--radius-lg);
+  padding: 28px 32px;
+  max-width: 480px;
+  margin: 0 auto 48px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  text-align: left;
+}
+
+.insta-profile-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--color-border-dark);
+  background: var(--color-dark-bg);
+  flex-shrink: 0;
+}
+
+.insta-profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.insta-profile-info {
+  flex-grow: 1;
+}
+
+.insta-profile-handle {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-white-text);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.insta-profile-stats {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.insta-stat {
+  font-size: 0.8rem;
+  color: var(--color-grey-muted);
+}
+
+.insta-stat strong {
+  color: var(--color-white-text);
+}
+
+.insta-profile-bio {
+  font-size: 0.78rem;
+  color: var(--color-grey-muted);
+  line-height: 1.4;
 }
 
 @media (max-width: 540px) {
@@ -2200,101 +2552,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
-/* Highlight Slideshow Dots */
-.highlight-dots {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  margin-top: 32px;
-}
-.highlight-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--text-muted);
-  opacity: 0.3;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-.highlight-dot.active {
-  background: var(--accent);
-  opacity: 1;
-  transform: scale(1.3);
-}
-.highlight-dot:hover {
-  opacity: 0.8;
-}
-.highlight-slides-container {
-  display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-.highlight-slides-container::-webkit-scrollbar {
-  display: none;
-}
-.highlight-slide {
-  flex: 0 0 100%;
-  scroll-snap-align: center;
-  opacity: 1 !important;
-  visibility: visible !important;
-  grid-area: auto !important;
-  display: grid;
-  gap: 32px;
-  grid-template-columns: 1fr 1.2fr;
-  align-items: center;
-}
-@media (max-width: 900px) {
-  .highlight-slide {
-    grid-template-columns: 1fr;
-    gap: 28px;
-  }
-}
-
-/* Highlight Nav Buttons */
-.highlight-of-the-day {
-  position: relative;
-}
-.highlight-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.6);
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 44px;
-  height: 44px;
-  font-size: 20px;
-  cursor: pointer;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(4px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-.highlight-nav:hover {
-  background: var(--accent);
-  transform: translateY(-50%) scale(1.1);
-  border-color: var(--accent);
-}
-.highlight-nav-prev {
-  left: -22px;
-}
-.highlight-nav-next {
-  right: -22px;
-}
-@media (max-width: 1200px) {
-  .highlight-nav-prev { left: 16px; }
-  .highlight-nav-next { right: 16px; }
-}
-@media (max-width: 768px) {
-  .highlight-nav { display: none; }
-}
 
 /* =============================================
    12. SEO LOCATION PAGES & FOOTER DIRECTORY
@@ -2410,48 +2667,70 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 40px;
 }
 .spot-card {
-  background: var(--color-dark-card);
+  background: linear-gradient(145deg, rgba(20, 23, 29, 0.9) 0%, rgba(14, 16, 19, 0.95) 100%);
   border: 1px solid var(--color-border-dark);
   border-radius: var(--radius-lg);
-  overflow: hidden;
+  padding: 28px;
   transition: transform var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+.spot-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(227, 41, 41, 0.4), transparent);
+  opacity: 0;
+  transition: opacity var(--transition-base);
 }
 .spot-card:hover {
   transform: translateY(-6px);
-  border-color: rgba(227, 41, 41, 0.4);
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.5);
+  border-color: rgba(227, 41, 41, 0.35);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
 }
-.spot-card-img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  display: block;
+.spot-card:hover::before {
+  opacity: 1;
 }
-.spot-card-body {
-  padding: 24px;
+.spot-card-header {
   display: flex;
-  flex-direction: column;
-  flex-grow: 1;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.spot-number {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--color-accent);
+  background: rgba(227, 41, 41, 0.1);
+  border: 1px solid rgba(227, 41, 41, 0.25);
+  padding: 4px 10px;
+  border-radius: 999px;
+  letter-spacing: 1px;
 }
 .spot-card-tag {
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   font-weight: 700;
-  color: var(--color-accent);
-  margin-bottom: 8px;
+  color: var(--color-grey-muted);
 }
 .spot-card-title {
   font-size: 1.25rem;
   font-weight: 700;
   margin-bottom: 12px;
+  color: var(--color-white-text);
+  line-height: 1.3;
 }
 .spot-card-desc {
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   color: var(--color-grey-muted);
-  line-height: 1.6;
+  line-height: 1.65;
   margin-bottom: 20px;
   flex-grow: 1;
 }
@@ -2461,8 +2740,15 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: space-between;
   padding-top: 16px;
   border-top: 1px solid var(--color-border-dark);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   color: var(--color-grey-muted);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.spot-card-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 /* FAQ Section */

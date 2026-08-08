@@ -77,25 +77,10 @@ function initLanguageSwitcher() {
       }
     }
 
-    // 4. Update Calendly widget language (EN / JA)
-    updateCalendlyLocale(lang);
-
-    // 5. Force refresh scroll reveal observations as heights change
+    // 4. Force refresh scroll reveal observations as heights change
     if (window.ScrollRevealObserver) {
       window.ScrollRevealObserver.disconnect();
       initScrollReveal();
-    }
-  }
-
-  function updateCalendlyLocale(lang) {
-    const calendlyWidget = document.querySelector('.calendly-inline-widget');
-    if (!calendlyWidget) return;
-    const targetLocale = lang === 'ja' ? 'ja' : 'en';
-    const targetUrl = `https://calendly.com/migueldcmadrigal?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=0e1013&text_color=ffffff&primary_color=e32929&locale=${targetLocale}`;
-    calendlyWidget.setAttribute('data-url', targetUrl);
-    const iframe = calendlyWidget.querySelector('iframe');
-    if (iframe && iframe.src !== targetUrl) {
-      iframe.src = targetUrl;
     }
   }
 }
@@ -443,91 +428,160 @@ function initAmbientParallax() {
 }
 
 /* =============================================
-   12. HIGHLIGHT SLIDESHOW
+   12. HIGHLIGHT SLIDESHOW (Auto-rotates when scrolled into view)
    ============================================= */
 function initHighlightSlideshow() {
-  const container = document.querySelector('.highlight-slides-container');
   const slides = document.querySelectorAll('.highlight-slide');
   const dots = document.querySelectorAll('.highlight-dot');
+  const thumbs = document.querySelectorAll('.highlight-thumb');
   const prevBtn = document.querySelector('.highlight-nav-prev');
   const nextBtn = document.querySelector('.highlight-nav-next');
-  if (slides.length <= 1 || !container) return;
+  const container = document.querySelector('.highlight-of-the-day');
+  if (!slides.length) return;
 
   let currentIndex = 0;
-  let intervalId;
+  let intervalId = null;
+  const ROTATE_INTERVAL = 4000; // Rotates every 4 seconds
 
-  function updateDots(index) {
-    dots.forEach(d => d.classList.remove('active'));
-    if (dots.length > index) dots[index].classList.add('active');
-  }
+  function showSlide(index) {
+    if (index < 0) index = slides.length - 1;
+    if (index >= slides.length) index = 0;
 
-  function scrollToSlide(index) {
-    container.scrollTo({
-      left: slides[index].offsetLeft - container.offsetLeft,
-      behavior: 'smooth'
+    slides.forEach((slide, i) => {
+      if (i === index) {
+        slide.classList.add('active');
+      } else {
+        slide.classList.remove('active');
+      }
     });
-    updateDots(index);
+
+    dots.forEach((dot, i) => {
+      if (i === index) {
+        dot.classList.add('active');
+      } else {
+        dot.classList.remove('active');
+      }
+    });
+
+    thumbs.forEach((thumb, i) => {
+      if (i === index) {
+        thumb.classList.add('active');
+      } else {
+        thumb.classList.remove('active');
+      }
+    });
+
+    currentIndex = index;
   }
 
   function nextSlide() {
-    currentIndex = (currentIndex + 1) % slides.length;
-    scrollToSlide(currentIndex);
+    showSlide(currentIndex + 1);
   }
 
   function prevSlide() {
-    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-    scrollToSlide(currentIndex);
+    showSlide(currentIndex - 1);
   }
 
-  function startSlideshow() {
-    intervalId = setInterval(nextSlide, 3500);
+  function startAutoplay() {
+    stopAutoplay();
+    intervalId = setInterval(nextSlide, ROTATE_INTERVAL);
   }
 
-  function stopSlideshow() {
-    clearInterval(intervalId);
-  }
-
-  container.addEventListener('scroll', () => {
-    const scrollLeft = container.scrollLeft;
-    const slideWidth = container.clientWidth;
-    const newIndex = Math.round(scrollLeft / slideWidth);
-    if (newIndex !== currentIndex && newIndex < slides.length) {
-      currentIndex = newIndex;
-      updateDots(currentIndex);
+  function stopAutoplay() {
+    if (intervalId) {
+      clearInterval(intervalId);
+      intervalId = null;
     }
-  }, { passive: true });
+  }
 
+  // Dot Click Navigation
   dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-      stopSlideshow();
-      currentIndex = index;
-      scrollToSlide(currentIndex);
-      startSlideshow();
+    dot.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      stopAutoplay();
+      const slideIdx = dot.dataset.slide !== undefined ? parseInt(dot.dataset.slide, 10) : index;
+      showSlide(isNaN(slideIdx) ? index : slideIdx);
+      startAutoplay();
     });
   });
 
+  // Thumbnail Click Navigation
+  thumbs.forEach((thumb, index) => {
+    thumb.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      stopAutoplay();
+      const slideIdx = thumb.dataset.slide !== undefined ? parseInt(thumb.dataset.slide, 10) : index;
+      showSlide(isNaN(slideIdx) ? index : slideIdx);
+      startAutoplay();
+    });
+  });
+
+  // Prev / Next Buttons
   if (prevBtn) {
-    prevBtn.addEventListener('click', () => {
-      stopSlideshow();
+    prevBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      stopAutoplay();
       prevSlide();
-      startSlideshow();
+      startAutoplay();
     });
   }
 
   if (nextBtn) {
-    nextBtn.addEventListener('click', () => {
-      stopSlideshow();
+    nextBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      stopAutoplay();
       nextSlide();
-      startSlideshow();
+      startAutoplay();
     });
   }
 
-  container.addEventListener('touchstart', stopSlideshow, { passive: true });
-  container.addEventListener('touchend', startSlideshow, { passive: true });
-  container.addEventListener('mouseenter', stopSlideshow);
-  container.addEventListener('mouseleave', startSlideshow);
+  // Hover & Touch Events
+  if (container) {
+    let touchStartX = 0;
+    let touchEndX = 0;
 
-  startSlideshow();
+    container.addEventListener('mouseenter', stopAutoplay);
+    container.addEventListener('mouseleave', startAutoplay);
+
+    container.addEventListener('touchstart', (e) => {
+      stopAutoplay();
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    container.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      if (touchStartX - touchEndX > 50) {
+        nextSlide();
+      } else if (touchEndX - touchStartX > 50) {
+        prevSlide();
+      }
+      startAutoplay();
+    }, { passive: true });
+
+    // Scroll Detection via IntersectionObserver
+    if ('IntersectionObserver' in window) {
+      const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            startAutoplay();
+          } else {
+            stopAutoplay();
+          }
+        });
+      }, { threshold: 0.2 });
+
+      scrollObserver.observe(container);
+    } else {
+      startAutoplay();
+    }
+  }
+
+  // Start with Slide 0 (Touge Formation)
+  showSlide(0);
 }
 
 

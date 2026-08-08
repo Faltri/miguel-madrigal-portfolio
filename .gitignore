@@ -11,3 +11,9 @@ desktop.ini
 *.njsproj
 *.sln
 *.sw?
+
+# Temporary helper scripts
+inspect_*.js
+*.json
+!package.json
+!manifest.json
