@@ -587,7 +587,7 @@ function initHighlightSlideshow() {
 
 
 /* =============================================
-   12. POV VIDEO CAROUSEL & AUTO-ROTATION (INFINITE LOOP)
+   12. POV VIDEO CAROUSEL & AUTO-ROTATION (SEAMLESS INFINITE LOOP)
    ============================================= */
 function initPovCarousel() {
   const track = document.getElementById('pov-carousel-track');
@@ -595,18 +595,26 @@ function initPovCarousel() {
   const nextBtn = document.querySelector('.pov-nav-next');
   if (!track) return;
 
-  // Clone all initial video cards to enable an infinite seamless loop
+  // Clone 2 extra sets (3 sets total) for flawless, seamless wrap in any direction & screen size
   const originalCards = Array.from(track.children);
-  originalCards.forEach(card => {
-    const clone = card.cloneNode(true);
-    track.appendChild(clone);
-  });
+  const totalOriginal = originalCards.length;
+  if (totalOriginal === 0) return;
+
+  // Clone set 1 and set 2
+  for (let i = 0; i < 2; i++) {
+    originalCards.forEach(card => {
+      const clone = card.cloneNode(true);
+      track.appendChild(clone);
+    });
+  }
 
   let isDown = false;
   let startX = 0;
-  let scrollLeft = 0;
+  let scrollLeftStart = 0;
+  let isDragging = false;
+  let userPaused = false; // toggled ONLY when user clicks on a video
   let autoScrollActive = true;
-  const scrollSpeed = 0.85; // smooth px per frame
+  const scrollSpeed = 0.9; // Smooth px per frame
   let animId = null;
 
   function ensureVideosPlay() {
@@ -617,97 +625,133 @@ function initPovCarousel() {
     });
   }
 
+  function getCycleWidth() {
+    const firstCard = track.children[0];
+    const nthCard = track.children[totalOriginal];
+    if (firstCard && nthCard) {
+      return nthCard.offsetLeft - firstCard.offsetLeft;
+    }
+    return track.scrollWidth / 3;
+  }
+
+  // Position at middle set initially
+  requestAnimationFrame(() => {
+    const cycle = getCycleWidth();
+    if (cycle > 0) {
+      track.scrollLeft = cycle;
+    }
+    ensureVideosPlay();
+  });
+
   function handleInfiniteBounds() {
-    const halfWidth = track.scrollWidth / 2;
-    if (halfWidth <= 0) return;
-    if (track.scrollLeft >= halfWidth) {
-      track.scrollLeft -= halfWidth;
-    } else if (track.scrollLeft <= 0) {
-      track.scrollLeft += halfWidth;
+    const cycle = getCycleWidth();
+    if (cycle <= 0) return;
+    if (track.scrollLeft >= cycle * 2) {
+      track.scrollLeft -= cycle;
+    } else if (track.scrollLeft <= 10) {
+      track.scrollLeft += cycle;
     }
   }
 
-  // Drag & Swipe handling
+  // Mouse Dragging & Click Handling
   track.addEventListener('mousedown', (e) => {
     isDown = true;
-    track.classList.add('is-dragging');
+    isDragging = false;
     startX = e.pageX - track.offsetLeft;
-    scrollLeft = track.scrollLeft;
-    stopAutoScroll();
+    scrollLeftStart = track.scrollLeft;
   });
 
   window.addEventListener('mouseup', () => {
     if (isDown) {
       isDown = false;
       track.classList.remove('is-dragging');
-      startAutoScroll();
     }
   });
 
   track.addEventListener('mousemove', (e) => {
     if (!isDown) return;
-    e.preventDefault();
     const x = e.pageX - track.offsetLeft;
-    const walk = (x - startX) * 1.5;
-    track.scrollLeft = scrollLeft - walk;
-    handleInfiniteBounds();
+    const dist = Math.abs(x - startX);
+    if (dist > 6) {
+      isDragging = true;
+      track.classList.add('is-dragging');
+    }
+    if (isDragging) {
+      e.preventDefault();
+      track.scrollLeft = scrollLeftStart - (x - startX) * 1.5;
+      handleInfiniteBounds();
+    }
   });
 
-  // Pause on hover/touch interaction
-  track.addEventListener('mouseenter', stopAutoScroll);
-  track.addEventListener('mouseleave', () => {
-    if (!isDown) startAutoScroll();
-  });
+  // Touch handlers for mobile
+  let touchStartX = 0;
+  let touchScrollStart = 0;
+  let touchMoved = false;
 
-  track.addEventListener('touchstart', stopAutoScroll, { passive: true });
-  track.addEventListener('touchend', () => {
-    setTimeout(startAutoScroll, 1200);
+  track.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].pageX - track.offsetLeft;
+    touchScrollStart = track.scrollLeft;
+    touchMoved = false;
   }, { passive: true });
+
+  track.addEventListener('touchmove', (e) => {
+    const x = e.touches[0].pageX - track.offsetLeft;
+    if (Math.abs(x - touchStartX) > 8) {
+      touchMoved = true;
+    }
+    if (touchMoved) {
+      track.scrollLeft = touchScrollStart - (x - touchStartX) * 1.5;
+      handleInfiniteBounds();
+    }
+  }, { passive: true });
+
+  // Click on cards to toggle pause/play state
+  track.addEventListener('click', (e) => {
+    if (isDragging || touchMoved) return; // ignore drag releases
+    
+    const card = e.target.closest('.pov-card');
+    if (card) {
+      userPaused = !userPaused;
+      
+      // Update visual active state
+      track.querySelectorAll('.pov-card').forEach(c => c.classList.remove('is-active-card'));
+      if (userPaused) {
+        card.classList.add('is-active-card');
+      }
+    }
+  });
 
   // Navigation Arrows
   if (prevBtn) {
     prevBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      stopAutoScroll();
-      track.scrollBy({ left: -260, behavior: 'smooth' });
-      setTimeout(() => {
-        handleInfiniteBounds();
-        startAutoScroll();
-      }, 500);
+      const cardWidth = track.children[0] ? track.children[0].offsetWidth + 18 : 240;
+      track.scrollLeft -= cardWidth;
+      handleInfiniteBounds();
+      ensureVideosPlay();
     });
   }
 
   if (nextBtn) {
     nextBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      stopAutoScroll();
-      track.scrollBy({ left: 260, behavior: 'smooth' });
-      setTimeout(() => {
-        handleInfiniteBounds();
-        startAutoScroll();
-      }, 500);
+      const cardWidth = track.children[0] ? track.children[0].offsetWidth + 18 : 240;
+      track.scrollLeft += cardWidth;
+      handleInfiniteBounds();
+      ensureVideosPlay();
     });
   }
 
   // Smooth continuous infinite auto-rotation loop
   function step() {
-    if (autoScrollActive && !isDown) {
+    if (autoScrollActive && !isDown && !userPaused) {
       track.scrollLeft += scrollSpeed;
-      const halfWidth = track.scrollWidth / 2;
-      if (halfWidth > 0 && track.scrollLeft >= halfWidth) {
-        track.scrollLeft -= halfWidth;
+      const cycle = getCycleWidth();
+      if (cycle > 0 && track.scrollLeft >= cycle * 2) {
+        track.scrollLeft -= cycle;
       }
     }
     animId = requestAnimationFrame(step);
-  }
-
-  function startAutoScroll() {
-    autoScrollActive = true;
-    ensureVideosPlay();
-  }
-
-  function stopAutoScroll() {
-    autoScrollActive = false;
   }
 
   // Viewport Observer to play videos and rotate only when in view
@@ -715,16 +759,16 @@ function initPovCarousel() {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          startAutoScroll();
+          autoScrollActive = true;
           ensureVideosPlay();
         } else {
-          stopAutoScroll();
+          autoScrollActive = false;
         }
       });
     }, { threshold: 0.15 });
     observer.observe(track);
   } else {
-    startAutoScroll();
+    autoScrollActive = true;
   }
 
   animId = requestAnimationFrame(step);
