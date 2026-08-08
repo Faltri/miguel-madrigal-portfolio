@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initPricingButtons();
   initAmbientParallax();
   initHighlightSlideshow();
+  initPovCarousel();
 });
 
 
@@ -585,4 +586,112 @@ function initHighlightSlideshow() {
 }
 
 
+/* =============================================
+   12. POV VIDEO CAROUSEL & AUTO-ROTATION
+   ============================================= */
+function initPovCarousel() {
+  const track = document.getElementById('pov-carousel-track');
+  const prevBtn = document.querySelector('.pov-nav-prev');
+  const nextBtn = document.querySelector('.pov-nav-next');
+  if (!track) return;
 
+  let isDown = false;
+  let startX = 0;
+  let scrollLeft = 0;
+  let autoScrollActive = true;
+  const scrollSpeed = 0.8; // px per frame
+  let animId = null;
+
+  // Drag & Swipe handling
+  track.addEventListener('mousedown', (e) => {
+    isDown = true;
+    track.classList.add('is-dragging');
+    startX = e.pageX - track.offsetLeft;
+    scrollLeft = track.scrollLeft;
+    stopAutoScroll();
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (isDown) {
+      isDown = false;
+      track.classList.remove('is-dragging');
+      startAutoScroll();
+    }
+  });
+
+  track.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - track.offsetLeft;
+    const walk = (x - startX) * 1.6;
+    track.scrollLeft = scrollLeft - walk;
+  });
+
+  // Pause on hover/touch interaction
+  track.addEventListener('mouseenter', stopAutoScroll);
+  track.addEventListener('mouseleave', () => {
+    if (!isDown) startAutoScroll();
+  });
+
+  track.addEventListener('touchstart', stopAutoScroll, { passive: true });
+  track.addEventListener('touchend', () => {
+    setTimeout(startAutoScroll, 1200);
+  }, { passive: true });
+
+  // Navigation Arrows
+  if (prevBtn) {
+    prevBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      stopAutoScroll();
+      track.scrollBy({ left: -260, behavior: 'smooth' });
+      setTimeout(startAutoScroll, 2500);
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      stopAutoScroll();
+      track.scrollBy({ left: 260, behavior: 'smooth' });
+      setTimeout(startAutoScroll, 2500);
+    });
+  }
+
+  // Smooth continuous auto-rotation loop
+  function step() {
+    if (autoScrollActive && !isDown) {
+      track.scrollLeft += scrollSpeed;
+      if (track.scrollLeft >= track.scrollWidth - track.clientWidth - 2) {
+        track.scrollLeft = 0;
+      }
+    }
+    animId = requestAnimationFrame(step);
+  }
+
+  function startAutoScroll() {
+    autoScrollActive = true;
+  }
+
+  function stopAutoScroll() {
+    autoScrollActive = false;
+  }
+
+  // Viewport Observer to play videos and rotate only when in view
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          startAutoScroll();
+          track.querySelectorAll('video').forEach(v => {
+            if (v.paused) v.play().catch(() => {});
+          });
+        } else {
+          stopAutoScroll();
+        }
+      });
+    }, { threshold: 0.15 });
+    observer.observe(track);
+  }
+
+  animId = requestAnimationFrame(step);
+}

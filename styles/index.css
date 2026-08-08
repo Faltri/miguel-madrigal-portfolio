@@ -711,6 +711,197 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-grey-muted);
 }
 
+/* =============================================
+   7b. ABOUT POV VIDEO SHOWCASE (BEHIND THE LENS)
+   ============================================= */
+.about-pov-showcase {
+  margin-top: 60px;
+  padding-top: 48px;
+  border-top: 1px solid var(--color-border-dark);
+  position: relative;
+}
+
+.about-pov-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 24px;
+  gap: 24px;
+}
+
+.about-pov-title-group {
+  max-width: 680px;
+}
+
+.about-pov-title {
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--color-white-text);
+  margin-top: 10px;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+
+.about-pov-desc {
+  font-size: 0.95rem;
+  color: var(--color-grey-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.pov-nav-btns {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.pov-nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-dark-surface);
+  border: 1px solid var(--color-border-dark);
+  color: var(--color-white-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all var(--transition-base);
+}
+
+.pov-nav-btn:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(255, 77, 0, 0.35);
+}
+
+.pov-carousel-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  padding: 8px 0;
+}
+
+.pov-carousel-wrapper::before,
+.pov-carousel-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.pov-carousel-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, var(--color-dark-bg), transparent);
+}
+
+.pov-carousel-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, var(--color-dark-bg), transparent);
+}
+
+.pov-carousel-track {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 10px 12px 14px;
+  user-select: none;
+  cursor: grab;
+}
+
+.pov-carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.pov-carousel-track.is-dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+}
+
+.pov-card {
+  flex: 0 0 210px;
+  height: 350px;
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--color-dark-surface);
+  border: 1px solid var(--color-border-dark);
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.35s, box-shadow 0.35s;
+}
+
+.pov-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  border-color: var(--color-accent);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 77, 0, 0.25);
+}
+
+.pov-card-media {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.pov-card video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.pov-card-tag {
+  position: absolute;
+  bottom: 12px;
+  left: 10px;
+  right: 10px;
+  padding: 6px 10px;
+  background: rgba(10, 10, 10, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  color: var(--color-white-text);
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  z-index: 3;
+  pointer-events: none;
+  transition: all var(--transition-base);
+  text-align: center;
+}
+
+.pov-card:hover .pov-card-tag {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  background: rgba(10, 10, 10, 0.9);
+}
+
+@media (max-width: 768px) {
+  .about-pov-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .pov-card {
+    flex: 0 0 175px;
+    height: 290px;
+  }
+  .about-pov-title {
+    font-size: 1.4rem;
+  }
+}
+
 
 /* =============================================
    8. PORTFOLIO / GALLERY SECTION
