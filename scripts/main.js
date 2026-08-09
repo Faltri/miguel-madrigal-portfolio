@@ -712,6 +712,7 @@ function initPovCarousel() {
       const cardWidth = track.children[0] ? track.children[0].offsetWidth + 18 : 240;
       track.scrollLeft -= cardWidth;
       handleInfiniteBounds();
+      floatScrollLeft = track.scrollLeft;
       ensureVideosPlay();
     });
   }
@@ -722,9 +723,12 @@ function initPovCarousel() {
       const cardWidth = track.children[0] ? track.children[0].offsetWidth + 18 : 240;
       track.scrollLeft += cardWidth;
       handleInfiniteBounds();
+      floatScrollLeft = track.scrollLeft;
       ensureVideosPlay();
     });
   }
+
+  let floatScrollLeft = null;
 
   // Smooth continuous infinite auto-rotation loop (frame-rate independent)
   function step(timestamp) {
@@ -733,12 +737,20 @@ function initPovCarousel() {
     lastTimestamp = timestamp;
 
     if (autoScrollActive && !isDown) {
-      track.scrollLeft += SCROLL_SPEED_PPS * delta;
+      if (floatScrollLeft === null) floatScrollLeft = track.scrollLeft;
+      
+      floatScrollLeft += SCROLL_SPEED_PPS * delta;
+      
       const cycle = getCycleWidth();
-      if (cycle > 0 && track.scrollLeft >= cycle * 2) {
-        track.scrollLeft -= cycle;
+      if (cycle > 0 && floatScrollLeft >= cycle * 2) {
+        floatScrollLeft -= cycle;
       }
+      track.scrollLeft = floatScrollLeft;
+    } else {
+      // Sync when user is interacting
+      floatScrollLeft = track.scrollLeft;
     }
+    
     animId = requestAnimationFrame(step);
   }
 
@@ -749,6 +761,7 @@ function initPovCarousel() {
         if (entry.isIntersecting) {
           autoScrollActive = true;
           lastTimestamp = null;
+          floatScrollLeft = track.scrollLeft; // Re-sync on view
           ensureVideosPlay();
         } else {
           autoScrollActive = false;
