@@ -612,7 +612,6 @@ function initPovCarousel() {
   let startX = 0;
   let scrollLeftStart = 0;
   let isDragging = false;
-  let userPaused = false; // toggled ONLY when user clicks on a video
   let autoScrollActive = true;
   let lastTimestamp = null;
   const SCROLL_SPEED_PPS = 32; // Smooth, relaxed cinematic speed (32 pixels per second)
@@ -706,22 +705,6 @@ function initPovCarousel() {
     }
   }, { passive: true });
 
-  // Click on cards to toggle pause/play state
-  track.addEventListener('click', (e) => {
-    if (isDragging || touchMoved) return; // ignore drag releases
-    
-    const card = e.target.closest('.pov-card');
-    if (card) {
-      userPaused = !userPaused;
-      
-      // Update visual active state
-      track.querySelectorAll('.pov-card').forEach(c => c.classList.remove('is-active-card'));
-      if (userPaused) {
-        card.classList.add('is-active-card');
-      }
-    }
-  });
-
   // Navigation Arrows
   if (prevBtn) {
     prevBtn.addEventListener('click', (e) => {
@@ -749,7 +732,7 @@ function initPovCarousel() {
     const delta = Math.min((timestamp - lastTimestamp) / 1000, 0.1);
     lastTimestamp = timestamp;
 
-    if (autoScrollActive && !isDown && !userPaused) {
+    if (autoScrollActive && !isDown) {
       track.scrollLeft += SCROLL_SPEED_PPS * delta;
       const cycle = getCycleWidth();
       if (cycle > 0 && track.scrollLeft >= cycle * 2) {
