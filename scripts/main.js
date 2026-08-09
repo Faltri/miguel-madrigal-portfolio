@@ -614,7 +614,7 @@ function initPovCarousel() {
   let isDragging = false;
   let autoScrollActive = true;
   let lastTimestamp = null;
-  const SCROLL_SPEED_PPS = 32; // Smooth, relaxed cinematic speed (32 pixels per second)
+  const SCROLL_SPEED_PPS = 55; // Slightly faster but still cinematic (55 pixels per second)
   let animId = null;
 
   function ensureVideosPlay() {
