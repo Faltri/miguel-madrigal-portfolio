@@ -137,33 +137,59 @@
   </style>
 </head>
 <body class="lang-en">
-  <header class="header" id="header">
-    <div class="container header-container">
-      <a href="index.html" class="logo">MIGUEL MADRIGAL</a>
-      <div class="nav-toggle" id="nav-toggle" aria-label="Toggle Menu">
-        <span></span>
-        <span></span>
-      </div>
-      <nav class="nav-menu" id="nav-menu">
+  <header class="header">
+    <div class="container">
+      <a href="index.html#home" class="logo">MIGUEL MADRIGAL</a>
+      
+      <!-- Nav Links -->
+      <nav class="nav-links">
+        <!-- English Nav Links -->
+        <a href="index.html#home" lang="en">Home</a>
+        <a href="index.html#about" lang="en">About</a>
         <a href="index.html#portfolio" lang="en">Portfolio</a>
-        <a href="index.html#portfolio" lang="ja" class="lang-hide">ポートフォリオ</a>
+        <a href="index.html#pricing" lang="en">Rates</a>
         <a href="index.html#contact" lang="en">Contact</a>
+
+        <!-- Japanese Nav Links -->
+        <a href="index.html#home" lang="ja" class="lang-hide">ホーム</a>
+        <a href="index.html#about" lang="ja" class="lang-hide">プロフィール</a>
+        <a href="index.html#portfolio" lang="ja" class="lang-hide">ギャラリー</a>
+        <a href="index.html#pricing" lang="ja" class="lang-hide">料金表</a>
         <a href="index.html#contact" lang="ja" class="lang-hide">お問い合わせ</a>
-        
-        <div class="lang-switcher" style="display: inline-flex; margin-left: 15px; align-items: center;">
+
+        <!-- Language Switcher Flags -->
+        <div class="lang-switcher">
+          <!-- English (UK Flag) -->
           <button class="lang-btn active" data-lang="en" aria-label="Switch to English">
-            <svg viewBox="0 0 100 100"><clipPath id="c-uk-gtr"><circle cx="50" cy="50" r="50"/></clipPath><g clip-path="url(#c-uk-gtr)"><rect width="100" height="100" fill="#012169"/><path d="M0 0 L100 100 M100 0 L0 100" stroke="#fff" stroke-width="20"/><path d="M0 0 L100 100 M100 0 L0 100" stroke="#C8102E" stroke-width="12"/><path d="M50 0 V100 M0 50 H100" stroke="#fff" stroke-width="30"/><path d="M50 0 V100 M0 50 H100" stroke="#C8102E" stroke-width="18"/></g></svg>
-            <span>EN</span>
+            <svg viewBox="0 0 100 100">
+              <clipPath id="circle-clip-desktop">
+                <circle cx="50" cy="50" r="50" />
+              </clipPath>
+              <g clip-path="url(#circle-clip-desktop)">
+                <rect width="100" height="100" fill="#00247d"/>
+                <path d="M0 0 L100 100 M100 0 L0 100" stroke="#fff" stroke-width="12"/>
+                <path d="M0 0 L100 100 M100 0 L0 100" stroke="#cf142b" stroke-width="8"/>
+                <path d="M50 0 V100 M0 50 H100" stroke="#fff" stroke-width="20"/>
+                <path d="M50 0 V100 M0 50 H100" stroke="#cf142b" stroke-width="12"/>
+              </g>
+            </svg>
           </button>
+          <!-- Japanese (Japan Flag) -->
           <button class="lang-btn" data-lang="ja" aria-label="日本語に切り替え">
-            <svg viewBox="0 0 100 100"><clipPath id="c-jp-gtr"><circle cx="50" cy="50" r="50"/></clipPath><g clip-path="url(#c-jp-gtr)"><rect width="100" height="100" fill="#ffffff"/><circle cx="50" cy="50" r="30" fill="#bc002d"/></g></svg>
-            <span>JP</span>
+            <svg viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="50" fill="#ffffff" stroke="#eeeeee" stroke-width="2" />
+              <circle cx="50" cy="50" r="28" fill="#e32929" />
+            </svg>
           </button>
         </div>
-
-        <a href="index.html" class="btn btn-outline" style="margin-left: 15px;" lang="en">Back to Home</a>
-        <a href="index.html" class="btn btn-outline" style="margin-left: 15px;" lang="ja" class="lang-hide">ホームへ戻る</a>
       </nav>
+
+      <!-- Hamburger Button (Mobile) -->
+      <button class="hamburger" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </header>
 
@@ -180,7 +206,7 @@
 
     <section class="article-content">
       <div class="article-content-text reveal reveal-up">
-        <p lang="en">This blue R35 GTR is just a monster, pure and simple. We wanted to do something a little moody and cyberpunk, so we took it out super late when the streets were empty. The deep metallic blue paint looks completely black until the streetlights hit it just right. We spent the night hunting for cool industrial spots and neon lights across Tokyo. It was freezing out, but the shots we got made it totally worth it.</p>
+        <p lang="en">This deep metallic blue R35 GTR is a monster. We took it out super late to get some moody, cyberpunk-style shots across Tokyo. The iconic quad LED taillights glowing in the dark never get old.</p>
         <p lang="ja" class="lang-hide">This text is intentionally kept chill in English.</p>
       </div>
 

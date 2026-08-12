@@ -136,18 +136,59 @@
   </style>
 </head>
 <body>
-  <header class="header" id="header">
-    <div class="container header-container">
-      <a href="index.html" class="logo">MIGUEL MADRIGAL</a>
-      <div class="nav-toggle" id="nav-toggle" aria-label="Toggle Menu">
-        <span></span>
-        <span></span>
-      </div>
-      <nav class="nav-menu" id="nav-menu">
+  <header class="header">
+    <div class="container">
+      <a href="index.html#home" class="logo">MIGUEL MADRIGAL</a>
+      
+      <!-- Nav Links -->
+      <nav class="nav-links">
+        <!-- English Nav Links -->
+        <a href="index.html#home" lang="en">Home</a>
+        <a href="index.html#about" lang="en">About</a>
         <a href="index.html#portfolio" lang="en">Portfolio</a>
+        <a href="index.html#pricing" lang="en">Rates</a>
         <a href="index.html#contact" lang="en">Contact</a>
-        <a href="index.html" class="btn btn-outline" style="margin-left: 20px;">Back to Home</a>
+
+        <!-- Japanese Nav Links -->
+        <a href="index.html#home" lang="ja" class="lang-hide">ホーム</a>
+        <a href="index.html#about" lang="ja" class="lang-hide">プロフィール</a>
+        <a href="index.html#portfolio" lang="ja" class="lang-hide">ギャラリー</a>
+        <a href="index.html#pricing" lang="ja" class="lang-hide">料金表</a>
+        <a href="index.html#contact" lang="ja" class="lang-hide">お問い合わせ</a>
+
+        <!-- Language Switcher Flags -->
+        <div class="lang-switcher">
+          <!-- English (UK Flag) -->
+          <button class="lang-btn active" data-lang="en" aria-label="Switch to English">
+            <svg viewBox="0 0 100 100">
+              <clipPath id="circle-clip-desktop">
+                <circle cx="50" cy="50" r="50" />
+              </clipPath>
+              <g clip-path="url(#circle-clip-desktop)">
+                <rect width="100" height="100" fill="#00247d"/>
+                <path d="M0 0 L100 100 M100 0 L0 100" stroke="#fff" stroke-width="12"/>
+                <path d="M0 0 L100 100 M100 0 L0 100" stroke="#cf142b" stroke-width="8"/>
+                <path d="M50 0 V100 M0 50 H100" stroke="#fff" stroke-width="20"/>
+                <path d="M50 0 V100 M0 50 H100" stroke="#cf142b" stroke-width="12"/>
+              </g>
+            </svg>
+          </button>
+          <!-- Japanese (Japan Flag) -->
+          <button class="lang-btn" data-lang="ja" aria-label="日本語に切り替え">
+            <svg viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="50" fill="#ffffff" stroke="#eeeeee" stroke-width="2" />
+              <circle cx="50" cy="50" r="28" fill="#e32929" />
+            </svg>
+          </button>
+        </div>
       </nav>
+
+      <!-- Hamburger Button (Mobile) -->
+      <button class="hamburger" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </header>
 
@@ -163,7 +204,7 @@
 
     <section class="article-content">
       <div class="article-content-text reveal reveal-up">
-        <p lang="en">You can’t talk about Tokyo car culture without mentioning the FD3S RX-7. When this vibrant red rotary beast rolled up to Daikoku PA, I had to grab my camera. The lines on the FD are just timeless. We hung out at Daikoku for a bit and then took it over to Tatsumi to get some different lighting. The car is so loud and aggressive, I tried to capture that same energy in the photos.</p>
+        <p lang="en">The FD3S RX-7 is an absolute icon of Tokyo car culture. This vibrant red rotary build looked incredible parked up at Daikoku PA. The body lines on the FD are just timeless.</p>
         <p lang="ja" class="lang-hide">This text is intentionally kept chill in English.</p>
       </div>
 
