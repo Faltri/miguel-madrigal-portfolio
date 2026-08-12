@@ -128,19 +128,51 @@
     </section>
 
     <section class="article-content">
+      <style>
+        .image-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 20px;
+          margin-bottom: 40px;
+        }
+        @media (max-width: 768px) {
+          .image-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+        .image-grid img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 8px;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+          transition: transform 0.3s ease;
+        }
+        .image-grid img:hover {
+          transform: scale(1.02);
+        }
+      </style>
+
       <p>
         When I planned this shoot for the Mazda Miata NA, I really wanted to keep things simple. The car itself has such a classic, clean design, so I wanted the photos to match that vibe.
       </p>
       
-      <img src="assets/images/DSC02839.jpg" alt="Mazda Miata NA Tunnel Rolling Shot" class="article-image">
+      <img src="assets/images/DSC02921.jpg" alt="Mazda Miata NA Tokyo Gate Bridge Background" class="article-image">
       
       <p>
-        Instead of going somewhere busy or full of neon lights, I chose an open location with a really minimal background. Having fewer distractions around just makes the car look better, and it's much easier on the eyes.
+        Instead of going somewhere busy or full of neon lights, I chose open locations with really minimal backgrounds, like this spot overlooking the water and the Tokyo Gate Bridge. Having fewer distractions around just makes the car look better, and it's much easier on the eyes.
       </p>
 
+      <div class="image-grid">
+        <img src="assets/images/DSC02839.jpg" alt="Mazda Miata NA Tunnel Rolling Shot">
+        <img src="assets/images/DSC02908.jpg" alt="Mazda Miata NA Clean Profile Stance">
+      </div>
+
       <p>
-        I also edited these with a softer, film-like look. It's nothing too crazy—just a subtle grade to give it that nostalgic feel that fits an older car like this perfectly.
+        I also got some close-ups of the interior, like the classic Nardi wood steering wheel and the retro gauges. I edited the whole set with a softer, film-like look. It's nothing too crazy, just a subtle grade to give it that nostalgic feel that fits an older car like this perfectly.
       </p>
+
+      <img src="assets/images/DSC02975.jpg" alt="Mazda Miata NA Interior Nardi Steering Wheel" class="article-image">
       
       <div style="text-align: center; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
         <a href="index.html#portfolio" class="btn btn-outline back-btn">Back to Gallery</a>
