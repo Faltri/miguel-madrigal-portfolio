@@ -3014,20 +3014,9 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 1;
 }
 
-.glowing-text {
-  text-shadow: 0 0 25px rgba(255, 255, 255, 0.4), 0 4px 12px rgba(0,0,0,0.8);
-}
 
-.glass-tagline {
-  display: inline-block;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(10px);
-  padding: 8px 18px;
-  border-radius: 30px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #fff !important;
-  margin-bottom: 20px;
-}
+
+
 
 .premium-location {
   margin-top: 15px;
@@ -3080,15 +3069,9 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Premium Hero Mobile Optimizations */
 @media (max-width: 768px) {
-  .glowing-text {
-    text-shadow: 0 0 12px rgba(255, 255, 255, 0.3), 0 2px 6px rgba(0,0,0,0.8);
-  }
   
-  .glass-tagline {
-    font-size: 0.9rem;
-    padding: 6px 14px;
-    margin-bottom: 12px;
-  }
+  
+  
   
   .premium-location {
     margin-top: 10px;
@@ -3109,4 +3092,32 @@ h1, h2, h3, h4, h5, h6 {
     height: 6px;
     top: 6px;
   }
+}
+
+/* --- Premium Editorial Typography --- */
+.editorial-name {
+  text-shadow: 0 4px 12px rgba(0,0,0,0.5); /* subtle drop shadow instead of a glow */
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.hero-divider {
+  width: 60px;
+  height: 2px;
+  background-color: var(--color-white-text);
+  border: none;
+  margin: 15px auto 25px auto;
+  opacity: 0.8;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.editorial-tagline {
+  font-size: 0.95rem;
+  letter-spacing: 0.15em;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95);
+  text-transform: uppercase;
+  margin-bottom: 25px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
 }
