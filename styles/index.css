@@ -3077,3 +3077,36 @@ h1, h2, h3, h4, h5, h6 {
   0% { transform: translate(-50%, 0); opacity: 1; }
   100% { transform: translate(-50%, 15px); opacity: 0; }
 }
+
+/* Premium Hero Mobile Optimizations */
+@media (max-width: 768px) {
+  .glowing-text {
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.3), 0 2px 6px rgba(0,0,0,0.8);
+  }
+  
+  .glass-tagline {
+    font-size: 0.9rem;
+    padding: 6px 14px;
+    margin-bottom: 12px;
+  }
+  
+  .premium-location {
+    margin-top: 10px;
+    margin-bottom: 25px;
+  }
+  
+  .modern-scroll {
+    bottom: 20px;
+  }
+  
+  .modern-scroll .mouse {
+    width: 20px;
+    height: 32px;
+    border-radius: 10px;
+  }
+  
+  .modern-scroll .mouse::before {
+    height: 6px;
+    top: 6px;
+  }
+}
