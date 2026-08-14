@@ -1513,6 +1513,40 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: center;
 }
 
+.pricing-card .card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.pricing-card .card-insta-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-grey-muted);
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.pricing-card .card-insta-link:hover {
+  color: var(--color-white-text);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.pricing-card .card-insta-link svg {
+  width: 15px;
+  height: 15px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+}
+
 /* Pricing Hover Previews */
 .pricing-hover-previews {
   position: absolute;
