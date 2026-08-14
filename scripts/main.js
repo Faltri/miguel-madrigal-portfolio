@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initAmbientParallax();
   initHighlightSlideshow();
   initPovCarousel();
+  initStoryVideo();
 });
 
 
@@ -775,5 +776,100 @@ function initPovCarousel() {
 
   animId = requestAnimationFrame(step);
   ensureVideosPlay();
+}
+
+/* =============================================
+   13. MY STORY VIDEO — Instant Autoplay & Resilient Observer
+   ============================================= */
+function initStoryVideo() {
+  const storyVideo = document.querySelector('.about-image video');
+  if (!storyVideo) return;
+
+  // 1. Force hardware & autoplay properties for iOS / Safari / Chrome compliance
+  storyVideo.muted = true;
+  storyVideo.defaultMuted = true;
+  storyVideo.playsInline = true;
+  storyVideo.setAttribute('muted', '');
+  storyVideo.setAttribute('playsinline', '');
+  storyVideo.setAttribute('webkit-playsinline', '');
+  storyVideo.setAttribute('autoplay', '');
+
+  function safePlay() {
+    if (!storyVideo) return;
+    const playPromise = storyVideo.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          storyVideo.classList.add('is-playing');
+        })
+        .catch(() => {
+          // Autoplay policy restriction (e.g. iOS Low Power Mode) — unlock on first touch/scroll/click
+          const unlockPlay = () => {
+            storyVideo.play().then(() => {
+              storyVideo.classList.add('is-playing');
+            }).catch(() => {});
+            window.removeEventListener('touchstart', unlockPlay, { passive: true });
+            window.removeEventListener('scroll', unlockPlay, { passive: true });
+            window.removeEventListener('click', unlockPlay);
+          };
+          window.addEventListener('touchstart', unlockPlay, { passive: true, once: true });
+          window.addEventListener('scroll', unlockPlay, { passive: true, once: true });
+          window.addEventListener('click', unlockPlay, { once: true });
+        });
+    }
+  }
+
+  // 2. IntersectionObserver to pre-buffer and play when approaching view
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          safePlay();
+        } else {
+          // Pause when far out of view to save mobile resources
+          if (!storyVideo.paused) {
+            storyVideo.pause();
+          }
+        }
+      });
+    }, {
+      rootMargin: '300px 0px 300px 0px', // Starts buffering 300px before scrolling into view
+      threshold: 0.05
+    });
+
+    observer.observe(storyVideo);
+  } else {
+    safePlay();
+  }
+
+  // 3. Fallback direct trigger on load / readiness
+  if (storyVideo.readyState >= 2) {
+    safePlay();
+  } else {
+    storyVideo.addEventListener('loadedmetadata', safePlay, { once: true });
+    storyVideo.addEventListener('canplay', safePlay, { once: true });
+    storyVideo.addEventListener('canplaythrough', safePlay, { once: true });
+  }
+
+  // 4. Click / tap on container allows user to toggle or restart immediately
+  const aboutImageContainer = document.querySelector('.about-image');
+  if (aboutImageContainer) {
+    aboutImageContainer.style.cursor = 'pointer';
+    aboutImageContainer.addEventListener('click', () => {
+      if (storyVideo.paused) {
+        storyVideo.play().catch(() => {});
+      }
+    });
+  }
+
+  // 5. Visibility change (when user returns to the tab)
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && storyVideo.getBoundingClientRect().top < window.innerHeight + 300 && storyVideo.getBoundingClientRect().bottom > -300) {
+      safePlay();
+    }
+  });
+
+  // Initial trigger
+  safePlay();
 }
 
