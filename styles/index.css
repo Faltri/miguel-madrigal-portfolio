@@ -1462,33 +1462,23 @@ h1, h2, h3, h4, h5, h6 {
 
 .pricing-card h3 {
   font-family: var(--font-heading);
-  font-size: 1.35rem;
+  font-size: 1.4rem;
   color: var(--color-white-text);
-  margin-bottom: 12px;
-}
-
-.pricing-card .price {
-  font-family: var(--font-heading);
-  font-size: 2.2rem;
-  font-weight: 800;
-  color: var(--color-white-text);
-  line-height: 1;
-}
-
-.pricing-card .price.price-inquire {
-  font-size: 1.45rem;
-  font-weight: 700;
-  color: var(--color-accent);
-  letter-spacing: -0.01em;
-  line-height: 1.2;
+  margin-bottom: 6px;
 }
 
 .pricing-card .price-note {
-  font-size: 0.8rem;
-  color: var(--color-grey-muted);
-  margin-top: 6px;
-  margin-bottom: 32px;
-  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-bottom: 28px;
+  display: inline-block;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(227, 41, 41, 0.08);
+  border: 1px solid rgba(227, 41, 41, 0.2);
+  padding: 4px 10px;
+  border-radius: 999px;
 }
 
 .pricing-features {
@@ -1613,6 +1603,113 @@ h1, h2, h3, h4, h5, h6 {
 .pricing-custom a:hover {
   border-color: var(--color-accent);
   color: var(--color-accent);
+}
+
+/* Instagram Direct DM Quick Connect Banner */
+.insta-quick-inquire {
+  background: linear-gradient(135deg, rgba(227, 41, 41, 0.08) 0%, rgba(20, 23, 29, 0.95) 100%);
+  border: 1px solid rgba(227, 41, 41, 0.3);
+  border-radius: var(--radius-lg);
+  padding: 32px 36px;
+  margin-top: 48px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  position: relative;
+  overflow: hidden;
+}
+
+.insta-quick-inquire::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(227, 41, 41, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.insta-quick-inquire-content {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+}
+
+.insta-avatar-badge {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(220, 39, 67, 0.35);
+}
+
+.insta-avatar-badge svg {
+  width: 26px;
+  height: 26px;
+}
+
+.insta-quick-inquire-text {
+  flex: 1;
+  min-width: 240px;
+}
+
+.insta-quick-inquire-text h4 {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  color: var(--color-white-text);
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+.insta-quick-inquire-text p {
+  font-size: 0.92rem;
+  color: var(--color-grey-muted);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.btn-insta-dm {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  border: none;
+  color: #fff !important;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: 999px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 6px 20px rgba(220, 39, 67, 0.35);
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.btn-insta-dm:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(220, 39, 67, 0.55);
+}
+
+@media (max-width: 768px) {
+  .insta-quick-inquire {
+    padding: 24px 20px;
+  }
+  .insta-quick-inquire-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+  .btn-insta-dm {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 
