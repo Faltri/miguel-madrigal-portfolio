@@ -61,6 +61,9 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--color-dark-bg);
+  overflow-x: hidden;
+  max-width: 100%;
+  width: 100%;
 }
 
 body {
@@ -70,6 +73,9 @@ body {
   color: var(--color-grey-muted);
   background-color: var(--color-dark-bg);
   overflow-x: hidden;
+  max-width: 100%;
+  width: 100%;
+  position: relative;
 }
 
 /* Ensure Japanese text matches standard UI aesthetics */
@@ -80,6 +86,7 @@ body.lang-ja {
 
 section {
   scroll-margin-top: var(--header-height);
+  overflow-x: clip; /* Prevent off-screen animations from causing horizontal scroll */
 }
 
 img {
@@ -148,8 +155,10 @@ h1, h2, h3, h4, h5, h6 {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
   z-index: -1;
   pointer-events: none;
   overflow: hidden;
@@ -1351,17 +1360,32 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 768px) {
   .highlight-slide {
     grid-template-columns: 1fr;
-    gap: 28px;
+    gap: 24px;
+    width: 100%;
   }
   
   .highlight-of-the-day {
-    padding: 24px;
+    padding: 20px 16px;
     margin-bottom: 40px;
+    max-width: 100%;
+    overflow: hidden;
   }
   
   .highlight-details {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 14px;
+    width: 100%;
+  }
+
+  .highlight-thumbnails {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .highlight-thumb {
+    width: 100%;
+    box-sizing: border-box;
   }
 }
 
@@ -1736,15 +1760,23 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 768px) {
   .insta-quick-inquire {
     padding: 24px 20px;
+    max-width: 100%;
+    overflow: hidden;
   }
   .insta-quick-inquire-content {
     flex-direction: column;
     align-items: flex-start;
     gap: 18px;
+    width: 100%;
+  }
+  .insta-quick-inquire-text {
+    width: 100%;
+    min-width: 0;
   }
   .btn-insta-dm {
     width: 100%;
     justify-content: center;
+    box-sizing: border-box;
   }
 }
 
@@ -2473,6 +2505,17 @@ h1, h2, h3, h4, h5, h6 {
     --header-height: 68px;
   }
 
+  /* Prevent horizontal overflow on mobile */
+  html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  .reveal.reveal-left,
+  .reveal.reveal-right {
+    transform: translateY(24px);
+  }
+
   /* Prevent iOS zoom on input focus */
   input, select, textarea {
     font-size: 16px !important;
@@ -2604,107 +2647,6 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: center;
   }
 }
-
-/* =============================================
-   17. INSTAGRAM & INFLUENCER SOCIAL PROOF STYLES
-   ============================================= */
-.testimonial-instagram {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.8rem;
-  margin-top: 4px;
-  color: var(--color-grey-muted);
-}
-
-.testimonial-instagram svg {
-  width: 12px;
-  height: 12px;
-  color: var(--color-accent);
-}
-
-.testimonial-instagram a {
-  color: var(--color-white-text);
-  font-weight: 500;
-}
-
-.testimonial-instagram a:hover {
-  color: var(--color-accent);
-}
-
-.testimonial-instagram span {
-  opacity: 0.6;
-}
-
-/* Instagram Profile Card */
-.insta-profile-card {
-  background: var(--color-dark-surface);
-  border: 1px solid var(--color-border-dark);
-  border-radius: var(--radius-lg);
-  padding: 28px 32px;
-  max-width: 480px;
-  margin: 0 auto 48px;
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  text-align: left;
-}
-
-.insta-profile-avatar {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 2px solid var(--color-border-dark);
-  background: var(--color-dark-bg);
-  flex-shrink: 0;
-}
-
-.insta-profile-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.insta-profile-info {
-  flex-grow: 1;
-}
-
-.insta-profile-handle {
-  font-family: var(--font-heading);
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--color-white-text);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 4px;
-}
-
-.insta-profile-stats {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 8px;
-}
-
-.insta-stat {
-  font-size: 0.8rem;
-  color: var(--color-grey-muted);
-}
-
-.insta-stat strong {
-  color: var(--color-white-text);
-}
-
-.insta-profile-bio {
-  font-size: 0.78rem;
-  color: var(--color-grey-muted);
-  line-height: 1.4;
-    grid-template-columns: 1fr;
-    gap: 56px;
-  }
-}
-
 
 /* =============================================
    17. INSTAGRAM & INFLUENCER SOCIAL PROOF STYLES
