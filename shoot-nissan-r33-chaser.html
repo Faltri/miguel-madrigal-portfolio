@@ -1,282 +1,142 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nissan R33 GT-R & Toyota Chaser - Miguel Madrigal Photography</title>
-  <meta name="description" content="A cinematic photoshoot of the Toyota GR86 across Tokyo's Tatsumi PA, highway rolling shots, and mountain passes.">
-  <meta name="keywords" content="Toyota GR86, GR86 photoshoot, Tokyo car photographer, Tatsumi PA, JDM car photography, Touge rolling shots">
+  
+  <meta name="description" content="Cinematic automotive photography of a Yellow Nissan R33 GT-R and Black Toyota Chaser JZX100 around Tokyo.">
+  <meta name="keywords" content="Nissan R33 GT-R, Toyota Chaser, JZX100, Tokyo car photographer, JDM car photography">
   <meta name="author" content="Miguel Madrigal">
-  <link rel="canonical" href="https://migumadrigal.com/shoot-toyota-gr86.html">
-
-  <meta property="og:title" content="Toyota GR86 (Rollers) - Aqua-Line Shoot">
-  <meta property="og:description" content="Cinematic Toyota GR86 photography traversing Tokyo's highways and mountain passes.">
-  <meta property="og:image" content="https://migumadrigal.com/assets/images/20260814-DSC07789.jpg">
-  <meta property="og:url" content="https://migumadrigal.com/shoot-toyota-gr86-rollers.html">
-  <meta property="og:type" content="article">
-
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Manrope:wght@300;400;500;700;800&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles/index.css">
   
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
-  <link rel="stylesheet" href="styles/index.css">
-
-  <style>
-    .article-hero {
-      position: relative;
-      height: 60vh;
-      width: 100%;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      background: var(--color-bg);
-    }
-    .article-hero img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.5;
-      z-index: 1;
-    }
-    .article-hero .overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(to bottom, rgba(10,10,10,0.3) 0%, var(--color-bg) 100%);
-      z-index: 2;
-    }
-    .article-title-container {
-      position: relative;
-      z-index: 3;
-      max-width: 800px;
-      padding: 0 20px;
-    }
-    .article-title {
-      font-family: var(--font-heading);
-      font-size: clamp(2rem, 5vw, 4rem);
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      margin-bottom: 15px;
-      text-transform: uppercase;
-    }
-    .article-subtitle {
-      font-family: var(--font-body);
-      font-size: 1.2rem;
-      color: var(--color-gray-light);
-      margin-bottom: 30px;
-    }
-    .article-content {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 80px 20px;
-      font-family: var(--font-body);
-      line-height: 1.8;
-      font-size: 1.1rem;
-      color: var(--color-white-text);
-    }
-    .article-content p {
-      margin-bottom: 30px;
-      color: var(--color-gray-light);
-    }
-    .article-image {
-      width: 100%;
-      border-radius: 12px;
-      margin: 40px 0;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-    .back-btn {
-      display: inline-block;
-      margin-top: 40px;
-    }
-  </style>
+  
+  <script src="https://unpkg.com/feather-icons"></script>
 </head>
-<body>
-  <header class="header">
-    <div class="container">
-      <a href="index.html#home" class="logo">MIGUEL MADRIGAL</a>
+<body class="article-page">
+
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <span class="logo-text">Miguel<br>Madrigal</span>
+      </a>
       
-      <!-- Nav Links -->
-      <nav class="nav-links">
-        <!-- English Nav Links -->
-        <a href="index.html#home" lang="en">Home</a>
-        <a href="index.html#about" lang="en">About</a>
-        <a href="index.html#portfolio" lang="en">Portfolio</a>
-        <a href="index.html#pricing" lang="en">Services</a>
-        <a href="index.html#contact" lang="en">Contact</a>
-
-        <!-- Japanese Nav Links -->
-        <a href="index.html#home" lang="ja" class="lang-hide">ホーム</a>
-        <a href="index.html#about" lang="ja" class="lang-hide">プロフィール</a>
-        <a href="index.html#portfolio" lang="ja" class="lang-hide">ギャラリー</a>
-        <a href="index.html#pricing" lang="ja" class="lang-hide">サービス</a>
-        <a href="index.html#contact" lang="ja" class="lang-hide">お問い合わせ</a>
-
-        <!-- Language Switcher Flags -->
-        <div class="lang-switcher">
-          <!-- English (UK Flag) -->
-          <button class="lang-btn active" data-lang="en" aria-label="Switch to English">
-            <svg viewBox="0 0 100 100">
-              <clipPath id="circle-clip-desktop">
-                <circle cx="50" cy="50" r="50" />
-              </clipPath>
-              <g clip-path="url(#circle-clip-desktop)">
-                <rect width="100" height="100" fill="#00247d"/>
-                <path d="M0 0 L100 100 M100 0 L0 100" stroke="#fff" stroke-width="12"/>
-                <path d="M0 0 L100 100 M100 0 L0 100" stroke="#cf142b" stroke-width="8"/>
-                <path d="M50 0 V100 M0 50 H100" stroke="#fff" stroke-width="20"/>
-                <path d="M50 0 V100 M0 50 H100" stroke="#cf142b" stroke-width="12"/>
-              </g>
-            </svg>
-          </button>
-          <!-- Japanese (Japan Flag) -->
-          <button class="lang-btn" data-lang="ja" aria-label="日本語に切り替え">
-            <svg viewBox="0 0 100 100">
-              <circle cx="50" cy="50" r="50" fill="#ffffff" stroke="#eeeeee" stroke-width="2" />
-              <circle cx="50" cy="50" r="28" fill="#e32929" />
-            </svg>
-          </button>
-        </div>
-      </nav>
-
-      <!-- Hamburger Button (Mobile) -->
-      <button class="hamburger" aria-label="Toggle navigation">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+      <div class="nav-links desktop-nav">
+        <a href="index.html">Home</a>
+        <a href="index.html#portfolio">Portfolio</a>
+        <a href="index.html#services">Services</a>
+      </div>
+      
+      <div class="nav-actions">
+        <a href="index.html#contact" class="btn btn-primary">Book a Shoot</a>
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
+          <i data-feather="menu"></i>
+        </button>
+      </div>
     </div>
-  </header>
+    
+    <div class="mobile-menu" id="mobile-menu">
+      <div class="mobile-nav-links">
+        <a href="index.html">Home</a>
+        <a href="index.html#portfolio">Portfolio</a>
+        <a href="index.html#services">Services</a>
+        <a href="index.html#contact" class="btn btn-primary mt-4">Book a Shoot</a>
+      </div>
+    </div>
+  </nav>
 
   <main>
-    <section class="article-hero">
-      <img src="assets/images/20260814-DSC07789.jpg" alt="Toyota GR86 Rollers Aqua-Line">
-      <div class="overlay"></div>
-      <div class="article-title-container">
-        <h1 class="article-title">Toyota GR86 (Rollers)</h1>
-        <p class="article-subtitle">Aqua-Line High Speed Tunnel Run</p>
-      </div>
-    </section>
-
-    <section class="article-content">
+    <article class="project-article">
+      <header class="article-hero reveal">
+        <img src="assets/images/20260808-DSC00044.jpg" alt="Nissan R33 GT-R Roller">
+        <div class="overlay"></div>
+        <div class="article-title-container">
+          <h1 class="article-title">Nissan R33 GT-R & Toyota Chaser</h1>
+          <p class="article-subtitle">Sunset Run & Bay Area Meet</p>
+        </div>
+      </header>
       
-      <!-- Text Part 1 -->
-      <div class="article-content-text reveal reveal-up">
-        <p lang="en">Caught some rolling shots of the gunmetal GR86 on the Aqua-Line right after leaving Umihotaru.</p>
-        <p lang="ja" class="lang-hide">This text is intentionally kept chill in English.</p>
-      </div>
+      <div class="article-container">
+        <div class="article-meta reveal reveal-up">
+          <div class="meta-item">
+            <span class="meta-label">Location</span>
+            <span class="meta-value">Tokyo Bay Area</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Date</span>
+            <span class="meta-value">Summer 2026</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Cars</span>
+            <span class="meta-value">R33 GT-R, Chaser JZX100</span>
+          </div>
+        </div>
 
-      <style>
-        .article-content-text { max-width: 950px; margin: 0 auto; padding: 40px 20px 20px; font-family: var(--font-body); line-height: 1.8; font-size: 1.1rem; color: var(--color-gray-light); }
-        .image-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 20px auto 40px; max-width: 1200px; padding: 0 20px; }
-        .image-grid img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; transition: transform 0.3s; }
-        .image-grid img:hover { transform: scale(1.02); }
-        
-        @media (max-width: 768px) {
-          .image-grid {
-            grid-template-columns: 1fr;
-          }
-        }
-      </style>
+        <div class="article-content reveal reveal-up reveal-delay-1">
+          <p>Caught up with some friends driving a striking yellow R33 GT-R and an aggressive black JZX100 Chaser. We cruised along the bay and took some high-speed rolling shots before stopping by the water to get some stationary photos as the sun went down. There were a bunch of other cool sports cars passing by us during the evening.</p>
+        </div>
 
-      <!-- Images Row 1 -->
-      <div class="image-grid reveal reveal-up">
-        <a href="assets/images/20260814-DSC07789.jpg" class="glightbox">
-          <img src="assets/images/20260814-DSC07789.jpg" alt="Toyota GR86 Aqua-Line rolling shot front quarter" loading="lazy">
-        </a>
-        <a href="assets/images/20260814-DSC07973.jpg" class="glightbox">
-          <img src="assets/images/20260814-DSC07973.jpg" alt="Toyota GR86 Aqua-Line rolling shot with red C8 Corvette" loading="lazy">
-        </a>
+        <div class="article-gallery reveal reveal-up reveal-delay-2">
+          <a href="assets/images/20260808-DSC00044.jpg" class="glightbox" data-gallery="r33-chaser">
+            <img src="assets/images/20260808-DSC00044.jpg" alt="Nissan R33 and Toyota Chaser" loading="lazy">
+          </a>
+          <a href="assets/images/20260808-DSC00151.jpg" class="glightbox" data-gallery="r33-chaser">
+            <img src="assets/images/20260808-DSC00151.jpg" alt="Nissan R33 and Toyota Chaser" loading="lazy">
+          </a>
+          <a href="assets/images/20260808-DSC00696.jpg" class="glightbox" data-gallery="r33-chaser">
+            <img src="assets/images/20260808-DSC00696.jpg" alt="Nissan R33 and Toyota Chaser" loading="lazy">
+          </a>
+          <a href="assets/images/20260808-DSC00700.jpg" class="glightbox" data-gallery="r33-chaser">
+            <img src="assets/images/20260808-DSC00700.jpg" alt="Nissan R33 and Toyota Chaser" loading="lazy">
+          </a>
+          <a href="assets/images/20260808-DSC00782.jpg" class="glightbox" data-gallery="r33-chaser">
+            <img src="assets/images/20260808-DSC00782.jpg" alt="Nissan R33 and Toyota Chaser" loading="lazy">
+          </a>
+        </div>
       </div>
-
-      <!-- Text Part 2 -->
-      <div class="article-content-text reveal reveal-up">
-        <p lang="en">There were a bunch of other cool sports cars passing by us, like some GT-Rs. I wasn't sure if they wanted to pass, so I had to make it real quick and grab the photos just in case.</p>
-      </div>
-
-      <!-- Images Row 2 -->
-      <div class="image-grid reveal reveal-up">
-        <a href="assets/images/20260814-DSC07794.jpg" class="glightbox">
-          <img src="assets/images/20260814-DSC07794.jpg" alt="Toyota GR86 Aqua-Line rolling shot with Corvette fender" loading="lazy">
-        </a>
-        <a href="assets/images/20260814-DSC07828.jpg" class="glightbox">
-          <img src="assets/images/20260814-DSC07828.jpg" alt="Toyota GR86 Aqua-Line rolling shot rear angle" loading="lazy">
-        </a>
-      </div>
-
-      <!-- Text Part 3 -->
-      <div class="article-content-text reveal reveal-up" style="padding-top: 0;">
-        <p lang="en">During the shoot, I was riding in my friend's Corvette to take these rollers, and it was a pretty fun shoot.</p>
-      </div>
-
-      <div style="text-align: center;">
-        <a href="index.html#portfolio" class="btn btn-primary back-btn" style="margin-top: 40px; display: inline-block;">Back to Gallery</a>
-      </div>
-    </section>
+    </article>
   </main>
 
   <footer class="footer">
-    <div class="container">
-      <div class="footer-locations">
-        <div class="footer-locations-title">
-          <span lang="en">📍 Greater Tokyo & Kanto Service Areas</span>
-          <span lang="ja" class="lang-hide">📍 関東・出張撮影対応エリア</span>
-        </div>
-        <div class="footer-locations-grid">
-          <a href="tokyo.html" class="footer-location-link">
-            <span lang="en">Tokyo & Shuto Expressway</span>
-            <span lang="ja" class="lang-hide">東京・首都高速</span>
-          </a>
-          <a href="yokohama.html" class="footer-location-link">
-            <span lang="en">Yokohama & Daikoku PA</span>
-            <span lang="ja" class="lang-hide">横浜・大黒PA</span>
-          </a>
-          <a href="kamakura.html" class="footer-location-link">
-            <span lang="en">Kamakura & Shonan Coast</span>
-            <span lang="ja" class="lang-hide">鎌倉・湘南海岸</span>
-          </a>
-          <a href="saitama.html" class="footer-location-link">
-            <span lang="en">Saitama & Kan-Etsu Exp</span>
-            <span lang="ja" class="lang-hide">埼玉・関越道</span>
-          </a>
-          <a href="hakone.html" class="footer-location-link">
-            <span lang="en">Hakone & Mt. Fuji Touge</span>
-            <span lang="ja" class="lang-hide">箱根・富士山峠</span>
-          </a>
-          <a href="chiba.html" class="footer-location-link">
-            <span lang="en">Chiba & Aqua-Line</span>
-            <span lang="ja" class="lang-hide">千葉・アクアライン</span>
-          </a>
+    <div class="footer-container">
+      <div class="footer-brand">
+        <h2 class="footer-logo">Miguel Madrigal</h2>
+        <p class="footer-tagline">Capturing automotive art across Japan.</p>
+        <div class="social-links">
+          <a href="#" aria-label="Instagram"><i data-feather="instagram"></i></a>
+          <a href="#" aria-label="Twitter"><i data-feather="twitter"></i></a>
+          <a href="#" aria-label="YouTube"><i data-feather="youtube"></i></a>
         </div>
       </div>
-
-      <div class="footer-bottom-row">
-        <div class="footer-copyright">
-          <div>&copy; 2026 Miguel Madrigal. All Rights Reserved.</div>
-          <div class="footer-sponsors" style="margin-top: 12px; display: flex; align-items: center; gap: 16px; opacity: 0.7;">
-            <span style="font-size: 0.85em; color: var(--color-grey-muted);">Supported by</span>
-            <!-- Typographic logo for K&F Concept -->
-            <span style="font-weight: 800; font-size: 0.9em; letter-spacing: 0.5px; font-family: 'Inter', sans-serif; color: #fff;">K&F CONCEPT</span>
-            <!-- Typographic logo for PGYTECH -->
-            <span style="font-weight: 900; font-size: 1em; letter-spacing: -0.5px; font-style: italic; font-family: 'Inter', sans-serif; color: #fff;">PGYTECH</span>
-          </div>
-        </div>
-        <div class="footer-links">
-          <a href="https://instagram.com/migumadrigal" target="_blank">Instagram</a>
-          <a href="mailto:miguelmadrigalwork@gmail.com">Email</a>
+      
+      <div class="footer-links">
+        <div class="link-group">
+          <h3>Explore</h3>
+          <a href="index.html">Home</a>
+          <a href="index.html#portfolio">Portfolio</a>
+          <a href="index.html#services">Services</a>
         </div>
       </div>
     </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Miguel Madrigal Photography. All rights reserved.</p>
+    </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
-  <script src="scripts/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
+  <script>
+    feather.replace();
+    const lightbox = GLightbox({
+      touchNavigation: true,
+      loop: true,
+      autoplayVideos: true
+    });
+  </script>
 </body>
 </html>
