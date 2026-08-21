@@ -8,13 +8,13 @@
    ============================================= */
 :root {
   /* Colors — Instagram Dark Mode Style */
-  --color-dark-bg: #000000;
-  --color-dark-surface: #0e1013;
-  --color-dark-card: #15181c;
-  --color-border-dark: #202227;
-  --color-white-text: #ffffff;
-  --color-grey-muted: #9ca3af;
-  --color-grey-dark: #374151;
+  --color-dark-bg: #ffffff; /* White bg */
+  --color-dark-surface: #f9fafb; /* Light surface */
+  --color-dark-card: #f3f4f6; /* Light card */
+  --color-border-dark: #e5e7eb; /* Light border */
+  --color-white-text: #111827; /* Dark text */
+  --color-grey-muted: #6b7280; /* Muted text */
+  --color-grey-dark: #e5e7eb; /* Light grey */
 
   /* Accent — Refined performance crimson red (Used with extreme restraint) */
   --color-accent: #e32929;
@@ -164,16 +164,7 @@ h1, h2, h3, h4, h5, h6 {
   overflow: hidden;
 }
 
-.ambient-glow {
-  position: absolute;
-  width: 60vw;
-  height: 60vw;
-  max-width: 800px;
-  max-height: 800px;
-  border-radius: 50%;
-  filter: blur(80px);
-  will-change: transform;
-}
+.ambient-glow { display: none; }
 
 .ambient-glow-1 {
   top: -20%;
