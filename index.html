@@ -3,56 +3,533 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Miguel Madrigal | Automotive Photographer</title>
-  
+  <title>Miguel Madrigal | Automotive Photographer Tokyo & Japan (東京 車 撮影)</title>
+  <meta name="description" content="Professional automotive photographer & content creator in Tokyo, Japan. Specialized in high-end car photography, rolling shots on Shuto Expressway, Daikoku PA meets, and cinematic 4K reels. 東京・関東エリアのプロ自動車カメラマン。">
+  <meta name="keywords" content="Tokyo car photographer, Japan automotive photography, Shuto expressway rolling shots, Daikoku PA photographer, Yokohama car photoshoot, 東京 車 撮影, 走行写真, 出張撮影">
+  <meta name="author" content="Miguel Madrigal">
+  <link rel="canonical" href="https://migumadrigal.com/">
+
+  <!-- Open Graph / Social Media -->
+  <meta property="og:title" content="Miguel Madrigal | Automotive Photographer Tokyo & Japan">
+  <meta property="og:description" content="High-end automotive photography, rolling tracking shots, and cinematic video across Tokyo, Yokohama, Daikoku PA, and Greater Kanto.">
+  <meta property="og:image" content="https://migumadrigal.com/assets/images/DSC02921.jpg">
+  <meta property="og:url" content="https://migumadrigal.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ja_JP">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Miguel Madrigal | Automotive Photographer Tokyo & Japan">
+  <meta name="twitter:description" content="Professional car photography and dynamic rolling shots in Tokyo, Daikoku PA, and Kanto.">
+  <meta name="twitter:image" content="https://migumadrigal.com/assets/images/DSC02921.jpg">
+
+  <!-- Schema.org Structured Data for Google Rich Results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Miguel Madrigal Automotive Photography",
+    "image": "https://migumadrigal.com/assets/images/DSC02921.jpg",
+    "@id": "https://migumadrigal.com/#business",
+    "url": "https://migumadrigal.com/",
+    "telephone": "",
+    "priceRange": "$$$",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Tokyo",
+      "addressRegion": "Kanto",
+      "addressCountry": "JP"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 35.6762,
+      "longitude": 139.6503
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ],
+      "opens": "00:00",
+      "closes": "23:59"
+    },
+    "sameAs": [
+      "https://instagram.com/migumadrigal"
+    ],
+    "areaServed": [
+      { "@type": "City", "name": "Tokyo" },
+      { "@type": "City", "name": "Yokohama" },
+      { "@type": "City", "name": "Kamakura" },
+      { "@type": "AdministrativeArea", "name": "Saitama" },
+      { "@type": "City", "name": "Hakone" },
+      { "@type": "AdministrativeArea", "name": "Chiba" }
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Automotive Photography Services",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "The Static Session / スチール撮影",
+            "description": "Curated static photography session, 10–15 high-res fully edited images, color grading."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "The Roller Session / 走行写真撮影",
+            "description": "Dynamic highway tracking shots, 8–10 fully-edited rolling photos, chase car provided."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "The Complete Experience / コンプリート撮影",
+            "description": "Complete photography package with 25–30 high-res photos across static and rolling sessions."
+          }
+        }
+      ]
+    }
+  }
+  </script>
+
+  <!-- Google Fonts: Plus Jakarta Sans for English headings, Noto Sans JP for Japanese, Inter for body copy -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+JP:wght@400;500;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,700;0,800;1,400&display=swap" rel="stylesheet">
-  
+
+  <!-- GLightbox CSS (CDN) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+
+  <!-- Custom Styles -->
   <link rel="stylesheet" href="styles/index.css">
 </head>
-<body class="lang-en" style="background: var(--color-dark-bg); color: var(--color-white-text);">
+<body class="lang-en">
 
-  <!-- HEADER -->
-  <header class="header" style="background: var(--color-dark-bg); border-bottom: 1px solid var(--color-border-dark);">
-    <div class="container" style="display: flex; justify-content: space-between; align-items: center; height: 100%;">
-      <a href="#" class="logo" style="color: var(--color-white-text);">MIGUEL MADRIGAL</a>
+  <!-- =============================================
+       AMBIENT BACKGROUND
+       ============================================= -->
+  <div class="ambient-background">
+    <div class="ambient-glow ambient-glow-1"></div>
+    <div class="ambient-glow ambient-glow-2"></div>
+    <div class="ambient-grid"></div>
+  </div>
+
+  <!-- =============================================
+       HEADER / NAVIGATION
+       ============================================= -->
+  <header class="header">
+    <div class="container">
+      <a href="#home" class="logo">MIGUEL MADRIGAL</a>
       
+      <!-- Nav Links -->
       <nav class="nav-links">
+        <!-- English Nav Links -->
         <a href="#portfolio" lang="en">Portfolio</a>
-        <a href="#projects" lang="en">Projects</a>
         <a href="#pov" lang="en">Behind the Lens</a>
-        <a href="#contact" lang="en">Contact</a>
+        <a href="https://instagram.com/migumadrigal" target="_blank" lang="en">Contact (IG)</a>
+
+        <!-- Japanese Nav Links -->
+        <a href="#portfolio" lang="ja" class="lang-hide">ギャラリー</a>
+        <a href="#pov" lang="ja" class="lang-hide">POV 動画</a>
+        <a href="https://instagram.com/migumadrigal" target="_blank" lang="ja" class="lang-hide">お問い合わせ (IG)</a>
+
+        <!-- Language Switcher Flags -->
+        <div class="lang-switcher">
+          <!-- English (UK Flag) -->
+          <button class="lang-btn active" data-lang="en" aria-label="Switch to English">
+            <svg viewBox="0 0 100 100">
+              <clipPath id="circle-clip-desktop">
+                <circle cx="50" cy="50" r="50" />
+              </clipPath>
+              <g clip-path="url(#circle-clip-desktop)">
+                <rect width="100" height="100" fill="#00247d"/>
+                <path d="M0 0 L100 100 M100 0 L0 100" stroke="#fff" stroke-width="12"/>
+                <path d="M0 0 L100 100 M100 0 L0 100" stroke="#cf142b" stroke-width="8"/>
+                <path d="M50 0 V100 M0 50 H100" stroke="#fff" stroke-width="20"/>
+                <path d="M50 0 V100 M0 50 H100" stroke="#cf142b" stroke-width="12"/>
+              </g>
+            </svg>
+          </button>
+          <!-- Japanese (Japan Flag) -->
+          <button class="lang-btn" data-lang="ja" aria-label="日本語に切り替え">
+            <svg viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="50" fill="#ffffff" stroke="#eeeeee" stroke-width="2" />
+              <circle cx="50" cy="50" r="28" fill="#e32929" />
+            </svg>
+          </button>
+        </div>
       </nav>
+
+      <!-- Hamburger Button (Mobile) -->
       <button class="hamburger" aria-label="Toggle navigation">
-        <span style="background: var(--color-white-text);"></span>
-        <span style="background: var(--color-white-text);"></span>
-        <span style="background: var(--color-white-text);"></span>
+        <span></span>
+        <span></span>
+        <span></span>
       </button>
     </div>
   </header>
 
-  <!-- MOBILE NAV -->
-  <div class="mobile-nav" style="background: var(--color-dark-bg);">
-    
+  <!-- Mobile Nav Overlay -->
+  <div class="mobile-nav">
     <nav class="mobile-nav-links">
       <a href="#portfolio" lang="en">Portfolio</a>
-      <a href="#projects" lang="en">Projects</a>
+      <a href="#portfolio" lang="ja" class="lang-hide">ギャラリー</a>
+      
       <a href="#pov" lang="en">Behind the Lens</a>
-      <a href="#contact" lang="en">Contact</a>
+      <a href="#pov" lang="ja" class="lang-hide">POV 動画</a>
+      
+      <a href="https://instagram.com/migumadrigal" target="_blank" lang="en">Contact (IG)</a>
+      <a href="https://instagram.com/migumadrigal" target="_blank" lang="ja" class="lang-hide">お問い合わせ (IG)</a>
+
+      <!-- Language switcher inside mobile nav -->
+      <div class="lang-switcher" style="margin-left: 0; margin-top: 24px; justify-content: center;">
+        <!-- English (UK Flag) -->
+        <button class="lang-btn active" data-lang="en" aria-label="Switch to English">
+          <svg viewBox="0 0 100 100">
+            <clipPath id="circle-clip-mobile">
+              <circle cx="50" cy="50" r="50" />
+            </clipPath>
+            <g clip-path="url(#circle-clip-mobile)">
+              <rect width="100" height="100" fill="#00247d"/>
+              <path d="M0 0 L100 100 M100 0 L0 100" stroke="#fff" stroke-width="12"/>
+              <path d="M0 0 L100 100 M100 0 L0 100" stroke="#cf142b" stroke-width="8"/>
+              <path d="M50 0 V100 M0 50 H100" stroke="#fff" stroke-width="20"/>
+              <path d="M50 0 V100 M0 50 H100" stroke="#cf142b" stroke-width="12"/>
+            </g>
+          </svg>
+        </button>
+        <!-- Japanese (Japan Flag) -->
+        <button class="lang-btn" data-lang="ja" aria-label="日本語に切り替え">
+          <svg viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="50" fill="#ffffff" stroke="#eeeeee" stroke-width="2" />
+            <circle cx="50" cy="50" r="28" fill="#e32929" />
+          </svg>
+        </button>
+      </div>
     </nav>
   </div>
 
-  <main style="padding-top: 100px;">
-    
-    <!-- 1. PORTFOLIO GRID (HERO) -->
-    <section id="portfolio" style="padding: 20px 0;">
-      <div class="container" style="text-align: center; margin-bottom: 40px;">
-         <h1 style="font-family: var(--font-heading); font-size: 2.5rem; font-weight: 700; letter-spacing: -1px;">MIGUEL MADRIGAL</h1>
-         <p style="color: var(--color-grey-muted); margin-top: 10px;">Automotive Photographer • Tokyo, Japan</p>
+  <main>
+
+    <!-- =============================================
+         POV CAROUSEL SECTION
+         ============================================= -->
+    <section id="pov" style="padding-top: 60px;">
+      <div class="container">
+        <!-- POV Behind-the-Lens Video Carousel Showcase -->
+        <div class="about-pov-showcase reveal reveal-up">
+          <div class="about-pov-top">
+            <div class="about-pov-title-group">
+              <div class="highlight-tag">
+                <span lang="en">📹 Behind the Lens</span>
+                <span lang="ja" class="lang-hide">📹 撮影現場・POV動画</span>
+              </div>
+              <h3 class="about-pov-title">
+                <span lang="en">Field POV & Camera Work</span>
+                <span lang="ja" class="lang-hide">リアルな撮影現場のPOVクリップ</span>
+              </h3>
+              <p class="about-pov-desc" lang="en">
+                Raw, first-person clips capturing rolling tracking rigs, night highway sessions, touge mountain passes, and on-location staging across Tokyo.
+              </p>
+              <p class="about-pov-desc lang-hide" lang="ja">
+                首都高でのローリング追走、深夜のストリート、峠のワインディングなど、現場でのリアルなカメラワークや撮影風景をPOVで体感してください。
+              </p>
+            </div>
+            <div class="pov-nav-btns">
+              <button class="pov-nav-btn pov-nav-prev" aria-label="Previous POV Video" title="Scroll Left">❮</button>
+              <button class="pov-nav-btn pov-nav-next" aria-label="Next POV Video" title="Scroll Right">❯</button>
+            </div>
+          </div>
+
+          <div class="pov-carousel-wrapper">
+            <div class="pov-carousel-track" id="pov-carousel-track">
+              <!-- Clip 1 -->
+              <div class="pov-card">
+                <div class="pov-card-media">
+                  <video src="assets/images/vid-20260621-173840-da.mov" class="lazy-video" loop muted playsinline preload="metadata"></video>
+                </div>
+              </div>
+              <!-- Clip 2 -->
+              <div class="pov-card">
+                <div class="pov-card-media">
+                  <video src="assets/images/vid-20260625-224910-65.mov" class="lazy-video" loop muted playsinline preload="metadata"></video>
+                </div>
+              </div>
+              <!-- Clip 3 -->
+              <div class="pov-card">
+                <div class="pov-card-media">
+                  <video src="assets/images/vid-20260626-225036-10.mov" class="lazy-video" loop muted playsinline preload="metadata"></video>
+                </div>
+              </div>
+              <!-- Clip 4 -->
+              <div class="pov-card">
+                <div class="pov-card-media">
+                  <video src="assets/images/vid-20260725-214850-fe.mov" class="lazy-video" loop muted playsinline preload="metadata"></video>
+                </div>
+              </div>
+              <!-- Clip 5 -->
+              <div class="pov-card">
+                <div class="pov-card-media">
+                  <video src="assets/images/vid-20260725-231956-66.mov" class="lazy-video" loop muted playsinline preload="metadata"></video>
+                </div>
+              </div>
+              <!-- Clip 6 -->
+              <div class="pov-card">
+                <div class="pov-card-media">
+                  <video src="assets/images/vid-20260727-142852-e9.mov" class="lazy-video" loop muted playsinline preload="metadata"></video>
+                </div>
+              </div>
+              <!-- Clip 7 -->
+              <div class="pov-card">
+                <div class="pov-card-media">
+                  <video src="assets/images/vid-20260727-145816-6d.mov" class="lazy-video" loop muted playsinline preload="metadata"></video>
+                </div>
+              </div>
+              <!-- Clip 8 -->
+              <div class="pov-card">
+                <div class="pov-card-media">
+                  <video src="assets/images/vid-20260804-171044-12.mov" class="lazy-video" loop muted playsinline preload="metadata"></video>
+                </div>
+              </div>
+              <!-- Clip 9 -->
+              <div class="pov-card">
+                <div class="pov-card-media">
+                  <video src="assets/images/vid-20260804-175439-9b.mov" class="lazy-video" loop muted playsinline preload="metadata"></video>
+                </div>
+              </div>
+              <!-- Clip 10 -->
+              <div class="pov-card">
+                <div class="pov-card-media">
+                  <video src="assets/images/vid-20260804-223909-6d.mov" class="lazy-video" loop muted playsinline preload="metadata"></video>
+                </div>
+              </div>
+              <!-- Clip 11 -->
+              <div class="pov-card">
+                <div class="pov-card-media">
+                  <video src="assets/images/vid-20260806-091101-52.mov" class="lazy-video" loop muted playsinline preload="metadata"></video>
+                </div>
+              </div>
+              <!-- Clip 12 -->
+              <div class="pov-card">
+                <div class="pov-card-media">
+                  <video src="assets/images/vid-20260808-182104-85.mov" class="lazy-video" loop muted playsinline preload="metadata"></video>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="gallery-grid reveal reveal-scale reveal-delay-1">
+    </section>
+
+    <!-- =============================================
+         3. PORTFOLIO / GALLERY SECTION
+         ============================================= -->
+    <section id="portfolio" class="portfolio" style="padding-top: 120px;">
+      <div class="container">
+        <div style="text-align: center; margin-bottom: 40px;">
+           <h1 style="font-family: var(--font-heading); font-size: 2.5rem; font-weight: 700; letter-spacing: -1px; text-transform: uppercase;">Miguel Madrigal</h1>
+           <p style="color: var(--color-grey-muted); margin-top: 10px; font-size: 1.1rem;">Automotive Photographer &bull; Tokyo, Japan</p>
+        </div>
+        <div class="portfolio-header reveal reveal-up">
+          <div>
+            <span class="section-label">
+              <span lang="en">Selected Works</span>
+              <span lang="ja" class="lang-hide">ギャラリー</span>
+            </span>
+            <h2 class="section-title" lang="en">The Gallery</h2>
+            <h2 class="section-title" lang="ja" class="lang-hide">作品ギャラリー</h2>
+          </div>
+          <div class="portfolio-filters">
+            <button class="filter-btn" data-filter="horizontal">
+              <span lang="en">Horizontal (3:2)</span>
+              <span lang="ja" class="lang-hide">横位置 (3:2)</span>
+            </button>
+            <button class="filter-btn is-active" data-filter="vertical">
+              <span lang="en">Vertical (2:3)</span>
+              <span lang="ja" class="lang-hide">縦位置 (2:3)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Highlight of the Day Feature -->
+        <div class="highlight-of-the-day reveal reveal-up">
+          <div class="highlight-slides-container">
+            <!-- Slide 1: Touge Formation (Mountain Pass Chase) -->
+            <div class="highlight-slide active">
+              <a href="assets/images/20260806-DSC06753.jpg" class="highlight-image-wrapper glightbox" data-gallery="highlight" data-title="Touge Formation (Mountain Pass Rolling)" data-description="Dynamic three-car rolling formation carving through scenic mountain curves with high-speed tracking and motion blur.">
+                <img src="assets/images/20260806-DSC06753.jpg" alt="Highlight of the Day - Touge Formation GR86 Mountain Pass rolling shot by Miguel Madrigal">
+              </a>
+              <div class="highlight-content">
+                <div class="highlight-tag">
+                  <span lang="en">✨ Highlight of the Day</span>
+                  <span lang="ja" class="lang-hide">✨ 本日のハイライト</span>
+                </div>
+                <h3 class="highlight-title">
+                  <span lang="en">Touge Formation</span>
+                  <span lang="ja" class="lang-hide">峠フォーメーション</span>
+                </h3>
+                <p class="highlight-desc" lang="en">
+                  Dynamic three-car rolling formation carving through scenic mountain pass curves with high-speed tracking and motion blur.
+                </p>
+                <p class="highlight-desc lang-hide" lang="ja">
+                  雄大な山岳ワインディングロードを駆け抜ける3台のGR86。高速トラッキングで捉えた圧倒的な躍動感とスピードの軌跡。
+                </p>
+                <div class="highlight-details">
+                  <div class="highlight-spec-item">
+                    <span class="highlight-spec-label" lang="en">Location</span>
+                    <span class="highlight-spec-label lang-hide" lang="ja">ロケーション</span>
+                    <span class="highlight-spec-value">Hakone / Gunma Touge Pass</span>
+                  </div>
+                  <div class="highlight-spec-item">
+                    <span class="highlight-spec-label" lang="en">Camera Settings</span>
+                    <span class="highlight-spec-label lang-hide" lang="ja">カメラ設定</span>
+                    <span class="highlight-spec-value">35mm • f/4.0 • 1/40s • ISO 200</span>
+                  </div>
+                </div>
+                <a href="assets/images/20260806-DSC06753.jpg" class="highlight-cta-btn glightbox" data-gallery="highlight" data-title="Touge Formation (Mountain Pass Rolling)" data-description="Dynamic three-car rolling formation carving through scenic mountain curves with high-speed tracking and motion blur.">
+                  <span lang="en">View Full Resolution</span>
+                  <span lang="ja" class="lang-hide">フル解像度で見る</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Slide 2: Initial D Heritage (Shiodome) -->
+            <div class="highlight-slide">
+              <a href="assets/images/20260728-DSC04318.jpg" class="highlight-image-wrapper glightbox" data-gallery="highlight" data-title="Initial D Heritage" data-description="Iconic AE86 Sprinter Trueno parked side-by-side with the modern Orange GR86 in Shiodome Italia-gai.">
+                <img src="assets/images/20260728-DSC04318.jpg" alt="Highlight of the Day - Initial D Heritage shot by Miguel Madrigal">
+              </a>
+              <div class="highlight-content">
+                <div class="highlight-tag">
+                  <span lang="en">✨ Highlight of the Day</span>
+                  <span lang="ja" class="lang-hide">✨ 本日のハイライト</span>
+                </div>
+                <h3 class="highlight-title">
+                  <span lang="en">Initial D Heritage</span>
+                  <span lang="ja" class="lang-hide">イニシャルD ヘリテージ</span>
+                </h3>
+                <p class="highlight-desc" lang="en">
+                  Iconic AE86 Sprinter Trueno parked side-by-side with the modern Orange GR86 in Shiodome Italia-gai.
+                </p>
+                <p class="highlight-desc lang-hide" lang="ja">
+                  汐留イタリア街で、新旧のオレンジGR86と並んで駐車するアイコニックなAE86スプリンタートレノ。
+                </p>
+                <div class="highlight-details">
+                  <div class="highlight-spec-item">
+                    <span class="highlight-spec-label" lang="en">Location</span>
+                    <span class="highlight-spec-label lang-hide" lang="ja">ロケーション</span>
+                    <span class="highlight-spec-value">Shiodome, Tokyo</span>
+                  </div>
+                  <div class="highlight-spec-item">
+                    <span class="highlight-spec-label" lang="en">Camera Settings</span>
+                    <span class="highlight-spec-label lang-hide" lang="ja">カメラ設定</span>
+                    <span class="highlight-spec-value">35mm • f/2.8 • 1/60s • ISO 400</span>
+                  </div>
+                </div>
+                <a href="assets/images/20260728-DSC04318.jpg" class="highlight-cta-btn glightbox" data-gallery="highlight" data-title="Initial D Heritage" data-description="Iconic AE86 Sprinter Trueno parked side-by-side with the modern Orange GR86 in Shiodome Italia-gai.">
+                  <span lang="en">View Full Resolution</span>
+                  <span lang="ja" class="lang-hide">フル解像度で見る</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Slide 3: Porsche 935 K3 (Shinjuku Neon) -->
+            <div class="highlight-slide">
+              <a href="assets/images/20260711-DSC09918.jpg" class="highlight-image-wrapper glightbox" data-gallery="highlight" data-title="Porsche 935 K3" data-description="Legendary Dunlop racing livery Kremer 935 parked under the warm golden neon storefront lights in Shinjuku.">
+                <img src="assets/images/20260711-DSC09918.jpg" alt="Highlight of the Day - Porsche 935 K3 in Shinjuku shot by Miguel Madrigal">
+              </a>
+              <div class="highlight-content">
+                <div class="highlight-tag">
+                  <span lang="en">✨ Highlight of the Day</span>
+                  <span lang="ja" class="lang-hide">✨ 本日のハイライト</span>
+                </div>
+                <h3 class="highlight-title">
+                  <span lang="en">Porsche 935 K3</span>
+                  <span lang="ja" class="lang-hide">ポルシェ 935 K3</span>
+                </h3>
+                <p class="highlight-desc" lang="en">
+                  Legendary Dunlop racing livery Kremer 935 parked under the warm golden neon storefront lights in Shinjuku.
+                </p>
+                <p class="highlight-desc lang-hide" lang="ja">
+                  新宿の夜のネオンとストリートの光に照らし出される、伝説のダンロップカラー・クレーマーポルシェ935 K3。
+                </p>
+                <div class="highlight-details">
+                  <div class="highlight-spec-item">
+                    <span class="highlight-spec-label" lang="en">Location</span>
+                    <span class="highlight-spec-label lang-hide" lang="ja">ロケーション</span>
+                    <span class="highlight-spec-value">Shinjuku, Tokyo</span>
+                  </div>
+                  <div class="highlight-spec-item">
+                    <span class="highlight-spec-label" lang="en">Camera Settings</span>
+                    <span class="highlight-spec-label lang-hide" lang="ja">カメラ設定</span>
+                    <span class="highlight-spec-value">50mm • f/2.0 • 1/125s • ISO 640</span>
+                  </div>
+                </div>
+                <a href="assets/images/20260711-DSC09918.jpg" class="highlight-cta-btn glightbox" data-gallery="highlight" data-title="Porsche 935 K3" data-description="Legendary Dunlop racing livery Kremer 935 parked under the warm golden neon storefront lights in Shinjuku.">
+                  <span lang="en">View Full Resolution</span>
+                  <span lang="ja" class="lang-hide">フル解像度で見る</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- Sub-Gallery Navigation Bar Below Image -->
+          <div class="highlight-subgallery">
+            <div class="highlight-subgallery-top">
+              <div class="highlight-subgallery-title">
+                <span lang="en">Featured Highlights (3 Sets)</span>
+                <span lang="ja" class="lang-hide">本日のハイライト（全3作品）</span>
+              </div>
+              <div class="highlight-dots-wrapper">
+                <div class="highlight-dots">
+                  <span class="highlight-dot active" data-slide="0" aria-label="Highlight 1 (Touge Formation)"></span>
+                  <span class="highlight-dot" data-slide="1" aria-label="Highlight 2 (Initial D Heritage)"></span>
+                  <span class="highlight-dot" data-slide="2" aria-label="Highlight 3 (Porsche 935 K3)"></span>
+                </div>
+                <div class="highlight-nav-btns">
+                  <button class="highlight-nav highlight-nav-prev" aria-label="Previous Highlight" title="Previous Slide">❮</button>
+                  <button class="highlight-nav highlight-nav-next" aria-label="Next Highlight" title="Next Slide">❯</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="highlight-thumbnails">
+              <div class="highlight-thumb active" data-slide="0">
+                <img src="assets/images/20260806-DSC06753.jpg" alt="Thumb Touge Formation Rolling">
+                <div class="highlight-thumb-info">
+                  <span class="highlight-thumb-num">01</span>
+                  <span class="highlight-thumb-name">Touge Formation</span>
+                </div>
+              </div>
+              <div class="highlight-thumb" data-slide="1">
+                <img src="assets/images/20260728-DSC04318.jpg" alt="Thumb Initial D Heritage Lineup">
+                <div class="highlight-thumb-info">
+                  <span class="highlight-thumb-num">02</span>
+                  <span class="highlight-thumb-name">Initial D Heritage</span>
+                </div>
+              </div>
+              <div class="highlight-thumb" data-slide="2">
+                <img src="assets/images/20260711-DSC09918.jpg" alt="Thumb Porsche 935 K3">
+                <div class="highlight-thumb-info">
+                  <span class="highlight-thumb-num">03</span>
+                  <span class="highlight-thumb-name">Porsche 935 K3</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+                <div class="gallery-grid reveal reveal-scale reveal-delay-1">
   <a href="assets/images/20260808-DSC00696.jpg" class="gallery-item glightbox" data-gallery="r33-chaser" data-title="Nissan R33 GT-R & Toyota Chaser JZX100" data-description="<br><br><a href='shoot-chaser-r33.html' class='btn btn-primary'>View Full Shoot</a>">
     <img src="assets/images/20260808-DSC00696.jpg" alt="Nissan R33 GT-R & Toyota Chaser JZX100" loading="lazy">
   </a>
@@ -90,39 +567,61 @@
     <img src="assets/images/20260710-DSC09297.jpg" alt="Toyota GR86 (Tatsumi PA)" loading="lazy">
   </a>
 </div>
-    </section>
 
-    <!-- 2. PROJECTS -->
-    <section id="projects" style="padding: 80px 0; max-width: 1200px; margin: 0 auto;">
-      <div class="container">
-        <h2 style="font-family: var(--font-heading); font-size: 2rem; margin-bottom: 40px;">Selected Projects</h2>
-        <div class="albums-grid">
+        <div class="albums-section reveal reveal-up">
+          <h2 class="albums-title" lang="en">Shoots & Projects</h2>
+          <div class="albums-grid">
               <a href="shoot-chaser-r33.html" class="album-card">
                 <img src="assets/images/20260808-DSC00044.jpg" alt="R33 & Chaser">
                 <div class="album-info">
                   <h3>Nissan R33 & Toyota Chaser</h3>
                   <span class="album-count">Photoshoot</span>
                 </div>
-      </div>
-    </section>
+              </a>
 
-    <!-- 3. POV VIDEOS -->
-    <section id="pov" style="padding: 80px 0; max-width: 1200px; margin: 0 auto;">
-      <div class="container">
-        <h2 style="font-family: var(--font-heading); font-size: 2rem; margin-bottom: 20px;">Behind the Lens</h2>
-        <p style="color: var(--color-grey-muted); margin-bottom: 40px;">Field POV & Camera Work</p>
-        <div class="pov-carousel-wrapper">
-            <div class="pov-carousel-track" id="pov-carousel-track">
-              <!-- Clip 1 -->
-              <div class="pov-card">
-                <div class="pov-card-media">
-                  <video src="assets/images/vid-20260621-173840-da.mov" class="lazy-video" loop muted playsinline preload="metadata"></video>
-                </div>
+            <a href="shoot-toyota-gr86-rollers.html" class="album-card">
+              <img src="assets/images/20260814-DSC07789.jpg" alt="GR86 Rollers">
+              <div class="album-info">
+                <h3>GR86 Aqua-Line Rollers</h3>
+                <span class="album-count">Photoshoot</span>
               </div>
+            </a>
+            <a href="shoot-toyota-gr86.html" class="album-card">
+              <img src="assets/images/20260710-DSC09344.jpg" alt="GR86 City">
+              <div class="album-info">
+                <h3>GR86 Tokyo Nights</h3>
+                <span class="album-count">Photoshoot</span>
+              </div>
+            </a>
+            <a href="shoot-honda-nsx.html" class="album-card">
+              <img src="assets/images/20140101-DSC08689.jpg" alt="Honda NSX">
+              <div class="album-info">
+                <h3>Honda NSX (NA1)</h3>
+                <span class="album-count">Photoshoot</span>
+              </div>
+            </a>
+            <a href="shoot-porsche-935-k3.html" class="album-card">
+              <img src="assets/images/20260711-DSC00036.jpg" alt="Porsche 935">
+              <div class="album-info">
+                <h3>Porsche 935 K3</h3>
+                <span class="album-count">Photoshoot</span>
+              </div>
+            </a>
+            <a href="shoot-mazda-miata-na.html" class="album-card">
+              <img src="assets/images/DSC02839.jpg" alt="Mazda Miata">
+              <div class="album-info">
+                <h3>Mazda Miata (NA)</h3>
+                <span class="album-count">Photoshoot</span>
+              </div>
+            </a>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- 4. SIMPLE CTA -->
+    <!-- =============================================
+         MINIMAL CTA SECTION
+         ============================================= -->
     <section id="contact" style="padding: 120px 0; text-align: center; background: var(--color-dark-surface);">
       <div class="container">
         <h2 style="font-family: var(--font-heading); font-size: 2.5rem; margin-bottom: 15px;">Available for Commission</h2>
@@ -130,31 +629,92 @@
         <a href="https://instagram.com/migumadrigal" target="_blank" class="btn btn-primary" style="padding: 15px 40px; font-size: 1.1rem; border-radius: 50px;">DM me on Instagram</a>
       </div>
     </section>
-
   </main>
 
-  <!-- FOOTER -->
-  <footer style="padding: 60px 0; text-align: center; border-top: 1px solid var(--color-border-dark);">
-    <p style="color: var(--color-grey-muted);">&copy; 2026 Miguel Madrigal Photography. All rights reserved.</p>
+  <!-- =============================================
+       FOOTER
+       ============================================= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-locations">
+        <div class="footer-locations-title">
+          <span lang="en">📍 Greater Tokyo & Kanto Service Areas</span>
+          <span lang="ja" class="lang-hide">📍 関東・出張撮影対応エリア</span>
+        </div>
+        <div class="footer-locations-grid">
+          <a href="tokyo.html" class="footer-location-link">
+            <span lang="en">Tokyo & Shuto Expressway</span>
+            <span lang="ja" class="lang-hide">東京・首都高速</span>
+          </a>
+          <a href="yokohama.html" class="footer-location-link">
+            <span lang="en">Yokohama & Daikoku PA</span>
+            <span lang="ja" class="lang-hide">横浜・大黒PA</span>
+          </a>
+          <a href="kamakura.html" class="footer-location-link">
+            <span lang="en">Kamakura & Shonan Coast</span>
+            <span lang="ja" class="lang-hide">鎌倉・湘南海岸</span>
+          </a>
+          <a href="saitama.html" class="footer-location-link">
+            <span lang="en">Saitama & Kan-Etsu Exp</span>
+            <span lang="ja" class="lang-hide">埼玉・関越道</span>
+          </a>
+          <a href="hakone.html" class="footer-location-link">
+            <span lang="en">Hakone & Mt. Fuji Touge</span>
+            <span lang="ja" class="lang-hide">箱根・富士山峠</span>
+          </a>
+          <a href="chiba.html" class="footer-location-link">
+            <span lang="en">Chiba & Aqua-Line</span>
+            <span lang="ja" class="lang-hide">千葉・アクアライン</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-bottom-row">
+        <div class="footer-copyright">
+          <div>&copy; 2026 Miguel Madrigal. All Rights Reserved.</div>
+          <div class="footer-sponsors" style="margin-top: 12px; display: flex; align-items: center; gap: 16px; opacity: 0.7;">
+            <span style="font-size: 0.85em; color: var(--color-grey-muted);">Supported by</span>
+            <!-- Typographic logo for K&F Concept -->
+            <span style="font-weight: 800; font-size: 0.9em; letter-spacing: 0.5px; font-family: 'Inter', sans-serif; color: #fff;">K&F CONCEPT</span>
+            <!-- Typographic logo for PGYTECH -->
+            <span style="font-weight: 900; font-size: 1em; letter-spacing: -0.5px; font-style: italic; font-family: 'Inter', sans-serif; color: #fff;">PGYTECH</span>
+          </div>
+        </div>
+        <div class="footer-links">
+          <a href="https://instagram.com/migumadrigal" target="_blank">Instagram</a>
+          <a href="mailto:miguelmadrigalwork@gmail.com">Email</a>
+        </div>
+      </div>
+    </div>
   </footer>
 
+  <!-- GLightbox JS (CDN) -->
   <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
+
+  <!-- Main JavaScript -->
+  <script src="scripts/main.js"></script>
+
   <script>
-    const lightbox = GLightbox({
-      touchNavigation: true,
-      loop: true,
-      autoplayVideos: true
+    document.addEventListener("DOMContentLoaded", function() {
+      var lazyVideos = [].slice.call(document.querySelectorAll("video.lazy-video"));
+
+      if ("IntersectionObserver" in window) {
+        var lazyVideoObserver = new IntersectionObserver(function(entries, observer) {
+          entries.forEach(function(video) {
+            if (video.isIntersecting) {
+              video.target.play();
+            } else {
+              video.target.pause();
+            }
+          });
+        });
+
+        lazyVideos.forEach(function(lazyVideo) {
+          lazyVideoObserver.observe(lazyVideo);
+        });
+      }
     });
-    
-    // Mobile Nav Toggle
-    const hamburger = document.querySelector('.hamburger');
-    const mobileNav = document.querySelector('.mobile-nav');
-    if(hamburger) {
-      hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        mobileNav.classList.toggle('active');
-      });
-    }
   </script>
 </body>
+
 </html>
