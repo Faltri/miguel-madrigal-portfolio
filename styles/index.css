@@ -1,331 +1,383 @@
 /* =============================================
-   MIGUEL MADRIGAL ?" V3 EDITORIAL THEME
+   MIGUEL MADRIGAL ?" V4 OS DESKTOP
    ============================================= */
 
-/* 1. RESET & VARIABLES */
-:root {
-  --color-bg: #ffffff;
-  --color-text: #1a1a1a;
-  --color-muted: #888888;
-  --color-accent: #d93838; /* Classic editorial red */
-  
-  --font-serif: 'Bodoni Moda', serif;
-  --font-sans: 'Inter', sans-serif;
-  --font-japanese: 'Noto Serif JP', serif; /* Serif for Japanese to match editorial feel */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-  --spacing-sm: 1rem;
-  --spacing-md: 2rem;
-  --spacing-lg: 5rem;
-  --spacing-xl: 10rem;
+:root {
+  --os-menu-bg: rgba(30, 30, 30, 0.65);
+  --os-window-bg: rgba(25, 25, 25, 0.85);
+  --os-window-border: rgba(255, 255, 255, 0.1);
+  --os-text: #ffffff;
+  --os-text-muted: #a0a0a0;
+  --os-accent: #0A84FF;
+  
+  --font-os: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  
+  --z-desktop: 1;
+  --z-icons: 10;
+  --z-window: 100;
+  --z-menubar: 1000;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  user-select: none; /* Make it feel like an OS, prevent text selection unless intended */
 }
 
-body {
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  font-family: var(--font-sans);
-  line-height: 1.5;
+body, html {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #000;
+  color: var(--os-text);
+  font-family: var(--font-os);
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
 }
 
-img, video {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-/* Typography */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-serif);
-  font-weight: 400; /* Thin, elegant weight */
-  line-height: 1.1;
-}
-
-.editorial-title {
-  font-size: clamp(4rem, 10vw, 12rem);
-  text-transform: uppercase;
-  letter-spacing: -0.03em;
-  margin-left: -5px; /* Offset alignment trick */
-}
-
-.editorial-subtitle {
-  font-family: var(--font-sans);
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: var(--color-muted);
-}
-
-/* 2. NAVIGATION */
-.nav-editorial {
-  position: fixed;
+/* =============================================
+   1. DESKTOP WALLPAPER
+   ============================================= */
+.desktop-wallpaper {
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  padding: 2rem 4rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  z-index: 100;
-  background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+  height: 100%;
+  background-image: url('../assets/images/20260710-DSC09429.jpg'); /* Moody GR86 night shot */
+  background-size: cover;
+  background-position: center center;
+  z-index: var(--z-desktop);
 }
 
-.nav-logo {
-  font-family: var(--font-serif);
-  font-size: 1.5rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-
-.nav-links {
-  display: flex;
-  gap: 3rem;
-}
-
-.nav-links a {
-  font-family: var(--font-sans);
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  position: relative;
-  overflow: hidden;
-}
-
-.nav-links a::after {
+/* Optional subtle vignette for readability */
+.desktop-wallpaper::after {
   content: '';
   position: absolute;
-  bottom: 0;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: radial-gradient(circle, rgba(0,0,0,0) 40%, rgba(0,0,0,0.6) 100%);
+}
+
+/* =============================================
+   2. TOP MENU BAR (macOS Style)
+   ============================================= */
+.menubar {
+  position: absolute;
+  top: 0;
   left: 0;
   width: 100%;
-  height: 1px;
-  background: var(--color-text);
-  transform: translateX(-101%);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  height: 28px;
+  background: var(--os-menu-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: var(--z-menubar);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  font-size: 13px;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-.nav-links a:hover::after {
-  transform: translateX(0);
+.menubar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
-/* 3. HERO SECTION */
-.hero-editorial {
-  min-height: 100vh;
-  padding: 12rem 4rem 4rem;
+.menubar-logo {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.menubar-logo svg {
+  fill: currentColor;
+}
+
+.menubar-items span {
+  cursor: pointer;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.menubar-items span:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.menubar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.menubar-right .clock {
+  font-variant-numeric: tabular-nums;
+}
+
+/* =============================================
+   3. DESKTOP ICONS
+   ============================================= */
+.desktop-icons-container {
+  position: absolute;
+  top: 40px;
+  right: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 20px;
+  z-index: var(--z-icons);
+  align-items: center;
 }
 
-.hero-top {
+.desktop-icon {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 80px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  transition: background 0.1s ease;
 }
 
-.hero-text-block {
-  max-width: 600px;
+.desktop-icon:hover {
+  background: rgba(255,255,255,0.1);
 }
 
-.hero-image-wrapper {
-  margin-top: 4rem;
-  width: 70%;
-  align-self: flex-end;
-  position: relative;
+.desktop-icon.selected {
+  background: rgba(255,255,255,0.2);
 }
 
-/* A classic editorial offset image trick */
-.hero-image-wrapper img {
-  width: 100%;
-  height: 70vh;
-  object-fit: cover;
-  filter: grayscale(20%);
-  transition: filter 0.8s ease;
+.desktop-icon svg {
+  width: 48px;
+  height: 48px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
 }
 
-.hero-image-wrapper:hover img {
-  filter: grayscale(0%);
+/* Custom coloring for folders based on content */
+.icon-folder svg path { fill: #0A84FF; } /* Blue Folder */
+.icon-video svg path { fill: #FF3B30; } /* Red Folder for videos */
+.icon-file svg path { fill: #ffffff; } /* White file */
+
+.desktop-icon span {
+  color: #fff;
+  font-size: 11px;
+  font-weight: 500;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+  line-height: 1.2;
 }
 
-.hero-caption {
+/* =============================================
+   4. WINDOW SYSTEM
+   ============================================= */
+.os-window {
   position: absolute;
-  bottom: -2rem;
-  left: -2rem;
-  background: var(--color-bg);
-  padding: 1rem;
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
-/* 4. ASYMMETRICAL GALLERY GRID */
-.editorial-gallery {
-  padding: var(--spacing-xl) 4rem;
-}
-
-.gallery-grid-staggered {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 2rem;
-  row-gap: 6rem;
-}
-
-.gallery-item {
-  position: relative;
+  top: 100px;
+  left: 100px;
+  width: 800px;
+  height: 600px;
+  max-width: 95vw;
+  max-height: 85vh;
+  background: var(--os-window-bg);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid var(--os-window-border);
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05) inset;
+  z-index: var(--z-window);
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
+  
+  /* Hidden by default */
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.95);
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-.gallery-item img {
-  width: 100%;
-  height: auto;
+.os-window.open {
+  opacity: 1;
+  pointer-events: auto;
   transform: scale(1);
-  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.gallery-item:hover img {
+.os-window.active {
+  z-index: calc(var(--z-window) + 10);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.1) inset;
+}
+
+/* Window Title Bar */
+.window-header {
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: rgba(0,0,0,0.2);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  cursor: grab;
+}
+
+.window-header:active {
+  cursor: grabbing;
+}
+
+.window-controls {
+  position: absolute;
+  left: 16px;
+  display: flex;
+  gap: 8px;
+}
+
+.control-btn {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+}
+.btn-close { background: #FF5F56; }
+.btn-min { background: #FFBD2E; }
+.btn-max { background: #27C93F; }
+
+.window-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+
+/* Window Content Area */
+.window-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  /* Custom scrollbar for webkit */
+}
+
+.window-content::-webkit-scrollbar {
+  width: 8px;
+}
+.window-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+.window-content::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 4px;
+}
+
+/* Allow text selection inside windows */
+.window-content * {
+  user-select: text;
+}
+
+/* =============================================
+   5. SPECIFIC WINDOW CONTENTS
+   ============================================= */
+/* Gallery Grid inside Window */
+.os-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.os-gallery-item {
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  aspect-ratio: 4/3;
+}
+
+.os-gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.os-gallery-item:hover img {
   transform: scale(1.05);
 }
 
-.gallery-caption {
-  margin-top: 1rem;
-  font-family: var(--font-serif);
-  font-size: 1.2rem;
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 0.5rem;
+/* Notepad Content */
+.notepad-content {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #fff;
+  white-space: pre-wrap;
+}
+.notepad-content a {
+  color: var(--os-accent);
+  text-decoration: underline;
 }
 
-.gallery-caption span {
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  color: var(--color-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-/* Staggered Grid Positions */
-.g-item-1 { grid-column: 2 / 9; }
-.g-item-2 { grid-column: 9 / 13; margin-top: 8rem; }
-.g-item-3 { grid-column: 1 / 6; margin-top: -4rem; }
-.g-item-4 { grid-column: 7 / 12; }
-.g-item-5 { grid-column: 3 / 11; }
-.g-item-6 { grid-column: 1 / 5; margin-top: 6rem; }
-.g-item-7 { grid-column: 6 / 13; }
-.g-item-8 { grid-column: 2 / 7; }
-.g-item-9 { grid-column: 8 / 12; margin-top: -6rem; }
-.g-item-10 { grid-column: 1 / 8; }
-.g-item-11 { grid-column: 9 / 13; margin-top: 4rem; }
-.g-item-12 { grid-column: 4 / 10; margin-top: 2rem; }
-
-/* 5. BEHIND THE LENS / POV */
-.editorial-pov {
-  padding: var(--spacing-xl) 4rem;
-  background-color: #fafafa;
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
-}
-
-.pov-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 4rem;
-}
-
-.pov-header h2 {
-  font-size: 4rem;
-}
-
+/* POV Video Grid */
 .pov-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
 }
-
-.pov-video {
+.pov-video-item {
   width: 100%;
   aspect-ratio: 9/16;
-  object-fit: cover;
-  filter: grayscale(100%);
-  transition: filter 0.4s ease;
+  border-radius: 8px;
+  overflow: hidden;
 }
-
-.pov-video:hover {
-  filter: grayscale(0%);
-}
-
-/* 6. MINIMAL FOOTER / CTA */
-.editorial-footer {
-  padding: var(--spacing-xl) 4rem 4rem;
-  text-align: center;
-}
-
-.editorial-cta {
-  font-size: clamp(3rem, 6vw, 6rem);
-  text-transform: uppercase;
-  margin-bottom: 2rem;
-  display: inline-block;
-  position: relative;
-}
-
-.editorial-cta::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
+.pov-video-item video {
   width: 100%;
-  height: 2px;
-  background: var(--color-text);
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  height: 100%;
+  object-fit: cover;
 }
 
-.editorial-cta:hover::after {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-
-.footer-bottom {
-  margin-top: var(--spacing-lg);
-  display: flex;
-  justify-content: space-between;
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-muted);
-}
-
-/* 7. RESPONSIVE DESIGN */
-@media (max-width: 1024px) {
-  .editorial-title { font-size: 6rem; }
-  .gallery-grid-staggered {
-    display: flex;
-    flex-direction: column;
-    gap: 4rem;
-  }
-  .gallery-item { margin-top: 0 !important; width: 100%; }
-  .pov-grid { grid-template-columns: repeat(2, 1fr); }
-  .nav-editorial { padding: 1.5rem 2rem; }
-  .hero-editorial, .editorial-gallery, .editorial-pov, .editorial-footer { padding-left: 2rem; padding-right: 2rem; }
-  .hero-image-wrapper { width: 100%; }
-}
-
+/* =============================================
+   6. MOBILE RESPONSIVENESS
+   ============================================= */
 @media (max-width: 768px) {
-  .editorial-title { font-size: 4rem; }
-  .nav-links { display: none; } /* Could add a simple hamburger later */
-  .pov-grid { grid-template-columns: 1fr; }
+  /* On mobile, icons move to top left, stack naturally */
+  .desktop-icons-container {
+    top: 40px;
+    left: 20px;
+    right: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  
+  /* Windows become fullscreen on mobile */
+  .os-window {
+    top: 28px !important; /* Right below menubar */
+    left: 0 !important;
+    width: 100vw !important;
+    height: calc(100vh - 28px) !important;
+    border-radius: 0;
+    max-width: none;
+    max-height: none;
+    transform: translateY(100%);
+  }
+  
+  .os-window.open {
+    transform: translateY(0);
+  }
+  
+  /* Disable dragging cursor on mobile since it's fullscreen */
+  .window-header {
+    cursor: default;
+  }
+  
+  /* Menubar simplified */
+  .menubar-items {
+    display: none;
+  }
 }

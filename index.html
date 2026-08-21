@@ -2,224 +2,288 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Miguel Madrigal | Editorial Automotive</title>
-  
-  <!-- Google Fonts: Bodoni Moda (Serif) & Inter (Sans) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,400&family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@400;500;600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Miguel Madrigal | OS Desktop</title>
   
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
   <link rel="stylesheet" href="styles/index.css">
 </head>
 <body>
 
-  <!-- NAVIGATION -->
-  <nav class="nav-editorial">
-    <div class="nav-logo">MM.</div>
-    <div class="nav-links">
-      <a href="#gallery">Selected Works</a>
-      <a href="#pov">Behind The Lens</a>
-      <a href="https://instagram.com/migumadrigal" target="_blank">Inquiries</a>
+  <!-- BACKGROUND WALLPAPER -->
+  <div class="desktop-wallpaper"></div>
+
+  <!-- TOP MENUBAR -->
+  <nav class="menubar">
+    <div class="menubar-left">
+      <div class="menubar-logo">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+        MIGUEL OS
+      </div>
+      <div class="menubar-items">
+        <span>File</span>
+        <span>Edit</span>
+        <span>View</span>
+        <span>Help</span>
+      </div>
+    </div>
+    <div class="menubar-right">
+      <span class="clock" id="os-clock">10:00 AM</span>
     </div>
   </nav>
 
-  <!-- HERO SECTION -->
-  <header class="hero-editorial">
-    <div class="hero-top">
-      <div class="hero-text-block">
-        <div class="editorial-subtitle">Automotive Photographer &bull; Tokyo</div>
-        <h1 class="editorial-title">Miguel<br>Madrigal</h1>
-      </div>
-    </div>
+  <!-- DESKTOP ICONS -->
+  <div class="desktop-icons-container">
     
-    <div class="hero-image-wrapper">
-      <img src="assets/images/20260626-DSC08130.jpg" alt="Hero Featured Shot">
-      <div class="hero-caption">Featured Session / Porsche 935</div>
+    <!-- Gallery Folder -->
+    <div class="desktop-icon icon-folder" data-target="win-gallery" ondblclick="openWindow('win-gallery')">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6C2 4.89543 2.89543 4 4 4H9.17157C9.70201 4 10.2107 4.21071 10.5858 4.58579L12 6H20C21.1046 6 22 6.89543 22 8V18C22 19.1046 21.1046 20 20 20H4C2.89543 20 2 19.1046 2 18V6Z"/></svg>
+      <span>Selected<br>Works</span>
     </div>
-  </header>
 
-  <!-- ASYMMETRICAL GALLERY -->
-  <section id="gallery" class="editorial-gallery">
-    <div class="gallery-grid-staggered">
-      
-      <!-- 1 -->
-      <div class="gallery-item g-item-1">
-        <a href="assets/images/20260808-DSC00696.jpg" class="glightbox">
-          <img src="assets/images/20260808-DSC00696.jpg" alt="R33 & Chaser">
-        </a>
-        <div class="gallery-caption">
-          Nissan R33 GT-R & Toyota Chaser JZX100
-        </div>
+    <!-- POV Video Folder -->
+    <div class="desktop-icon icon-video" data-target="win-pov" ondblclick="openWindow('win-pov')">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6C2 4.89543 2.89543 4 4 4H9.17157C9.70201 4 10.2107 4.21071 10.5858 4.58579L12 6H20C21.1046 6 22 6.89543 22 8V18C22 19.1046 21.1046 20 20 20H4C2.89543 20 2 19.1046 2 18V6Z"/></svg>
+      <span>Behind<br>The Lens</span>
+    </div>
+
+    <!-- Contact Notepad -->
+    <div class="desktop-icon icon-file" data-target="win-contact" ondblclick="openWindow('win-contact')">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2V8H20" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 13H16" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 17H16" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 9H10" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Contact<br>Miguel.txt</span>
+    </div>
+
+  </div>
+
+  <!-- ==========================================
+       WINDOWS 
+       ========================================== -->
+
+  <!-- WINDOW: SELECTED WORKS -->
+  <div class="os-window" id="win-gallery">
+    <div class="window-header">
+      <div class="window-controls">
+        <button class="control-btn btn-close" onclick="closeWindow('win-gallery')"></button>
+        <button class="control-btn btn-min" onclick="closeWindow('win-gallery')"></button>
+        <button class="control-btn btn-max"></button>
       </div>
-
-      <!-- 2 -->
-      <div class="gallery-item g-item-2">
-        <a href="assets/images/DSC02118.jpg" class="glightbox">
+      <div class="window-title">Selected_Works</div>
+    </div>
+    <div class="window-content">
+      <div class="os-gallery-grid">
+        <!-- Gallery Images linked to GLightbox -->
+        <a href="assets/images/20260626-DSC08130.jpg" class="os-gallery-item glightbox" data-gallery="main">
+          <img src="assets/images/20260626-DSC08130.jpg" alt="Porsche 935">
+        </a>
+        <a href="assets/images/20260808-DSC00696.jpg" class="os-gallery-item glightbox" data-gallery="main">
+          <img src="assets/images/20260808-DSC00696.jpg" alt="Nissan R33 & Toyota Chaser">
+        </a>
+        <a href="assets/images/DSC02118.jpg" class="os-gallery-item glightbox" data-gallery="main">
           <img src="assets/images/DSC02118.jpg" alt="Nissan GT-R">
         </a>
-        <div class="gallery-caption">
-          Nissan GT-R R35
-        </div>
-      </div>
-
-      <!-- 3 -->
-      <div class="gallery-item g-item-3">
-        <a href="assets/images/20260711-DSC09918.jpg" class="glightbox">
-          <img src="assets/images/20260711-DSC09918.jpg" alt="Porsche 935">
-        </a>
-        <div class="gallery-caption">
-          Porsche 935 K3
-        </div>
-      </div>
-
-      <!-- 4 -->
-      <div class="gallery-item g-item-4">
-        <a href="assets/images/20260710-DSC09344.jpg" class="glightbox">
+        <a href="assets/images/20260710-DSC09344.jpg" class="os-gallery-item glightbox" data-gallery="main">
           <img src="assets/images/20260710-DSC09344.jpg" alt="Toyota GR86">
         </a>
-        <div class="gallery-caption">
-          Toyota GR86
-        </div>
-      </div>
-
-      <!-- 5 -->
-      <div class="gallery-item g-item-5">
-        <a href="assets/images/20260808-DSC00044.jpg" class="glightbox">
-          <img src="assets/images/20260808-DSC00044.jpg" alt="R33 Roller">
-        </a>
-        <div class="gallery-caption">
-          Nissan R33 GT-R
-        </div>
-      </div>
-
-      <!-- 6 -->
-      <div class="gallery-item g-item-6">
-        <a href="assets/images/DSC02156.jpg" class="glightbox">
+        <a href="assets/images/DSC02156.jpg" class="os-gallery-item glightbox" data-gallery="main">
           <img src="assets/images/DSC02156.jpg" alt="Nissan 350Z">
         </a>
-        <div class="gallery-caption">
-          Nissan 350Z (Z33)
-        </div>
-      </div>
-
-      <!-- 7 -->
-      <div class="gallery-item g-item-7">
-        <a href="assets/images/20260711-DSC09896.jpg" class="glightbox">
-          <img src="assets/images/20260711-DSC09896.jpg" alt="Porsche 935 Details">
+        <a href="assets/images/20260711-DSC09918.jpg" class="os-gallery-item glightbox" data-gallery="main">
+          <img src="assets/images/20260711-DSC09918.jpg" alt="Porsche 935 Kremer">
         </a>
-        <div class="gallery-caption">
-          Porsche 935 K3
-        </div>
-      </div>
-
-      <!-- 8 -->
-      <div class="gallery-item g-item-8">
-        <a href="assets/images/20260710-DSC09429.jpg" class="glightbox">
-          <img src="assets/images/20260710-DSC09429.jpg" alt="GR86 Night">
+        <a href="assets/images/20260808-DSC00151.jpg" class="os-gallery-item glightbox" data-gallery="main">
+          <img src="assets/images/20260808-DSC00151.jpg" alt="Chaser Rolling Shot">
         </a>
-        <div class="gallery-caption">
-          Toyota GR86
-        </div>
-      </div>
-
-      <!-- 9 -->
-      <div class="gallery-item g-item-9">
-        <a href="assets/images/DSC02282.jpg" class="glightbox">
-          <img src="assets/images/DSC02282.jpg" alt="350Z Details">
+        <a href="assets/images/20260710-DSC09429.jpg" class="os-gallery-item glightbox" data-gallery="main">
+          <img src="assets/images/20260710-DSC09429.jpg" alt="GR86 Tokyo Nights">
         </a>
-        <div class="gallery-caption">
-          Nissan 350Z (Z33)
-        </div>
-      </div>
-
-      <!-- 10 -->
-      <div class="gallery-item g-item-10">
-        <a href="assets/images/20260808-DSC00151.jpg" class="glightbox">
-          <img src="assets/images/20260808-DSC00151.jpg" alt="Chaser Roller">
+        <a href="assets/images/20260806-DSC06753.jpg" class="os-gallery-item glightbox" data-gallery="main">
+          <img src="assets/images/20260806-DSC06753.jpg" alt="Touge Formation">
         </a>
-        <div class="gallery-caption">
-          Toyota Chaser JZX100
-        </div>
-      </div>
-
-      <!-- 11 -->
-      <div class="gallery-item g-item-11">
-        <a href="assets/images/20260711-DSC09946.jpg" class="glightbox">
-          <img src="assets/images/20260711-DSC09946.jpg" alt="Porsche 935 Interior">
+        <a href="assets/images/20260728-DSC04318.jpg" class="os-gallery-item glightbox" data-gallery="main">
+          <img src="assets/images/20260728-DSC04318.jpg" alt="Initial D Heritage">
         </a>
-        <div class="gallery-caption">
-          Porsche 935 K3
-        </div>
       </div>
-
-      <!-- 12 -->
-      <div class="gallery-item g-item-12">
-        <a href="assets/images/20260710-DSC09297.jpg" class="glightbox">
-          <img src="assets/images/20260710-DSC09297.jpg" alt="GR86 Motion">
-        </a>
-        <div class="gallery-caption">
-          Toyota GR86
-        </div>
-      </div>
-
     </div>
-  </section>
+  </div>
 
-  <!-- POV VIDEOS (GRID SPREAD) -->
-  <section id="pov" class="editorial-pov">
-    <div class="pov-header">
-      <h2>Behind the Lens</h2>
-      <div class="editorial-subtitle">Field Work & Process</div>
+  <!-- WINDOW: BEHIND THE LENS -->
+  <div class="os-window" id="win-pov" style="left: 150px; top: 150px;">
+    <div class="window-header">
+      <div class="window-controls">
+        <button class="control-btn btn-close" onclick="closeWindow('win-pov')"></button>
+        <button class="control-btn btn-min" onclick="closeWindow('win-pov')"></button>
+        <button class="control-btn btn-max"></button>
+      </div>
+      <div class="window-title">Behind_The_Lens</div>
     </div>
-    
-    <div class="pov-grid">
-      <video src="assets/images/vid-20260621-173840-da.mov" class="pov-video lazy-video" loop muted playsinline></video>
-      <video src="assets/images/vid-20260626-225036-10.mov" class="pov-video lazy-video" loop muted playsinline></video>
-      <video src="assets/images/vid-20260725-231956-66.mov" class="pov-video lazy-video" loop muted playsinline></video>
-      <video src="assets/images/vid-20260804-175439-9b.mov" class="pov-video lazy-video" loop muted playsinline></video>
+    <div class="window-content">
+      <div class="pov-grid">
+        <div class="pov-video-item"><video src="assets/images/vid-20260621-173840-da.mov" loop muted autoplay playsinline></video></div>
+        <div class="pov-video-item"><video src="assets/images/vid-20260626-225036-10.mov" loop muted autoplay playsinline></video></div>
+        <div class="pov-video-item"><video src="assets/images/vid-20260725-231956-66.mov" loop muted autoplay playsinline></video></div>
+        <div class="pov-video-item"><video src="assets/images/vid-20260804-175439-9b.mov" loop muted autoplay playsinline></video></div>
+      </div>
     </div>
-  </section>
+  </div>
 
-  <!-- EDITORIAL CTA FOOTER -->
-  <footer class="editorial-footer">
-    <a href="https://instagram.com/migumadrigal" target="_blank" class="editorial-cta">
-      Book a Session
-    </a>
-    
-    <div class="footer-bottom">
-      <div>&copy; 2026 Miguel Madrigal</div>
-      <div>Tokyo, Japan &mdash; Worldwide</div>
+  <!-- WINDOW: CONTACT MIGUEL.TXT -->
+  <div class="os-window" id="win-contact" style="left: 200px; top: 200px; width: 500px; height: 400px;">
+    <div class="window-header">
+      <div class="window-controls">
+        <button class="control-btn btn-close" onclick="closeWindow('win-contact')"></button>
+        <button class="control-btn btn-min" onclick="closeWindow('win-contact')"></button>
+        <button class="control-btn btn-max"></button>
+      </div>
+      <div class="window-title">Contact_Miguel.txt</div>
     </div>
-  </footer>
+    <div class="window-content">
+      <div class="notepad-content">
+HELLO.
 
-  <!-- GLightbox JS -->
+I am Miguel Madrigal, an automotive photographer based in Tokyo, Japan.
+
+I specialize in editorial, commercial, and high-end field camera work.
+
+To book a session, request a commission, or inquire about prints:
+
+> SEND ME A DIRECT MESSAGE:
+> <a href="https://instagram.com/migumadrigal" target="_blank">instagram.com/migumadrigal</a>
+
+Thank you for visiting my desktop.
+      </div>
+    </div>
+  </div>
+
+
+  <!-- SCRIPTS -->
   <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
   <script>
+    // Initialize Lightbox for the gallery inside the window
     const lightbox = GLightbox({
       touchNavigation: true,
       loop: true,
+      selector: '.glightbox'
     });
+
+    // Clock Logic
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12; 
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      document.getElementById('os-clock').innerText = `\${hours}:\${minutes} \${ampm}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Window Manager
+    let highestZ = 100;
     
-    // Auto-play videos on scroll
-    document.addEventListener("DOMContentLoaded", function() {
-      var lazyVideos = [].slice.call(document.querySelectorAll("video.lazy-video"));
-      if ("IntersectionObserver" in window) {
-        var lazyVideoObserver = new IntersectionObserver(function(entries) {
-          entries.forEach(function(video) {
-            if (video.isIntersecting) {
-              video.target.play();
-            } else {
-              video.target.pause();
-            }
-          });
-        });
-        lazyVideos.forEach(function(lazyVideo) {
-          lazyVideoObserver.observe(lazyVideo);
-        });
-      }
+    // Support single click on mobile, double click on desktop
+    const isMobile = window.innerWidth <= 768;
+    const icons = document.querySelectorAll('.desktop-icon');
+    
+    icons.forEach(icon => {
+      // Highlight selection on single click
+      icon.addEventListener('click', (e) => {
+        icons.forEach(i => i.classList.remove('selected'));
+        icon.classList.add('selected');
+        
+        // On mobile, single tap opens the window directly
+        if (isMobile) {
+          openWindow(icon.getAttribute('data-target'));
+        }
+      });
     });
+
+    function openWindow(id) {
+      const win = document.getElementById(id);
+      if (!win) return;
+      
+      highestZ++;
+      win.style.zIndex = highestZ;
+      
+      // Remove active from all, add to this one
+      document.querySelectorAll('.os-window').forEach(w => w.classList.remove('active'));
+      win.classList.add('open');
+      win.classList.add('active');
+    }
+
+    function closeWindow(id) {
+      const win = document.getElementById(id);
+      if (!win) return;
+      win.classList.remove('open');
+      win.classList.remove('active');
+    }
+
+    // Draggable Windows Logic (Vanilla JS)
+    const windows = document.querySelectorAll('.os-window');
+    
+    windows.forEach(win => {
+      const header = win.querySelector('.window-header');
+      
+      // Bring to front on mousedown anywhere on the window
+      win.addEventListener('mousedown', () => {
+        if (!win.classList.contains('active')) {
+          highestZ++;
+          win.style.zIndex = highestZ;
+          document.querySelectorAll('.os-window').forEach(w => w.classList.remove('active'));
+          win.classList.add('active');
+        }
+      });
+
+      // Dragging logic
+      let isDragging = false;
+      let startX, startY, initialX, initialY;
+
+      header.addEventListener('mousedown', (e) => {
+        // Don't drag if clicking the control buttons
+        if(e.target.classList.contains('control-btn')) return;
+        
+        // Don't drag on mobile
+        if(window.innerWidth <= 768) return;
+
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        
+        // Get computed style to handle transform/left correctly
+        const rect = win.getBoundingClientRect();
+        initialX = rect.left;
+        initialY = rect.top;
+        
+        // Remove bottom/right constraints temporarily by relying on explicit top/left
+        win.style.bottom = 'auto';
+        win.style.right = 'auto';
+        win.style.left = `\${initialX}px`;
+        win.style.top = `\${initialY}px`;
+      });
+
+      document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault(); // Prevent text selection while dragging
+
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+
+        win.style.left = `\${initialX + dx}px`;
+        win.style.top = `\${initialY + dy}px`;
+      });
+
+      document.addEventListener('mouseup', () => {
+        isDragging = false;
+      });
+    });
+
+    // Deselect icons when clicking on desktop
+    document.querySelector('.desktop-wallpaper').addEventListener('mousedown', () => {
+      icons.forEach(i => i.classList.remove('selected'));
+      document.querySelectorAll('.os-window').forEach(w => w.classList.remove('active'));
+    });
+
   </script>
 </body>
 </html>
