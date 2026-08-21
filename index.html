@@ -2,287 +2,183 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Miguel Madrigal | OS Desktop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Miguel Madrigal | Automotive Visuals</title>
   
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
   <link rel="stylesheet" href="styles/index.css">
 </head>
 <body>
 
-  <!-- BACKGROUND WALLPAPER -->
-  <div class="desktop-wallpaper"></div>
-
-  <!-- TOP MENUBAR -->
-  <nav class="menubar">
-    <div class="menubar-left">
-      <div class="menubar-logo">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
-        MIGUEL OS
-      </div>
-      <div class="menubar-items">
-        <span>File</span>
-        <span>Edit</span>
-        <span>View</span>
-        <span>Help</span>
-      </div>
-    </div>
-    <div class="menubar-right">
-      <span class="clock" id="os-clock">10:00 AM</span>
+  <!-- NAVIGATION -->
+  <nav class="nav-bar" id="navbar">
+    <a href="#" class="nav-logo">MIGUEL MADRIGAL</a>
+    <div class="nav-links">
+      <a href="#portfolio">Selected Works</a>
+      <a href="https://instagram.com/migumadrigal" target="_blank">Inquiries</a>
     </div>
   </nav>
 
-  <!-- DESKTOP ICONS -->
-  <div class="desktop-icons-container">
+  <!-- HERO SECTION -->
+  <header class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
     
-    <!-- Gallery Folder -->
-    <div class="desktop-icon icon-folder" data-target="win-gallery" ondblclick="openWindow('win-gallery')">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6C2 4.89543 2.89543 4 4 4H9.17157C9.70201 4 10.2107 4.21071 10.5858 4.58579L12 6H20C21.1046 6 22 6.89543 22 8V18C22 19.1046 21.1046 20 20 20H4C2.89543 20 2 19.1046 2 18V6Z"/></svg>
-      <span>Selected<br>Works</span>
+    <div class="hero-content reveal-up">
+      <span class="hero-subtitle">Professional Automotive Visuals</span>
+      <h1 class="hero-title">Elevating automotive design through world-class photography.</h1>
+      <a href="#portfolio" class="btn-glass">View Portfolio</a>
+    </div>
+  </header>
+
+  <!-- PORTFOLIO GRID -->
+  <section id="portfolio" class="portfolio">
+    <div class="section-header reveal-up">
+      <h2 class="section-title">Featured Projects</h2>
     </div>
 
-    <!-- POV Video Folder -->
-    <div class="desktop-icon icon-video" data-target="win-pov" ondblclick="openWindow('win-pov')">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6C2 4.89543 2.89543 4 4 4H9.17157C9.70201 4 10.2107 4.21071 10.5858 4.58579L12 6H20C21.1046 6 22 6.89543 22 8V18C22 19.1046 21.1046 20 20 20H4C2.89543 20 2 19.1046 2 18V6Z"/></svg>
-      <span>Behind<br>The Lens</span>
+    <div class="portfolio-grid">
+      
+      <!-- Project 1 -->
+      <a href="assets/images/20260626-DSC08130.jpg" class="project-card glightbox reveal-up" data-gallery="portfolio">
+        <img src="assets/images/20260626-DSC08130.jpg" alt="Porsche 935" class="project-img">
+        <div class="project-overlay">
+          <div>
+            <div class="project-title">Porsche 935 K3</div>
+            <div class="project-meta">Studio Session</div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Project 2 -->
+      <a href="assets/images/20260808-DSC00696.jpg" class="project-card glightbox reveal-up" data-gallery="portfolio">
+        <img src="assets/images/20260808-DSC00696.jpg" alt="R33 and Chaser" class="project-img">
+        <div class="project-overlay">
+          <div>
+            <div class="project-title">Nissan R33 GT-R & Toyota Chaser JZX100</div>
+            <div class="project-meta">Daikoku PA</div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Project 3 (Full width) -->
+      <a href="assets/images/20260806-DSC06753.jpg" class="project-card glightbox reveal-up" data-gallery="portfolio">
+        <img src="assets/images/20260806-DSC06753.jpg" alt="Touge Formation" class="project-img">
+        <div class="project-overlay">
+          <div>
+            <div class="project-title">Touge Formation</div>
+            <div class="project-meta">Mountain Pass</div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Project 4 -->
+      <a href="assets/images/DSC02118.jpg" class="project-card glightbox reveal-up" data-gallery="portfolio">
+        <img src="assets/images/DSC02118.jpg" alt="Nissan GT-R" class="project-img">
+        <div class="project-overlay">
+          <div>
+            <div class="project-title">Nissan GT-R R35</div>
+            <div class="project-meta">Tokyo Streets</div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Project 5 -->
+      <a href="assets/images/20260710-DSC09344.jpg" class="project-card glightbox reveal-up" data-gallery="portfolio">
+        <img src="assets/images/20260710-DSC09344.jpg" alt="Toyota GR86" class="project-img">
+        <div class="project-overlay">
+          <div>
+            <div class="project-title">Toyota GR86</div>
+            <div class="project-meta">Tatsumi PA</div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Project 6 (Full width) -->
+      <a href="assets/images/DSC02156.jpg" class="project-card glightbox reveal-up" data-gallery="portfolio">
+        <img src="assets/images/DSC02156.jpg" alt="Nissan 350Z" class="project-img">
+        <div class="project-overlay">
+          <div>
+            <div class="project-title">Nissan 350Z (Z33)</div>
+            <div class="project-meta">City Tracking</div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Project 7 -->
+      <a href="assets/images/20260710-DSC09429.jpg" class="project-card glightbox reveal-up" data-gallery="portfolio">
+        <img src="assets/images/20260710-DSC09429.jpg" alt="GR86 Night" class="project-img">
+        <div class="project-overlay">
+          <div>
+            <div class="project-title">Toyota GR86</div>
+            <div class="project-meta">Tokyo Nights</div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Project 8 -->
+      <a href="assets/images/20260728-DSC04318.jpg" class="project-card glightbox reveal-up" data-gallery="portfolio">
+        <img src="assets/images/20260728-DSC04318.jpg" alt="Initial D Heritage" class="project-img">
+        <div class="project-overlay">
+          <div>
+            <div class="project-title">Initial D Heritage</div>
+            <div class="project-meta">Gunma Prefecture</div>
+          </div>
+        </div>
+      </a>
+
     </div>
-
-    <!-- Contact Notepad -->
-    <div class="desktop-icon icon-file" data-target="win-contact" ondblclick="openWindow('win-contact')">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2V8H20" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 13H16" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 17H16" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 9H10" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span>Contact<br>Miguel.txt</span>
-    </div>
-
-  </div>
-
-  <!-- ==========================================
-       WINDOWS 
-       ========================================== -->
-
-  <!-- WINDOW: SELECTED WORKS -->
-  <div class="os-window" id="win-gallery">
-    <div class="window-header">
-      <div class="window-controls">
-        <button class="control-btn btn-close" onclick="closeWindow('win-gallery')"></button>
-        <button class="control-btn btn-min" onclick="closeWindow('win-gallery')"></button>
-        <button class="control-btn btn-max"></button>
-      </div>
-      <div class="window-title">Selected_Works</div>
-    </div>
-    <div class="window-content">
-      <div class="os-gallery-grid">
-        <!-- Gallery Images linked to GLightbox -->
-        <a href="assets/images/20260626-DSC08130.jpg" class="os-gallery-item glightbox" data-gallery="main">
-          <img src="assets/images/20260626-DSC08130.jpg" alt="Porsche 935">
-        </a>
-        <a href="assets/images/20260808-DSC00696.jpg" class="os-gallery-item glightbox" data-gallery="main">
-          <img src="assets/images/20260808-DSC00696.jpg" alt="Nissan R33 & Toyota Chaser">
-        </a>
-        <a href="assets/images/DSC02118.jpg" class="os-gallery-item glightbox" data-gallery="main">
-          <img src="assets/images/DSC02118.jpg" alt="Nissan GT-R">
-        </a>
-        <a href="assets/images/20260710-DSC09344.jpg" class="os-gallery-item glightbox" data-gallery="main">
-          <img src="assets/images/20260710-DSC09344.jpg" alt="Toyota GR86">
-        </a>
-        <a href="assets/images/DSC02156.jpg" class="os-gallery-item glightbox" data-gallery="main">
-          <img src="assets/images/DSC02156.jpg" alt="Nissan 350Z">
-        </a>
-        <a href="assets/images/20260711-DSC09918.jpg" class="os-gallery-item glightbox" data-gallery="main">
-          <img src="assets/images/20260711-DSC09918.jpg" alt="Porsche 935 Kremer">
-        </a>
-        <a href="assets/images/20260808-DSC00151.jpg" class="os-gallery-item glightbox" data-gallery="main">
-          <img src="assets/images/20260808-DSC00151.jpg" alt="Chaser Rolling Shot">
-        </a>
-        <a href="assets/images/20260710-DSC09429.jpg" class="os-gallery-item glightbox" data-gallery="main">
-          <img src="assets/images/20260710-DSC09429.jpg" alt="GR86 Tokyo Nights">
-        </a>
-        <a href="assets/images/20260806-DSC06753.jpg" class="os-gallery-item glightbox" data-gallery="main">
-          <img src="assets/images/20260806-DSC06753.jpg" alt="Touge Formation">
-        </a>
-        <a href="assets/images/20260728-DSC04318.jpg" class="os-gallery-item glightbox" data-gallery="main">
-          <img src="assets/images/20260728-DSC04318.jpg" alt="Initial D Heritage">
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- WINDOW: BEHIND THE LENS -->
-  <div class="os-window" id="win-pov" style="left: 150px; top: 150px;">
-    <div class="window-header">
-      <div class="window-controls">
-        <button class="control-btn btn-close" onclick="closeWindow('win-pov')"></button>
-        <button class="control-btn btn-min" onclick="closeWindow('win-pov')"></button>
-        <button class="control-btn btn-max"></button>
-      </div>
-      <div class="window-title">Behind_The_Lens</div>
-    </div>
-    <div class="window-content">
-      <div class="pov-grid">
-        <div class="pov-video-item"><video src="assets/images/vid-20260621-173840-da.mov" loop muted autoplay playsinline></video></div>
-        <div class="pov-video-item"><video src="assets/images/vid-20260626-225036-10.mov" loop muted autoplay playsinline></video></div>
-        <div class="pov-video-item"><video src="assets/images/vid-20260725-231956-66.mov" loop muted autoplay playsinline></video></div>
-        <div class="pov-video-item"><video src="assets/images/vid-20260804-175439-9b.mov" loop muted autoplay playsinline></video></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- WINDOW: CONTACT MIGUEL.TXT -->
-  <div class="os-window" id="win-contact" style="left: 200px; top: 200px; width: 500px; height: 400px;">
-    <div class="window-header">
-      <div class="window-controls">
-        <button class="control-btn btn-close" onclick="closeWindow('win-contact')"></button>
-        <button class="control-btn btn-min" onclick="closeWindow('win-contact')"></button>
-        <button class="control-btn btn-max"></button>
-      </div>
-      <div class="window-title">Contact_Miguel.txt</div>
-    </div>
-    <div class="window-content">
-      <div class="notepad-content">
-HELLO.
-
-I am Miguel Madrigal, an automotive photographer based in Tokyo, Japan.
-
-I specialize in editorial, commercial, and high-end field camera work.
-
-To book a session, request a commission, or inquire about prints:
-
-> SEND ME A DIRECT MESSAGE:
-> <a href="https://instagram.com/migumadrigal" target="_blank">instagram.com/migumadrigal</a>
-
-Thank you for visiting my desktop.
-      </div>
-    </div>
-  </div>
-
+  </section>
 
   <!-- SCRIPTS -->
   <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
   <script>
-    // Initialize Lightbox for the gallery inside the window
+    // Initialize Lightbox
     const lightbox = GLightbox({
       touchNavigation: true,
       loop: true,
       selector: '.glightbox'
     });
 
-    // Clock Logic
-    function updateClock() {
-      const now = new Date();
-      let hours = now.getHours();
-      let minutes = now.getMinutes();
-      const ampm = hours >= 12 ? 'PM' : 'AM';
-      hours = hours % 12;
-      hours = hours ? hours : 12; 
-      minutes = minutes < 10 ? '0' + minutes : minutes;
-      document.getElementById('os-clock').innerText = `\${hours}:\${minutes} \${ampm}`;
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
+    // Navbar Scroll Effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
 
-    // Window Manager
-    let highestZ = 100;
+    // Reveal Animations on Scroll
+    const revealElements = document.querySelectorAll('.reveal-up');
     
-    // Support single click on mobile, double click on desktop
-    const isMobile = window.innerWidth <= 768;
-    const icons = document.querySelectorAll('.desktop-icon');
-    
-    icons.forEach(icon => {
-      // Highlight selection on single click
-      icon.addEventListener('click', (e) => {
-        icons.forEach(i => i.classList.remove('selected'));
-        icon.classList.add('selected');
-        
-        // On mobile, single tap opens the window directly
-        if (isMobile) {
-          openWindow(icon.getAttribute('data-target'));
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target); // Only animate once
         }
       });
+    }, {
+      root: null,
+      threshold: 0.15, // Trigger when 15% of the element is visible
+      rootMargin: "0px 0px -50px 0px" // Trigger slightly before it hits the bottom
     });
 
-    function openWindow(id) {
-      const win = document.getElementById(id);
-      if (!win) return;
-      
-      highestZ++;
-      win.style.zIndex = highestZ;
-      
-      // Remove active from all, add to this one
-      document.querySelectorAll('.os-window').forEach(w => w.classList.remove('active'));
-      win.classList.add('open');
-      win.classList.add('active');
-    }
-
-    function closeWindow(id) {
-      const win = document.getElementById(id);
-      if (!win) return;
-      win.classList.remove('open');
-      win.classList.remove('active');
-    }
-
-    // Draggable Windows Logic (Vanilla JS)
-    const windows = document.querySelectorAll('.os-window');
+    revealElements.forEach(el => {
+      revealObserver.observe(el);
+    });
     
-    windows.forEach(win => {
-      const header = win.querySelector('.window-header');
-      
-      // Bring to front on mousedown anywhere on the window
-      win.addEventListener('mousedown', () => {
-        if (!win.classList.contains('active')) {
-          highestZ++;
-          win.style.zIndex = highestZ;
-          document.querySelectorAll('.os-window').forEach(w => w.classList.remove('active'));
-          win.classList.add('active');
+    // Ensure initial elements in viewport trigger immediately
+    setTimeout(() => {
+      revealElements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if(rect.top < window.innerHeight) {
+          el.classList.add('is-visible');
         }
       });
-
-      // Dragging logic
-      let isDragging = false;
-      let startX, startY, initialX, initialY;
-
-      header.addEventListener('mousedown', (e) => {
-        // Don't drag if clicking the control buttons
-        if(e.target.classList.contains('control-btn')) return;
-        
-        // Don't drag on mobile
-        if(window.innerWidth <= 768) return;
-
-        isDragging = true;
-        startX = e.clientX;
-        startY = e.clientY;
-        
-        // Get computed style to handle transform/left correctly
-        const rect = win.getBoundingClientRect();
-        initialX = rect.left;
-        initialY = rect.top;
-        
-        // Remove bottom/right constraints temporarily by relying on explicit top/left
-        win.style.bottom = 'auto';
-        win.style.right = 'auto';
-        win.style.left = `\${initialX}px`;
-        win.style.top = `\${initialY}px`;
-      });
-
-      document.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        e.preventDefault(); // Prevent text selection while dragging
-
-        const dx = e.clientX - startX;
-        const dy = e.clientY - startY;
-
-        win.style.left = `\${initialX + dx}px`;
-        win.style.top = `\${initialY + dy}px`;
-      });
-
-      document.addEventListener('mouseup', () => {
-        isDragging = false;
-      });
-    });
-
-    // Deselect icons when clicking on desktop
-    document.querySelector('.desktop-wallpaper').addEventListener('mousedown', () => {
-      icons.forEach(i => i.classList.remove('selected'));
-      document.querySelectorAll('.os-window').forEach(w => w.classList.remove('active'));
-    });
+    }, 100);
 
   </script>
 </body>

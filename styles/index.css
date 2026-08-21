@@ -1,383 +1,301 @@
 /* =============================================
-   MIGUEL MADRIGAL ?" V4 OS DESKTOP
+   MIGUEL MADRIGAL ?" V5 PREMIUM AGENCY (Bloom3D Style)
    ============================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --os-menu-bg: rgba(30, 30, 30, 0.65);
-  --os-window-bg: rgba(25, 25, 25, 0.85);
-  --os-window-border: rgba(255, 255, 255, 0.1);
-  --os-text: #ffffff;
-  --os-text-muted: #a0a0a0;
-  --os-accent: #0A84FF;
+  --color-bg: #070707;
+  --color-text: #f5f5f5;
+  --color-text-muted: #888888;
+  --color-accent: #ffffff;
   
-  --font-os: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  
-  --z-desktop: 1;
-  --z-icons: 10;
-  --z-window: 100;
-  --z-menubar: 1000;
+  --font-main: 'Inter', -apple-system, sans-serif;
+  --nav-height: 80px;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  user-select: none; /* Make it feel like an OS, prevent text selection unless intended */
 }
 
-body, html {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  background-color: #000;
-  color: var(--os-text);
-  font-family: var(--font-os);
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-main);
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 /* =============================================
-   1. DESKTOP WALLPAPER
+   1. NAVIGATION
    ============================================= */
-.desktop-wallpaper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url('../assets/images/20260710-DSC09429.jpg'); /* Moody GR86 night shot */
-  background-size: cover;
-  background-position: center center;
-  z-index: var(--z-desktop);
-}
-
-/* Optional subtle vignette for readability */
-.desktop-wallpaper::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: radial-gradient(circle, rgba(0,0,0,0) 40%, rgba(0,0,0,0.6) 100%);
-}
-
-/* =============================================
-   2. TOP MENU BAR (macOS Style)
-   ============================================= */
-.menubar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 28px;
-  background: var(--os-menu-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  z-index: var(--z-menubar);
+.nav-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-height);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 16px;
-  font-size: 13px;
-  font-weight: 500;
+  padding: 0 40px;
+  z-index: 1000;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+  transition: background 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.nav-bar.scrolled {
+  background: rgba(7, 7, 7, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-.menubar-left {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.menubar-logo {
+.nav-logo {
+  font-size: 1.2rem;
   font-weight: 700;
   letter-spacing: -0.02em;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.nav-links {
   display: flex;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
+  gap: 32px;
 }
 
-.menubar-logo svg {
-  fill: currentColor;
-}
-
-.menubar-items span {
-  cursor: pointer;
-  padding: 2px 8px;
-  border-radius: 4px;
-}
-
-.menubar-items span:hover {
-  background: rgba(255,255,255,0.1);
-}
-
-.menubar-right {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.menubar-right .clock {
-  font-variant-numeric: tabular-nums;
-}
-
-/* =============================================
-   3. DESKTOP ICONS
-   ============================================= */
-.desktop-icons-container {
-  position: absolute;
-  top: 40px;
-  right: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  z-index: var(--z-icons);
-  align-items: center;
-}
-
-.desktop-icon {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  width: 80px;
-  cursor: pointer;
-  padding: 6px;
-  border-radius: 6px;
-  transition: background 0.1s ease;
-}
-
-.desktop-icon:hover {
-  background: rgba(255,255,255,0.1);
-}
-
-.desktop-icon.selected {
-  background: rgba(255,255,255,0.2);
-}
-
-.desktop-icon svg {
-  width: 48px;
-  height: 48px;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
-}
-
-/* Custom coloring for folders based on content */
-.icon-folder svg path { fill: #0A84FF; } /* Blue Folder */
-.icon-video svg path { fill: #FF3B30; } /* Red Folder for videos */
-.icon-file svg path { fill: #ffffff; } /* White file */
-
-.desktop-icon span {
-  color: #fff;
-  font-size: 11px;
+.nav-links a {
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: 0.9rem;
   font-weight: 500;
-  text-align: center;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
-  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hover underline animation */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0; width: 100%; height: 1px;
+  background: currentColor;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.nav-links a:hover::after {
+  transform: translateX(0);
 }
 
 /* =============================================
-   4. WINDOW SYSTEM
+   2. HERO SECTION
    ============================================= */
-.os-window {
-  position: absolute;
-  top: 100px;
-  left: 100px;
-  width: 800px;
-  height: 600px;
-  max-width: 95vw;
-  max-height: 85vh;
-  background: var(--os-window-bg);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-  border: 1px solid var(--os-window-border);
-  border-radius: 12px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05) inset;
-  z-index: var(--z-window);
+.hero {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  padding: 0 40px;
   overflow: hidden;
-  
-  /* Hidden by default */
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(0.95);
-  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-.os-window.open {
-  opacity: 1;
-  pointer-events: auto;
-  transform: scale(1);
+.hero-bg {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: url('../assets/images/20260711-DSC09918.jpg'); /* Porsche */
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+  animation: slowZoom 20s ease-out forwards;
 }
 
-.os-window.active {
-  z-index: calc(var(--z-window) + 10);
-  box-shadow: 0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.1) inset;
+@keyframes slowZoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1); }
 }
 
-/* Window Title Bar */
-.window-header {
-  height: 48px;
-  flex-shrink: 0;
-  display: flex;
+.hero-overlay {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5); /* Darken bg so text pops */
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin-top: 40px;
+}
+
+.hero-subtitle {
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 24px;
+  display: block;
+}
+
+.hero-title {
+  font-size: clamp(3rem, 7vw, 6rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  max-width: 900px;
+  margin-bottom: 40px;
+}
+
+.btn-glass {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  padding: 16px 32px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #fff;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.btn-glass:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* =============================================
+   3. PORTFOLIO SECTION
+   ============================================= */
+.portfolio {
+  padding: 120px 40px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.section-header {
+  margin-bottom: 60px;
+}
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* Make every 3rd item span full width for editorial rhythm */
+.project-card:nth-child(3n) {
+  grid-column: 1 / -1;
+  aspect-ratio: 21 / 9;
+}
+
+.project-card {
   position: relative;
-  background: rgba(0,0,0,0.2);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  cursor: grab;
-}
-
-.window-header:active {
-  cursor: grabbing;
-}
-
-.window-controls {
-  position: absolute;
-  left: 16px;
-  display: flex;
-  gap: 8px;
-}
-
-.control-btn {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  border: none;
+  border-radius: 4px;
+  overflow: hidden;
   cursor: pointer;
+  aspect-ratio: 4 / 3;
+  display: block;
 }
-.btn-close { background: #FF5F56; }
-.btn-min { background: #FFBD2E; }
-.btn-max { background: #27C93F; }
 
-.window-title {
-  font-size: 13px;
+.project-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.project-overlay {
+  position: absolute;
+  bottom: 0; left: 0; width: 100%;
+  padding: 40px 30px 30px;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.project-card:hover .project-img {
+  transform: scale(1.03);
+}
+
+.project-card:hover .project-overlay {
+  transform: translateY(0);
+}
+
+.project-title {
+  font-size: 1.5rem;
   font-weight: 600;
   color: #fff;
-  letter-spacing: 0.02em;
+  letter-spacing: -0.01em;
 }
-
-/* Window Content Area */
-.window-content {
-  flex: 1;
-  overflow-y: auto;
-  padding: 24px;
-  /* Custom scrollbar for webkit */
-}
-
-.window-content::-webkit-scrollbar {
-  width: 8px;
-}
-.window-content::-webkit-scrollbar-track {
-  background: transparent;
-}
-.window-content::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.2);
-  border-radius: 4px;
-}
-
-/* Allow text selection inside windows */
-.window-content * {
-  user-select: text;
+.project-meta {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+  margin-top: 8px;
 }
 
 /* =============================================
-   5. SPECIFIC WINDOW CONTENTS
+   4. SCROLL ANIMATIONS (Reveal Up)
    ============================================= */
-/* Gallery Grid inside Window */
-.os-gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
+.reveal-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-.os-gallery-item {
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
-  cursor: pointer;
-  aspect-ratio: 4/3;
-}
-
-.os-gallery-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-.os-gallery-item:hover img {
-  transform: scale(1.05);
-}
-
-/* Notepad Content */
-.notepad-content {
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 14px;
-  line-height: 1.6;
-  color: #fff;
-  white-space: pre-wrap;
-}
-.notepad-content a {
-  color: var(--os-accent);
-  text-decoration: underline;
-}
-
-/* POV Video Grid */
-.pov-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 16px;
-}
-.pov-video-item {
-  width: 100%;
-  aspect-ratio: 9/16;
-  border-radius: 8px;
-  overflow: hidden;
-}
-.pov-video-item video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.reveal-up.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* =============================================
-   6. MOBILE RESPONSIVENESS
+   5. MOBILE RESPONSIVENESS
    ============================================= */
 @media (max-width: 768px) {
-  /* On mobile, icons move to top left, stack naturally */
-  .desktop-icons-container {
-    top: 40px;
-    left: 20px;
-    right: auto;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: flex-start;
+  .nav-bar {
+    padding: 0 20px;
+  }
+  .hero {
+    padding: 0 20px;
+  }
+  .portfolio {
+    padding: 80px 20px;
+  }
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+  }
+  .project-card:nth-child(3n) {
+    grid-column: 1 / -1;
+    aspect-ratio: 4 / 3; /* Reset aspect ratio on mobile */
   }
   
-  /* Windows become fullscreen on mobile */
-  .os-window {
-    top: 28px !important; /* Right below menubar */
-    left: 0 !important;
-    width: 100vw !important;
-    height: calc(100vh - 28px) !important;
-    border-radius: 0;
-    max-width: none;
-    max-height: none;
-    transform: translateY(100%);
-  }
-  
-  .os-window.open {
+  /* On mobile, overlays should always be visible since there is no hover */
+  .project-overlay {
     transform: translateY(0);
-  }
-  
-  /* Disable dragging cursor on mobile since it's fullscreen */
-  .window-header {
-    cursor: default;
-  }
-  
-  /* Menubar simplified */
-  .menubar-items {
-    display: none;
+    padding: 30px 20px 20px;
   }
 }
