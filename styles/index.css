@@ -48,6 +48,18 @@ body {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(255,255,255,0.05);
+  
+  /* Hidden by default, revealed on scroll */
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-100%);
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.nav-bar.scrolled {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
 .nav-logo {
