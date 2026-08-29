@@ -3,424 +3,1809 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Curation Editor | Miguel Madrigal</title>
-  
-  <link rel="stylesheet" href="styles/index.css">
-  
+  <title>CMS Editor | Miguel Madrigal</title>
   <style>
-    body {
-      background: #111;
-      padding-top: 100px;
-      color: #fff;
-      font-family: sans-serif;
-    }
+    body { background: #111; color: #fff; font-family: sans-serif; padding-top: 100px; margin: 0; }
+    * { box-sizing: border-box; }
     
     .editor-topbar {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 80px;
-      background: rgba(0,0,0,0.95);
-      border-bottom: 1px solid #333;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 40px;
-      z-index: 9999;
+      position: fixed; top: 0; left: 0; right: 0; height: 80px;
+      background: rgba(0,0,0,0.95); border-bottom: 1px solid #333;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 40px; z-index: 9999;
     }
     
-    .editor-title {
-      font-size: 1.2rem;
-      font-weight: bold;
-    }
+    .editor-title { font-size: 1.2rem; font-weight: bold; }
     
-    .export-btn {
-      background: #fff;
-      color: #000;
-      border: none;
-      padding: 10px 20px;
-      font-size: 1rem;
-      font-weight: 600;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: 0.2s ease;
-    }
-    
+    .nav-controls { display: flex; align-items: center; gap: 30px; }
+    .slider-container { display: flex; align-items: center; gap: 10px; color: #ccc; font-size: 0.9rem; }
+    .export-btn { background: #fff; color: #000; border: none; padding: 10px 20px; font-weight: bold; border-radius: 4px; cursor: pointer; }
     .export-btn:hover { background: #ccc; }
     
-    .panes-container {
-      display: flex;
-      flex-direction: column;
-      gap: 40px;
-      padding: 0 40px 80px;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-
-    .pane-header {
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #333;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-    }
-
-    .pane-subtitle {
-      font-size: 0.9rem;
-      color: #888;
-      font-weight: normal;
-    }
+    .panes-container { display: flex; flex-direction: column; gap: 40px; padding: 0 40px 80px; max-width: 1400px; margin: 0 auto; }
+    
+    .pane-header { font-size: 1.5rem; font-weight: 600; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: flex-end; }
+    .pane-subtitle { font-size: 0.9rem; color: #888; font-weight: normal; }
     
     .sortable-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 15px;
-      min-height: 200px;
-      background: rgba(255,255,255,0.02);
-      border: 2px dashed #333;
-      padding: 15px;
-      border-radius: 8px;
+      grid-template-columns: repeat(var(--cols, 5), 1fr);
+      gap: 15px; min-height: 200px; background: rgba(255,255,255,0.02);
+      border: 2px dashed #333; padding: 15px; border-radius: 8px;
     }
     
-    .sortable-item {
-      display: block;
-      cursor: grab;
-      position: relative;
+    .sortable-item { position: relative; cursor: grab; overflow: hidden; border-radius: 4px; background: #222; }
+    .sortable-item img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; pointer-events: none; }
+    
+    /* Hover Controls */
+    .item-controls {
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6); display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px;
+      opacity: 0; transition: opacity 0.2s; pointer-events: none;
     }
+    .sortable-item:hover .item-controls { opacity: 1; pointer-events: auto; }
     
-    .sortable-item:active { cursor: grabbing; opacity: 0.8; transform: scale(0.95); }
+    .ctrl-btn { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); color: #fff; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 0.9rem; transition: 0.2s; backdrop-filter: blur(4px); }
+    .ctrl-btn:hover { background: #fff; color: #000; }
     
-    .sortable-item img {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      object-fit: cover;
-      display: block;
-      border-radius: 4px;
-      pointer-events: none;
+    /* Modal */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 10000; display: none; padding: 40px; overflow-y: auto;
     }
-    
-    .sortable-ghost { opacity: 0.4; background: #333; }
+    .modal-overlay.active { display: block; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .modal-close { background: none; border: none; color: #fff; font-size: 2rem; cursor: pointer; }
+    .modal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
+    .modal-item { cursor: pointer; transition: 0.2s; border-radius: 4px; overflow: hidden; }
+    .modal-item img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; }
+    .modal-item:hover { transform: scale(1.05); box-shadow: 0 0 0 2px #fff; }
   </style>
 </head>
 <body>
 
   <div class="editor-topbar">
-    <div class="editor-title">Visual Layout Editor</div>
-    <button class="export-btn" id="exportBtn">Export Curation</button>
+    <div class="editor-title">Mini-CMS Editor</div>
+    <div class="nav-controls">
+      <div class="slider-container">
+        <span>Columns:</span>
+        <input type="range" id="colSlider" min="2" max="8" value="5">
+      </div>
+      <button class="export-btn" id="exportBtn">Export Curation</button>
+    </div>
   </div>
 
   <div class="panes-container">
-    <!-- ACTIVE GRID -->
     <div>
-      <div class="pane-header">
-        Active Grid
-        <span class="pane-subtitle">These photos will appear on your website. Drag to reorder.</span>
-      </div>
-      <div class="sortable-grid" id="activeGrid">
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260710-DSC09297.jpg"><img src="assets/images/3x3-grid-selection/20260710-DSC09297.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260710-DSC09321.jpg"><img src="assets/images/3x3-grid-selection/20260710-DSC09321.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260710-DSC09429.jpg"><img src="assets/images/3x3-grid-selection/20260710-DSC09429.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04003.jpg"><img src="assets/images/3x3-grid-selection/20260728-DSC04003.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04017.jpg"><img src="assets/images/3x3-grid-selection/20260728-DSC04017.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04046.jpg"><img src="assets/images/3x3-grid-selection/20260728-DSC04046.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04091.jpg"><img src="assets/images/3x3-grid-selection/20260728-DSC04091.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04114.jpg"><img src="assets/images/3x3-grid-selection/20260728-DSC04114.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04598.jpg"><img src="assets/images/3x3-grid-selection/20260728-DSC04598.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260804-DSC05446.jpg"><img src="assets/images/3x3-grid-selection/20260804-DSC05446.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06665.jpg"><img src="assets/images/3x3-grid-selection/20260806-DSC06665.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06695.jpg"><img src="assets/images/3x3-grid-selection/20260806-DSC06695.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06698.jpg"><img src="assets/images/3x3-grid-selection/20260806-DSC06698.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06712.jpg"><img src="assets/images/3x3-grid-selection/20260806-DSC06712.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06753.jpg"><img src="assets/images/3x3-grid-selection/20260806-DSC06753.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00151.jpg"><img src="assets/images/3x3-grid-selection/20260808-DSC00151.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00696.jpg"><img src="assets/images/3x3-grid-selection/20260808-DSC00696.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00782.jpg"><img src="assets/images/3x3-grid-selection/20260808-DSC00782.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00908.jpg"><img src="assets/images/3x3-grid-selection/20260808-DSC00908.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260711-DSC09896.jpg"><img src="assets/images/3x3-grid-selection/20260711-DSC09896.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260804-DSC05811.jpg"><img src="assets/images/3x3-grid-selection/20260804-DSC05811.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06215.jpg"><img src="assets/images/3x3-grid-selection/20260806-DSC06215.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06253.jpg"><img src="assets/images/3x3-grid-selection/20260806-DSC06253.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06457.jpg"><img src="assets/images/3x3-grid-selection/20260806-DSC06457.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00044.jpg"><img src="assets/images/3x3-grid-selection/20260808-DSC00044.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00300.jpg"><img src="assets/images/3x3-grid-selection/20260808-DSC00300.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260814-DSC07999.jpg"><img src="assets/images/3x3-grid-selection/20260814-DSC07999.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260818-DSC08839.jpg"><img src="assets/images/3x3-grid-selection/20260818-DSC08839.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260818-DSC08851.jpg"><img src="assets/images/3x3-grid-selection/20260818-DSC08851.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260818-DSC08854.jpg"><img src="assets/images/3x3-grid-selection/20260818-DSC08854.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260711-DSC09918.jpg"><img src="assets/images/3x3-grid-selection/20260711-DSC09918.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260711-DSC09946.jpg"><img src="assets/images/3x3-grid-selection/20260711-DSC09946.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260626-DSC08130.jpg"><img src="assets/images/3x3-grid-selection/20260626-DSC08130.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260626-DSC08145.jpg"><img src="assets/images/3x3-grid-selection/20260626-DSC08145.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260626-DSC08235.jpg"><img src="assets/images/3x3-grid-selection/20260626-DSC08235.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260626-DSC08324.jpg"><img src="assets/images/3x3-grid-selection/20260626-DSC08324.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/DSC02118.jpg"><img src="assets/images/3x3-grid-selection/DSC02118.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/DSC02156.jpg"><img src="assets/images/3x3-grid-selection/DSC02156.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/DSC02269.jpg"><img src="assets/images/3x3-grid-selection/DSC02269.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/DSC02282.jpg"><img src="assets/images/3x3-grid-selection/DSC02282.jpg"></div>
+      <div class="pane-header">Active Portfolio <span class="pane-subtitle">Live on website. Hover for options.</span></div>
+      <div class="sortable-grid" id="activeGrid" style="--cols: 5;">
+        
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260710-DSC09297.jpg">
+          <img src="assets/images/3x3-grid-selection/20260710-DSC09297.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260710-DSC09321.jpg">
+          <img src="assets/images/3x3-grid-selection/20260710-DSC09321.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260710-DSC09429.jpg">
+          <img src="assets/images/3x3-grid-selection/20260710-DSC09429.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04003.jpg">
+          <img src="assets/images/3x3-grid-selection/20260728-DSC04003.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04017.jpg">
+          <img src="assets/images/3x3-grid-selection/20260728-DSC04017.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04046.jpg">
+          <img src="assets/images/3x3-grid-selection/20260728-DSC04046.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04091.jpg">
+          <img src="assets/images/3x3-grid-selection/20260728-DSC04091.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04114.jpg">
+          <img src="assets/images/3x3-grid-selection/20260728-DSC04114.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04598.jpg">
+          <img src="assets/images/3x3-grid-selection/20260728-DSC04598.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260804-DSC05446.jpg">
+          <img src="assets/images/3x3-grid-selection/20260804-DSC05446.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06665.jpg">
+          <img src="assets/images/3x3-grid-selection/20260806-DSC06665.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06695.jpg">
+          <img src="assets/images/3x3-grid-selection/20260806-DSC06695.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06698.jpg">
+          <img src="assets/images/3x3-grid-selection/20260806-DSC06698.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06712.jpg">
+          <img src="assets/images/3x3-grid-selection/20260806-DSC06712.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06753.jpg">
+          <img src="assets/images/3x3-grid-selection/20260806-DSC06753.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00151.jpg">
+          <img src="assets/images/3x3-grid-selection/20260808-DSC00151.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00696.jpg">
+          <img src="assets/images/3x3-grid-selection/20260808-DSC00696.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00782.jpg">
+          <img src="assets/images/3x3-grid-selection/20260808-DSC00782.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00908.jpg">
+          <img src="assets/images/3x3-grid-selection/20260808-DSC00908.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260711-DSC09896.jpg">
+          <img src="assets/images/3x3-grid-selection/20260711-DSC09896.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260804-DSC05811.jpg">
+          <img src="assets/images/3x3-grid-selection/20260804-DSC05811.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06215.jpg">
+          <img src="assets/images/3x3-grid-selection/20260806-DSC06215.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06253.jpg">
+          <img src="assets/images/3x3-grid-selection/20260806-DSC06253.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06457.jpg">
+          <img src="assets/images/3x3-grid-selection/20260806-DSC06457.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00044.jpg">
+          <img src="assets/images/3x3-grid-selection/20260808-DSC00044.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00300.jpg">
+          <img src="assets/images/3x3-grid-selection/20260808-DSC00300.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260814-DSC07999.jpg">
+          <img src="assets/images/3x3-grid-selection/20260814-DSC07999.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260818-DSC08839.jpg">
+          <img src="assets/images/3x3-grid-selection/20260818-DSC08839.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260818-DSC08851.jpg">
+          <img src="assets/images/3x3-grid-selection/20260818-DSC08851.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260818-DSC08854.jpg">
+          <img src="assets/images/3x3-grid-selection/20260818-DSC08854.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260711-DSC09918.jpg">
+          <img src="assets/images/3x3-grid-selection/20260711-DSC09918.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260711-DSC09946.jpg">
+          <img src="assets/images/3x3-grid-selection/20260711-DSC09946.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260626-DSC08130.jpg">
+          <img src="assets/images/3x3-grid-selection/20260626-DSC08130.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260626-DSC08145.jpg">
+          <img src="assets/images/3x3-grid-selection/20260626-DSC08145.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260626-DSC08235.jpg">
+          <img src="assets/images/3x3-grid-selection/20260626-DSC08235.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260626-DSC08324.jpg">
+          <img src="assets/images/3x3-grid-selection/20260626-DSC08324.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/DSC02118.jpg">
+          <img src="assets/images/3x3-grid-selection/DSC02118.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/DSC02156.jpg">
+          <img src="assets/images/3x3-grid-selection/DSC02156.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/DSC02269.jpg">
+          <img src="assets/images/3x3-grid-selection/DSC02269.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
+        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/DSC02282.jpg">
+          <img src="assets/images/3x3-grid-selection/DSC02282.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn replace-btn">⇄ Replace</button>
+            <button class="ctrl-btn remove-btn">X Remove</button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- UNUSED PHOTOS -->
     <div>
-      <div class="pane-header" style="color: #888; border-color: #222;">
-        Unused Photos
-        <span class="pane-subtitle">Drag these UP into the Active Grid to add them, or drag active photos DOWN here to delete them.</span>
-      </div>
-      <div class="sortable-grid" id="unusedGrid">
-        <div class="sortable-item" data-id="assets/images/20140101-DSC08617.jpg"><img src="assets/images/20140101-DSC08617.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20140101-DSC08689.jpg"><img src="assets/images/20140101-DSC08689.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20140101-DSC08694.jpg"><img src="assets/images/20140101-DSC08694.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20140101-DSC09042.jpg"><img src="assets/images/20140101-DSC09042.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20140101-DSC09122.jpg"><img src="assets/images/20140101-DSC09122.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20140101-DSC09159.jpg"><img src="assets/images/20140101-DSC09159.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20140101-DSC09166.jpg"><img src="assets/images/20140101-DSC09166.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20140101-DSC09194.jpg"><img src="assets/images/20140101-DSC09194.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20140101-DSC09207.jpg"><img src="assets/images/20140101-DSC09207.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20140101-DSC09212.jpg"><img src="assets/images/20140101-DSC09212.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20140101-DSC09213.jpg"><img src="assets/images/20140101-DSC09213.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260531-DSC03398-Edit.jpg"><img src="assets/images/20260531-DSC03398-Edit.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260531-DSC03418.jpg"><img src="assets/images/20260531-DSC03418.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260531-DSC03427-Edit.jpg"><img src="assets/images/20260531-DSC03427-Edit.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260531-DSC03438-Edit.jpg"><img src="assets/images/20260531-DSC03438-Edit.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260607-DSC04716.jpg"><img src="assets/images/20260607-DSC04716.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260618-DSC07360-Edit.jpg"><img src="assets/images/20260618-DSC07360-Edit.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260621-DSC07667.jpg"><img src="assets/images/20260621-DSC07667.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260621-DSC07671-Edit.jpg"><img src="assets/images/20260621-DSC07671-Edit.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260621-DSC07673.jpg"><img src="assets/images/20260621-DSC07673.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260621-DSC07679.jpg"><img src="assets/images/20260621-DSC07679.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260621-DSC07686.jpg"><img src="assets/images/20260621-DSC07686.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260621-DSC07688-Edit.jpg"><img src="assets/images/20260621-DSC07688-Edit.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260626-DSC08130.jpg"><img src="assets/images/20260626-DSC08130.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260626-DSC08145.jpg"><img src="assets/images/20260626-DSC08145.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260626-DSC08235.jpg"><img src="assets/images/20260626-DSC08235.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260626-DSC08324.jpg"><img src="assets/images/20260626-DSC08324.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260710-DSC09249.jpg"><img src="assets/images/20260710-DSC09249.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260710-DSC09297.jpg"><img src="assets/images/20260710-DSC09297.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260710-DSC09321.jpg"><img src="assets/images/20260710-DSC09321.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260710-DSC09332.jpg"><img src="assets/images/20260710-DSC09332.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260710-DSC09344.jpg"><img src="assets/images/20260710-DSC09344.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260710-DSC09384.jpg"><img src="assets/images/20260710-DSC09384.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260710-DSC09396.jpg"><img src="assets/images/20260710-DSC09396.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260710-DSC09400.jpg"><img src="assets/images/20260710-DSC09400.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260710-DSC09429.jpg"><img src="assets/images/20260710-DSC09429.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260710-DSC09544.jpg"><img src="assets/images/20260710-DSC09544.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260710-DSC09643.jpg"><img src="assets/images/20260710-DSC09643.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260711-DSC00036.jpg"><img src="assets/images/20260711-DSC00036.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260711-DSC00050.jpg"><img src="assets/images/20260711-DSC00050.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260711-DSC00064.jpg"><img src="assets/images/20260711-DSC00064.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260711-DSC09896.jpg"><img src="assets/images/20260711-DSC09896.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260711-DSC09905.jpg"><img src="assets/images/20260711-DSC09905.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260711-DSC09918.jpg"><img src="assets/images/20260711-DSC09918.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260711-DSC09946.jpg"><img src="assets/images/20260711-DSC09946.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260711-DSC09970.jpg"><img src="assets/images/20260711-DSC09970.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260719-DSC09680.jpg"><img src="assets/images/20260719-DSC09680.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260725-DSC02281.jpg"><img src="assets/images/20260725-DSC02281.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260727-DSC02938.jpg"><img src="assets/images/20260727-DSC02938.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260727-DSC03453.jpg"><img src="assets/images/20260727-DSC03453.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260728-DSC03957.jpg"><img src="assets/images/20260728-DSC03957.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260728-DSC03999.jpg"><img src="assets/images/20260728-DSC03999.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260728-DSC04003.jpg"><img src="assets/images/20260728-DSC04003.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260728-DSC04017.jpg"><img src="assets/images/20260728-DSC04017.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260728-DSC04035.jpg"><img src="assets/images/20260728-DSC04035.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260728-DSC04046.jpg"><img src="assets/images/20260728-DSC04046.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260728-DSC04091.jpg"><img src="assets/images/20260728-DSC04091.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260728-DSC04114.jpg"><img src="assets/images/20260728-DSC04114.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260728-DSC04146.jpg"><img src="assets/images/20260728-DSC04146.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260728-DSC04168.jpg"><img src="assets/images/20260728-DSC04168.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260728-DSC04251.jpg"><img src="assets/images/20260728-DSC04251.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260728-DSC04265.jpg"><img src="assets/images/20260728-DSC04265.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260728-DSC04318.jpg"><img src="assets/images/20260728-DSC04318.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260728-DSC04488.jpg"><img src="assets/images/20260728-DSC04488.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260728-DSC04493.jpg"><img src="assets/images/20260728-DSC04493.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260728-DSC04511.jpg"><img src="assets/images/20260728-DSC04511.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260728-DSC04557.jpg"><img src="assets/images/20260728-DSC04557.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260728-DSC04558.jpg"><img src="assets/images/20260728-DSC04558.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260728-DSC04559.jpg"><img src="assets/images/20260728-DSC04559.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260728-DSC04585.jpg"><img src="assets/images/20260728-DSC04585.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260728-DSC04598.jpg"><img src="assets/images/20260728-DSC04598.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260728-DSC04616.jpg"><img src="assets/images/20260728-DSC04616.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260728-DSC04734.jpg"><img src="assets/images/20260728-DSC04734.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260728-DSC04766.jpg"><img src="assets/images/20260728-DSC04766.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260728-DSC04772.jpg"><img src="assets/images/20260728-DSC04772.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260804-DSC05410.jpg"><img src="assets/images/20260804-DSC05410.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260804-DSC05434.jpg"><img src="assets/images/20260804-DSC05434.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260804-DSC05446-2.jpg"><img src="assets/images/20260804-DSC05446-2.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260804-DSC05466.jpg"><img src="assets/images/20260804-DSC05466.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260804-DSC05471.jpg"><img src="assets/images/20260804-DSC05471.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260804-DSC05484.jpg"><img src="assets/images/20260804-DSC05484.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260804-DSC05486.jpg"><img src="assets/images/20260804-DSC05486.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260804-DSC05582.jpg"><img src="assets/images/20260804-DSC05582.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260804-DSC05648.jpg"><img src="assets/images/20260804-DSC05648.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260804-DSC05657.jpg"><img src="assets/images/20260804-DSC05657.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260804-DSC05689.jpg"><img src="assets/images/20260804-DSC05689.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260804-DSC05692.jpg"><img src="assets/images/20260804-DSC05692.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260804-DSC05706.jpg"><img src="assets/images/20260804-DSC05706.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260804-DSC05718.jpg"><img src="assets/images/20260804-DSC05718.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260804-DSC05806.jpg"><img src="assets/images/20260804-DSC05806.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260804-DSC05811.jpg"><img src="assets/images/20260804-DSC05811.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260804-DSC05820.jpg"><img src="assets/images/20260804-DSC05820.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260804-DSC05918.jpg"><img src="assets/images/20260804-DSC05918.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260806-DSC06215.jpg"><img src="assets/images/20260806-DSC06215.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260806-DSC06253.jpg"><img src="assets/images/20260806-DSC06253.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260806-DSC06457.jpg"><img src="assets/images/20260806-DSC06457.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260806-DSC06665.jpg"><img src="assets/images/20260806-DSC06665.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260806-DSC06695.jpg"><img src="assets/images/20260806-DSC06695.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260806-DSC06698.jpg"><img src="assets/images/20260806-DSC06698.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260806-DSC06712.jpg"><img src="assets/images/20260806-DSC06712.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260806-DSC06753.jpg"><img src="assets/images/20260806-DSC06753.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC00044.jpg"><img src="assets/images/20260808-DSC00044.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC00149.jpg"><img src="assets/images/20260808-DSC00149.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC00151.jpg"><img src="assets/images/20260808-DSC00151.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC00173.jpg"><img src="assets/images/20260808-DSC00173.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC00300.jpg"><img src="assets/images/20260808-DSC00300.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC00352.jpg"><img src="assets/images/20260808-DSC00352.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC00696.jpg"><img src="assets/images/20260808-DSC00696.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC00700.jpg"><img src="assets/images/20260808-DSC00700.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC00726.jpg"><img src="assets/images/20260808-DSC00726.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC00727.jpg"><img src="assets/images/20260808-DSC00727.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC00782.jpg"><img src="assets/images/20260808-DSC00782.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC00821.jpg"><img src="assets/images/20260808-DSC00821.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC00842.jpg"><img src="assets/images/20260808-DSC00842.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC00850.jpg"><img src="assets/images/20260808-DSC00850.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC00854.jpg"><img src="assets/images/20260808-DSC00854.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC00856.jpg"><img src="assets/images/20260808-DSC00856.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC00859.jpg"><img src="assets/images/20260808-DSC00859.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC00860.jpg"><img src="assets/images/20260808-DSC00860.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC00861.jpg"><img src="assets/images/20260808-DSC00861.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC00908.jpg"><img src="assets/images/20260808-DSC00908.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC00915.jpg"><img src="assets/images/20260808-DSC00915.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC01172.jpg"><img src="assets/images/20260808-DSC01172.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC09746.jpg"><img src="assets/images/20260808-DSC09746.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC09809.jpg"><img src="assets/images/20260808-DSC09809.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC09822.jpg"><img src="assets/images/20260808-DSC09822.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC09840.jpg"><img src="assets/images/20260808-DSC09840.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC09854.jpg"><img src="assets/images/20260808-DSC09854.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC09860.jpg"><img src="assets/images/20260808-DSC09860.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC09863.jpg"><img src="assets/images/20260808-DSC09863.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC09865.jpg"><img src="assets/images/20260808-DSC09865.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC09866.jpg"><img src="assets/images/20260808-DSC09866.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC09868.jpg"><img src="assets/images/20260808-DSC09868.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC09874.jpg"><img src="assets/images/20260808-DSC09874.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC09913.jpg"><img src="assets/images/20260808-DSC09913.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC09920.jpg"><img src="assets/images/20260808-DSC09920.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC09928.jpg"><img src="assets/images/20260808-DSC09928.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC09935.jpg"><img src="assets/images/20260808-DSC09935.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC09942.jpg"><img src="assets/images/20260808-DSC09942.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC09943.jpg"><img src="assets/images/20260808-DSC09943.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC09973.jpg"><img src="assets/images/20260808-DSC09973.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC09974.jpg"><img src="assets/images/20260808-DSC09974.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC09978.jpg"><img src="assets/images/20260808-DSC09978.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260814-DSC07789.jpg"><img src="assets/images/20260814-DSC07789.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260814-DSC07791.jpg"><img src="assets/images/20260814-DSC07791.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260814-DSC07794.jpg"><img src="assets/images/20260814-DSC07794.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260814-DSC07828.jpg"><img src="assets/images/20260814-DSC07828.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260814-DSC07907.jpg"><img src="assets/images/20260814-DSC07907.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260814-DSC07911.jpg"><img src="assets/images/20260814-DSC07911.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260814-DSC07912.jpg"><img src="assets/images/20260814-DSC07912.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260814-DSC07917.jpg"><img src="assets/images/20260814-DSC07917.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260814-DSC07973.jpg"><img src="assets/images/20260814-DSC07973.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260814-DSC07997.jpg"><img src="assets/images/20260814-DSC07997.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260814-DSC07999.jpg"><img src="assets/images/20260814-DSC07999.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260818-DSC08839.jpg"><img src="assets/images/20260818-DSC08839.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260818-DSC08851.jpg"><img src="assets/images/20260818-DSC08851.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/20260818-DSC08854.jpg"><img src="assets/images/20260818-DSC08854.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/wfwfwfwf.jpg"><img src="assets/images/3x3-grid-selection/wfwfwfwf.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/wfwfwfwwf (2).jpg"><img src="assets/images/3x3-grid-selection/wfwfwfwwf (2).jpg"></div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/wfwfwfwwf.jpg"><img src="assets/images/3x3-grid-selection/wfwfwfwwf.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC01752.jpg"><img src="assets/images/DSC01752.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC01811.jpg"><img src="assets/images/DSC01811.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC02025.jpg"><img src="assets/images/DSC02025.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC02118.jpg"><img src="assets/images/DSC02118.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC02138.jpg"><img src="assets/images/DSC02138.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC02156.jpg"><img src="assets/images/DSC02156.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC02170.jpg"><img src="assets/images/DSC02170.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC02238.jpg"><img src="assets/images/DSC02238.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC02269.jpg"><img src="assets/images/DSC02269.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC02270.jpg"><img src="assets/images/DSC02270.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC02282.jpg"><img src="assets/images/DSC02282.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC02294.jpg"><img src="assets/images/DSC02294.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC02297.jpg"><img src="assets/images/DSC02297.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC02336.jpg"><img src="assets/images/DSC02336.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC02337.jpg"><img src="assets/images/DSC02337.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC02346.jpg"><img src="assets/images/DSC02346.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC02788.jpg"><img src="assets/images/DSC02788.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC02865.jpg"><img src="assets/images/DSC02865.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC02908.jpg"><img src="assets/images/DSC02908.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC02921.jpg"><img src="assets/images/DSC02921.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC02925.jpg"><img src="assets/images/DSC02925.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC02928.jpg"><img src="assets/images/DSC02928.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC02937.jpg"><img src="assets/images/DSC02937.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC02938.jpg"><img src="assets/images/DSC02938.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC02958.jpg"><img src="assets/images/DSC02958.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC02975.jpg"><img src="assets/images/DSC02975.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC02977.jpg"><img src="assets/images/DSC02977.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC02991.jpg"><img src="assets/images/DSC02991.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC02994.jpg"><img src="assets/images/DSC02994.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC03009.jpg"><img src="assets/images/DSC03009.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC03016.jpg"><img src="assets/images/DSC03016.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC03017.jpg"><img src="assets/images/DSC03017.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC03149.jpg"><img src="assets/images/DSC03149.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC03165.jpg"><img src="assets/images/DSC03165.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC03198.jpg"><img src="assets/images/DSC03198.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/DSC03455.jpg"><img src="assets/images/DSC03455.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/dwd (2).jpg"><img src="assets/images/dwd (2).jpg"></div>
-        <div class="sortable-item" data-id="assets/images/dwd.jpg"><img src="assets/images/dwd.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/dwdw.jpg"><img src="assets/images/dwdw.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/efewew.jpg"><img src="assets/images/efewew.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/ergreg.jpg"><img src="assets/images/ergreg.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/ergregr.jpg"><img src="assets/images/ergregr.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/fewfefwefw.jpg"><img src="assets/images/fewfefwefw.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/fwfwfw.jpg"><img src="assets/images/fwfwfw.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/fwfwfwf.jpg"><img src="assets/images/fwfwfwf.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/fwfwfwfw.jpg"><img src="assets/images/fwfwfwfw.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/fwfwfwfwfw.jpg"><img src="assets/images/fwfwfwfwfw.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/gergerg.jpg"><img src="assets/images/gergerg.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/greg.jpg"><img src="assets/images/greg.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/greger.jpg"><img src="assets/images/greger.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/miguel-avatar.jpg"><img src="assets/images/miguel-avatar.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/miguel-portrait-1.jpg"><img src="assets/images/miguel-portrait-1.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/miguel-portrait-bench.jpg"><img src="assets/images/miguel-portrait-bench.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/miguel-portrait-camera-close.jpg"><img src="assets/images/miguel-portrait-camera-close.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/wfwfwfw (2).jpg"><img src="assets/images/wfwfwfw (2).jpg"></div>
-        <div class="sortable-item" data-id="assets/images/wfwfwfw.jpg"><img src="assets/images/wfwfwfw.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/wfwfwfwf.jpg"><img src="assets/images/wfwfwfwf.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/wfwfwfwfwf (2).jpg"><img src="assets/images/wfwfwfwfwf (2).jpg"></div>
-        <div class="sortable-item" data-id="assets/images/wfwfwfwfwf.jpg"><img src="assets/images/wfwfwfwfwf.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/wfwfwfwwf (2).jpg"><img src="assets/images/wfwfwfwwf (2).jpg"></div>
-        <div class="sortable-item" data-id="assets/images/wfwfwfwwf.jpg"><img src="assets/images/wfwfwfwwf.jpg"></div>
-        <div class="sortable-item" data-id="assets/images/wfwwfwf.jpg"><img src="assets/images/wfwwfwf.jpg"></div>
+      <div class="pane-header" style="color:#888; border-color:#222;">Unused Pool <span class="pane-subtitle">Hover to add to active grid.</span></div>
+      <div class="sortable-grid" id="unusedGrid" style="--cols: 8;">
+        
+        <div class="sortable-item unused-item" data-id="assets/images/20140101-DSC08617.jpg">
+          <img src="assets/images/20140101-DSC08617.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20140101-DSC08689.jpg">
+          <img src="assets/images/20140101-DSC08689.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20140101-DSC08694.jpg">
+          <img src="assets/images/20140101-DSC08694.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20140101-DSC09042.jpg">
+          <img src="assets/images/20140101-DSC09042.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20140101-DSC09122.jpg">
+          <img src="assets/images/20140101-DSC09122.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20140101-DSC09159.jpg">
+          <img src="assets/images/20140101-DSC09159.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20140101-DSC09166.jpg">
+          <img src="assets/images/20140101-DSC09166.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20140101-DSC09194.jpg">
+          <img src="assets/images/20140101-DSC09194.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20140101-DSC09207.jpg">
+          <img src="assets/images/20140101-DSC09207.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20140101-DSC09212.jpg">
+          <img src="assets/images/20140101-DSC09212.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20140101-DSC09213.jpg">
+          <img src="assets/images/20140101-DSC09213.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260531-DSC03398-Edit.jpg">
+          <img src="assets/images/20260531-DSC03398-Edit.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260531-DSC03418.jpg">
+          <img src="assets/images/20260531-DSC03418.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260531-DSC03427-Edit.jpg">
+          <img src="assets/images/20260531-DSC03427-Edit.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260531-DSC03438-Edit.jpg">
+          <img src="assets/images/20260531-DSC03438-Edit.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260607-DSC04716.jpg">
+          <img src="assets/images/20260607-DSC04716.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260618-DSC07360-Edit.jpg">
+          <img src="assets/images/20260618-DSC07360-Edit.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260621-DSC07667.jpg">
+          <img src="assets/images/20260621-DSC07667.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260621-DSC07671-Edit.jpg">
+          <img src="assets/images/20260621-DSC07671-Edit.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260621-DSC07673.jpg">
+          <img src="assets/images/20260621-DSC07673.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260621-DSC07679.jpg">
+          <img src="assets/images/20260621-DSC07679.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260621-DSC07686.jpg">
+          <img src="assets/images/20260621-DSC07686.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260621-DSC07688-Edit.jpg">
+          <img src="assets/images/20260621-DSC07688-Edit.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260626-DSC08130.jpg">
+          <img src="assets/images/20260626-DSC08130.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260626-DSC08145.jpg">
+          <img src="assets/images/20260626-DSC08145.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260626-DSC08235.jpg">
+          <img src="assets/images/20260626-DSC08235.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260626-DSC08324.jpg">
+          <img src="assets/images/20260626-DSC08324.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260710-DSC09249.jpg">
+          <img src="assets/images/20260710-DSC09249.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260710-DSC09297.jpg">
+          <img src="assets/images/20260710-DSC09297.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260710-DSC09321.jpg">
+          <img src="assets/images/20260710-DSC09321.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260710-DSC09332.jpg">
+          <img src="assets/images/20260710-DSC09332.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260710-DSC09344.jpg">
+          <img src="assets/images/20260710-DSC09344.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260710-DSC09384.jpg">
+          <img src="assets/images/20260710-DSC09384.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260710-DSC09396.jpg">
+          <img src="assets/images/20260710-DSC09396.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260710-DSC09400.jpg">
+          <img src="assets/images/20260710-DSC09400.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260710-DSC09429.jpg">
+          <img src="assets/images/20260710-DSC09429.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260710-DSC09544.jpg">
+          <img src="assets/images/20260710-DSC09544.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260710-DSC09643.jpg">
+          <img src="assets/images/20260710-DSC09643.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260711-DSC00036.jpg">
+          <img src="assets/images/20260711-DSC00036.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260711-DSC00050.jpg">
+          <img src="assets/images/20260711-DSC00050.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260711-DSC00064.jpg">
+          <img src="assets/images/20260711-DSC00064.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260711-DSC09896.jpg">
+          <img src="assets/images/20260711-DSC09896.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260711-DSC09905.jpg">
+          <img src="assets/images/20260711-DSC09905.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260711-DSC09918.jpg">
+          <img src="assets/images/20260711-DSC09918.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260711-DSC09946.jpg">
+          <img src="assets/images/20260711-DSC09946.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260711-DSC09970.jpg">
+          <img src="assets/images/20260711-DSC09970.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260719-DSC09680.jpg">
+          <img src="assets/images/20260719-DSC09680.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260725-DSC02281.jpg">
+          <img src="assets/images/20260725-DSC02281.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260727-DSC02938.jpg">
+          <img src="assets/images/20260727-DSC02938.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260727-DSC03453.jpg">
+          <img src="assets/images/20260727-DSC03453.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC03957.jpg">
+          <img src="assets/images/20260728-DSC03957.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC03999.jpg">
+          <img src="assets/images/20260728-DSC03999.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04003.jpg">
+          <img src="assets/images/20260728-DSC04003.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04017.jpg">
+          <img src="assets/images/20260728-DSC04017.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04035.jpg">
+          <img src="assets/images/20260728-DSC04035.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04046.jpg">
+          <img src="assets/images/20260728-DSC04046.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04091.jpg">
+          <img src="assets/images/20260728-DSC04091.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04114.jpg">
+          <img src="assets/images/20260728-DSC04114.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04146.jpg">
+          <img src="assets/images/20260728-DSC04146.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04168.jpg">
+          <img src="assets/images/20260728-DSC04168.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04251.jpg">
+          <img src="assets/images/20260728-DSC04251.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04265.jpg">
+          <img src="assets/images/20260728-DSC04265.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04318.jpg">
+          <img src="assets/images/20260728-DSC04318.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04488.jpg">
+          <img src="assets/images/20260728-DSC04488.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04493.jpg">
+          <img src="assets/images/20260728-DSC04493.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04511.jpg">
+          <img src="assets/images/20260728-DSC04511.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04557.jpg">
+          <img src="assets/images/20260728-DSC04557.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04558.jpg">
+          <img src="assets/images/20260728-DSC04558.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04559.jpg">
+          <img src="assets/images/20260728-DSC04559.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04585.jpg">
+          <img src="assets/images/20260728-DSC04585.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04598.jpg">
+          <img src="assets/images/20260728-DSC04598.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04616.jpg">
+          <img src="assets/images/20260728-DSC04616.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04734.jpg">
+          <img src="assets/images/20260728-DSC04734.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04766.jpg">
+          <img src="assets/images/20260728-DSC04766.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04772.jpg">
+          <img src="assets/images/20260728-DSC04772.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05410.jpg">
+          <img src="assets/images/20260804-DSC05410.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05434.jpg">
+          <img src="assets/images/20260804-DSC05434.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05446-2.jpg">
+          <img src="assets/images/20260804-DSC05446-2.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05466.jpg">
+          <img src="assets/images/20260804-DSC05466.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05471.jpg">
+          <img src="assets/images/20260804-DSC05471.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05484.jpg">
+          <img src="assets/images/20260804-DSC05484.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05486.jpg">
+          <img src="assets/images/20260804-DSC05486.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05582.jpg">
+          <img src="assets/images/20260804-DSC05582.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05648.jpg">
+          <img src="assets/images/20260804-DSC05648.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05657.jpg">
+          <img src="assets/images/20260804-DSC05657.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05689.jpg">
+          <img src="assets/images/20260804-DSC05689.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05692.jpg">
+          <img src="assets/images/20260804-DSC05692.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05706.jpg">
+          <img src="assets/images/20260804-DSC05706.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05718.jpg">
+          <img src="assets/images/20260804-DSC05718.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05806.jpg">
+          <img src="assets/images/20260804-DSC05806.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05811.jpg">
+          <img src="assets/images/20260804-DSC05811.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05820.jpg">
+          <img src="assets/images/20260804-DSC05820.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05918.jpg">
+          <img src="assets/images/20260804-DSC05918.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260806-DSC06215.jpg">
+          <img src="assets/images/20260806-DSC06215.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260806-DSC06253.jpg">
+          <img src="assets/images/20260806-DSC06253.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260806-DSC06457.jpg">
+          <img src="assets/images/20260806-DSC06457.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260806-DSC06665.jpg">
+          <img src="assets/images/20260806-DSC06665.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260806-DSC06695.jpg">
+          <img src="assets/images/20260806-DSC06695.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260806-DSC06698.jpg">
+          <img src="assets/images/20260806-DSC06698.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260806-DSC06712.jpg">
+          <img src="assets/images/20260806-DSC06712.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260806-DSC06753.jpg">
+          <img src="assets/images/20260806-DSC06753.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00044.jpg">
+          <img src="assets/images/20260808-DSC00044.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00149.jpg">
+          <img src="assets/images/20260808-DSC00149.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00151.jpg">
+          <img src="assets/images/20260808-DSC00151.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00173.jpg">
+          <img src="assets/images/20260808-DSC00173.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00300.jpg">
+          <img src="assets/images/20260808-DSC00300.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00352.jpg">
+          <img src="assets/images/20260808-DSC00352.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00696.jpg">
+          <img src="assets/images/20260808-DSC00696.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00700.jpg">
+          <img src="assets/images/20260808-DSC00700.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00726.jpg">
+          <img src="assets/images/20260808-DSC00726.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00727.jpg">
+          <img src="assets/images/20260808-DSC00727.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00782.jpg">
+          <img src="assets/images/20260808-DSC00782.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00821.jpg">
+          <img src="assets/images/20260808-DSC00821.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00842.jpg">
+          <img src="assets/images/20260808-DSC00842.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00850.jpg">
+          <img src="assets/images/20260808-DSC00850.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00854.jpg">
+          <img src="assets/images/20260808-DSC00854.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00856.jpg">
+          <img src="assets/images/20260808-DSC00856.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00859.jpg">
+          <img src="assets/images/20260808-DSC00859.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00860.jpg">
+          <img src="assets/images/20260808-DSC00860.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00861.jpg">
+          <img src="assets/images/20260808-DSC00861.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00908.jpg">
+          <img src="assets/images/20260808-DSC00908.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00915.jpg">
+          <img src="assets/images/20260808-DSC00915.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC01172.jpg">
+          <img src="assets/images/20260808-DSC01172.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09746.jpg">
+          <img src="assets/images/20260808-DSC09746.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09809.jpg">
+          <img src="assets/images/20260808-DSC09809.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09822.jpg">
+          <img src="assets/images/20260808-DSC09822.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09840.jpg">
+          <img src="assets/images/20260808-DSC09840.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09854.jpg">
+          <img src="assets/images/20260808-DSC09854.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09860.jpg">
+          <img src="assets/images/20260808-DSC09860.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09863.jpg">
+          <img src="assets/images/20260808-DSC09863.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09865.jpg">
+          <img src="assets/images/20260808-DSC09865.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09866.jpg">
+          <img src="assets/images/20260808-DSC09866.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09868.jpg">
+          <img src="assets/images/20260808-DSC09868.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09874.jpg">
+          <img src="assets/images/20260808-DSC09874.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09913.jpg">
+          <img src="assets/images/20260808-DSC09913.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09920.jpg">
+          <img src="assets/images/20260808-DSC09920.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09928.jpg">
+          <img src="assets/images/20260808-DSC09928.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09935.jpg">
+          <img src="assets/images/20260808-DSC09935.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09942.jpg">
+          <img src="assets/images/20260808-DSC09942.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09943.jpg">
+          <img src="assets/images/20260808-DSC09943.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09973.jpg">
+          <img src="assets/images/20260808-DSC09973.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09974.jpg">
+          <img src="assets/images/20260808-DSC09974.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09978.jpg">
+          <img src="assets/images/20260808-DSC09978.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260814-DSC07789.jpg">
+          <img src="assets/images/20260814-DSC07789.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260814-DSC07791.jpg">
+          <img src="assets/images/20260814-DSC07791.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260814-DSC07794.jpg">
+          <img src="assets/images/20260814-DSC07794.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260814-DSC07828.jpg">
+          <img src="assets/images/20260814-DSC07828.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260814-DSC07907.jpg">
+          <img src="assets/images/20260814-DSC07907.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260814-DSC07911.jpg">
+          <img src="assets/images/20260814-DSC07911.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260814-DSC07912.jpg">
+          <img src="assets/images/20260814-DSC07912.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260814-DSC07917.jpg">
+          <img src="assets/images/20260814-DSC07917.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260814-DSC07973.jpg">
+          <img src="assets/images/20260814-DSC07973.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260814-DSC07997.jpg">
+          <img src="assets/images/20260814-DSC07997.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260814-DSC07999.jpg">
+          <img src="assets/images/20260814-DSC07999.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260818-DSC08839.jpg">
+          <img src="assets/images/20260818-DSC08839.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260818-DSC08851.jpg">
+          <img src="assets/images/20260818-DSC08851.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/20260818-DSC08854.jpg">
+          <img src="assets/images/20260818-DSC08854.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/3x3-grid-selection/wfwfwfwf.jpg">
+          <img src="assets/images/3x3-grid-selection/wfwfwfwf.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/3x3-grid-selection/wfwfwfwwf (2).jpg">
+          <img src="assets/images/3x3-grid-selection/wfwfwfwwf (2).jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/3x3-grid-selection/wfwfwfwwf.jpg">
+          <img src="assets/images/3x3-grid-selection/wfwfwfwwf.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC01752.jpg">
+          <img src="assets/images/DSC01752.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC01811.jpg">
+          <img src="assets/images/DSC01811.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC02025.jpg">
+          <img src="assets/images/DSC02025.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC02118.jpg">
+          <img src="assets/images/DSC02118.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC02138.jpg">
+          <img src="assets/images/DSC02138.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC02156.jpg">
+          <img src="assets/images/DSC02156.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC02170.jpg">
+          <img src="assets/images/DSC02170.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC02238.jpg">
+          <img src="assets/images/DSC02238.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC02269.jpg">
+          <img src="assets/images/DSC02269.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC02270.jpg">
+          <img src="assets/images/DSC02270.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC02282.jpg">
+          <img src="assets/images/DSC02282.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC02294.jpg">
+          <img src="assets/images/DSC02294.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC02297.jpg">
+          <img src="assets/images/DSC02297.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC02336.jpg">
+          <img src="assets/images/DSC02336.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC02337.jpg">
+          <img src="assets/images/DSC02337.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC02346.jpg">
+          <img src="assets/images/DSC02346.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC02788.jpg">
+          <img src="assets/images/DSC02788.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC02865.jpg">
+          <img src="assets/images/DSC02865.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC02908.jpg">
+          <img src="assets/images/DSC02908.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC02921.jpg">
+          <img src="assets/images/DSC02921.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC02925.jpg">
+          <img src="assets/images/DSC02925.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC02928.jpg">
+          <img src="assets/images/DSC02928.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC02937.jpg">
+          <img src="assets/images/DSC02937.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC02938.jpg">
+          <img src="assets/images/DSC02938.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC02958.jpg">
+          <img src="assets/images/DSC02958.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC02975.jpg">
+          <img src="assets/images/DSC02975.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC02977.jpg">
+          <img src="assets/images/DSC02977.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC02991.jpg">
+          <img src="assets/images/DSC02991.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC02994.jpg">
+          <img src="assets/images/DSC02994.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC03009.jpg">
+          <img src="assets/images/DSC03009.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC03016.jpg">
+          <img src="assets/images/DSC03016.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC03017.jpg">
+          <img src="assets/images/DSC03017.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC03149.jpg">
+          <img src="assets/images/DSC03149.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC03165.jpg">
+          <img src="assets/images/DSC03165.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC03198.jpg">
+          <img src="assets/images/DSC03198.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/DSC03455.jpg">
+          <img src="assets/images/DSC03455.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/dwd (2).jpg">
+          <img src="assets/images/dwd (2).jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/dwd.jpg">
+          <img src="assets/images/dwd.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/dwdw.jpg">
+          <img src="assets/images/dwdw.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/efewew.jpg">
+          <img src="assets/images/efewew.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/ergreg.jpg">
+          <img src="assets/images/ergreg.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/ergregr.jpg">
+          <img src="assets/images/ergregr.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/fewfefwefw.jpg">
+          <img src="assets/images/fewfefwefw.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/fwfwfw.jpg">
+          <img src="assets/images/fwfwfw.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/fwfwfwf.jpg">
+          <img src="assets/images/fwfwfwf.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/fwfwfwfw.jpg">
+          <img src="assets/images/fwfwfwfw.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/fwfwfwfwfw.jpg">
+          <img src="assets/images/fwfwfwfwfw.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/gergerg.jpg">
+          <img src="assets/images/gergerg.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/greg.jpg">
+          <img src="assets/images/greg.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/greger.jpg">
+          <img src="assets/images/greger.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/miguel-avatar.jpg">
+          <img src="assets/images/miguel-avatar.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/miguel-portrait-1.jpg">
+          <img src="assets/images/miguel-portrait-1.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/miguel-portrait-bench.jpg">
+          <img src="assets/images/miguel-portrait-bench.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/miguel-portrait-camera-close.jpg">
+          <img src="assets/images/miguel-portrait-camera-close.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/wfwfwfw (2).jpg">
+          <img src="assets/images/wfwfwfw (2).jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/wfwfwfw.jpg">
+          <img src="assets/images/wfwfwfw.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/wfwfwfwf.jpg">
+          <img src="assets/images/wfwfwfwf.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/wfwfwfwfwf (2).jpg">
+          <img src="assets/images/wfwfwfwfwf (2).jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/wfwfwfwfwf.jpg">
+          <img src="assets/images/wfwfwfwfwf.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/wfwfwfwwf (2).jpg">
+          <img src="assets/images/wfwfwfwwf (2).jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/wfwfwfwwf.jpg">
+          <img src="assets/images/wfwfwfwwf.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
+        <div class="sortable-item unused-item" data-id="assets/images/wfwwfwf.jpg">
+          <img src="assets/images/wfwwfwf.jpg">
+          <div class="item-controls">
+            <button class="ctrl-btn add-btn">+ Add</button>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
+  
+  <!-- Replace Modal -->
+  <div class="modal-overlay" id="replaceModal">
+    <div class="modal-header">
+      <h2>Select photo to swap in:</h2>
+      <button class="modal-close" id="closeModal">&times;</button>
+    </div>
+    <div class="modal-grid" id="modalGrid"></div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
   <script>
     const activeGrid = document.getElementById('activeGrid');
     const unusedGrid = document.getElementById('unusedGrid');
+    const colSlider = document.getElementById('colSlider');
+    const replaceModal = document.getElementById('replaceModal');
+    const modalGrid = document.getElementById('modalGrid');
+    const closeModal = document.getElementById('closeModal');
+    let targetReplaceItem = null;
     
-    const sortableOptions = {
-      group: 'shared', // set both lists to same group
-      animation: 150,
-      ghostClass: 'sortable-ghost',
-      delay: 50,
-      delayOnTouchOnly: true
-    };
+    // Sortable JS setup
+    new Sortable(activeGrid, { group: 'shared', animation: 150, delay: 50, delayOnTouchOnly: true,
+      onAdd: function (evt) { changeItemState(evt.item, 'active'); } 
+    });
+    new Sortable(unusedGrid, { group: 'shared', animation: 150, delay: 50, delayOnTouchOnly: true,
+      onAdd: function (evt) { changeItemState(evt.item, 'unused'); } 
+    });
     
-    const activeSortable = new Sortable(activeGrid, sortableOptions);
-    new Sortable(unusedGrid, sortableOptions);
+    colSlider.addEventListener('input', (e) => {
+      activeGrid.style.setProperty('--cols', e.target.value);
+    });
+
+    // Helper to swap innerHTML controls when moved between grids
+    function changeItemState(itemEl, state) {
+      const controls = itemEl.querySelector('.item-controls');
+      if (state === 'active') {
+        itemEl.classList.remove('unused-item');
+        itemEl.classList.add('active-item');
+        controls.innerHTML = '<button class="ctrl-btn replace-btn">⇄ Replace</button> <button class="ctrl-btn remove-btn">X Remove</button>';
+      } else {
+        itemEl.classList.remove('active-item');
+        itemEl.classList.add('unused-item');
+        controls.innerHTML = '<button class="ctrl-btn add-btn">+ Add</button>';
+      }
+    }
+
+    // Event Delegation for dynamically changing buttons
+    document.body.addEventListener('click', (e) => {
+      const itemEl = e.target.closest('.sortable-item');
+      if (!itemEl) return;
+      
+      if (e.target.classList.contains('remove-btn')) {
+        changeItemState(itemEl, 'unused');
+        unusedGrid.appendChild(itemEl);
+      } 
+      else if (e.target.classList.contains('add-btn')) {
+        changeItemState(itemEl, 'active');
+        activeGrid.appendChild(itemEl);
+      }
+      else if (e.target.classList.contains('replace-btn')) {
+        targetReplaceItem = itemEl;
+        openReplaceModal();
+      }
+    });
     
+    // Modal Logic
+    function openReplaceModal() {
+      modalGrid.innerHTML = '';
+      const unusedItems = Array.from(unusedGrid.children);
+      unusedItems.forEach(item => {
+        const id = item.getAttribute('data-id');
+        const mItem = document.createElement('div');
+        mItem.className = 'modal-item';
+        mItem.innerHTML = `<img src="${id}">`;
+        mItem.onclick = () => performReplace(id, item);
+        modalGrid.appendChild(mItem);
+      });
+      replaceModal.classList.add('active');
+    }
+    
+    closeModal.onclick = () => replaceModal.classList.remove('active');
+    
+    function performReplace(newId, unusedEl) {
+      if (!targetReplaceItem) return;
+      
+      // Swap IDs
+      const oldId = targetReplaceItem.getAttribute('data-id');
+      targetReplaceItem.setAttribute('data-id', newId);
+      targetReplaceItem.querySelector('img').src = newId;
+      
+      unusedEl.setAttribute('data-id', oldId);
+      unusedEl.querySelector('img').src = oldId;
+      
+      replaceModal.classList.remove('active');
+    }
+
+    // Export Logic
     const exportBtn = document.getElementById('exportBtn');
-    
     exportBtn.addEventListener('click', () => {
-      // ONLY grab the images from the Active Grid!
-      const order = activeSortable.toArray();
-      const json = JSON.stringify(order, null, 2);
+      const activeIds = Array.from(activeGrid.children).map(el => el.getAttribute('data-id'));
+      const json = JSON.stringify(activeIds, null, 2);
       
       navigator.clipboard.writeText(json).then(() => {
         const originalText = exportBtn.innerText;
-        exportBtn.innerText = 'Copied to Clipboard!';
+        exportBtn.innerText = 'Copied!';
         exportBtn.style.background = '#4CAF50';
         exportBtn.style.color = '#fff';
         setTimeout(() => {
@@ -428,8 +1813,6 @@
           exportBtn.style.background = '#fff';
           exportBtn.style.color = '#000';
         }, 3000);
-      }).catch(err => {
-        alert('Failed to copy. Please copy manually:\n\n' + json);
       });
     });
   </script>
