@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CMS Editor | Miguel Madrigal</title>
+  <title>CMS Editor 4.0 | Miguel Madrigal</title>
   <style>
     body { background: #111; color: #fff; font-family: sans-serif; padding-top: 100px; margin: 0; }
     * { box-sizing: border-box; }
@@ -30,18 +30,30 @@
     .sortable-grid {
       display: grid;
       grid-template-columns: repeat(var(--cols, 5), 1fr);
+      align-items: start; /* CRITICAL: Allows items to be their natural height instead of stretching */
       gap: 15px; min-height: 200px; background: rgba(255,255,255,0.02);
       border: 2px dashed #333; padding: 15px; border-radius: 8px;
     }
     
-    .sortable-item { position: relative; cursor: grab; overflow: hidden; border-radius: 4px; background: #222; }
-    .sortable-item img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; pointer-events: none; }
+    .sortable-item { position: relative; cursor: grab; border-radius: 4px; background: #222; overflow: hidden; }
+    .sortable-item img { 
+      width: 100%; 
+      height: auto; /* Show true aspect ratio! */
+      display: block; pointer-events: none; 
+    }
     
+    .orientation-badge {
+      position: absolute; top: 8px; left: 8px; padding: 4px 8px; font-size: 0.8rem; font-weight: bold; border-radius: 4px; z-index: 10;
+      backdrop-filter: blur(4px);
+    }
+    .badge-v { background: rgba(0, 150, 255, 0.7); color: #fff; }
+    .badge-h { background: rgba(255, 100, 0, 0.7); color: #fff; }
+
     /* Hover Controls */
     .item-controls {
       position: absolute; top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0,0,0,0.6); display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px;
-      opacity: 0; transition: opacity 0.2s; pointer-events: none;
+      opacity: 0; transition: opacity 0.2s; pointer-events: none; z-index: 20;
     }
     .sortable-item:hover .item-controls { opacity: 1; pointer-events: auto; }
     
@@ -49,22 +61,20 @@
     .ctrl-btn:hover { background: #fff; color: #000; }
     
     /* Modal */
-    .modal-overlay {
-      position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 10000; display: none; padding: 40px; overflow-y: auto;
-    }
+    .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 10000; display: none; padding: 40px; overflow-y: auto; }
     .modal-overlay.active { display: block; }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
     .modal-close { background: none; border: none; color: #fff; font-size: 2rem; cursor: pointer; }
-    .modal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
-    .modal-item { cursor: pointer; transition: 0.2s; border-radius: 4px; overflow: hidden; }
-    .modal-item img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; }
-    .modal-item:hover { transform: scale(1.05); box-shadow: 0 0 0 2px #fff; }
+    .modal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); align-items: start; gap: 15px; }
+    .modal-item { cursor: pointer; transition: 0.2s; border-radius: 4px; overflow: hidden; position: relative; }
+    .modal-item img { width: 100%; height: auto; display: block; }
+    .modal-item:hover { transform: scale(1.05); box-shadow: 0 0 0 2px #fff; z-index: 10; }
   </style>
 </head>
 <body>
 
   <div class="editor-topbar">
-    <div class="editor-title">Mini-CMS Editor</div>
+    <div class="editor-title">Editor 4.0: True Aspect Ratios</div>
     <div class="nav-controls">
       <div class="slider-container">
         <span>Columns:</span>
@@ -76,1633 +86,1365 @@
 
   <div class="panes-container">
     <div>
-      <div class="pane-header">Active Portfolio <span class="pane-subtitle">Live on website. Hover for options.</span></div>
+      <div class="pane-header">Active Portfolio <span class="pane-subtitle">Live on website. True aspect ratios shown.</span></div>
       <div class="sortable-grid" id="activeGrid" style="--cols: 5;">
         
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260710-DSC09297.jpg">
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260710-DSC09297.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/3x3-grid-selection/20260710-DSC09297.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260710-DSC09321.jpg">
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260710-DSC09321.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/3x3-grid-selection/20260710-DSC09321.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260710-DSC09429.jpg">
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260710-DSC09429.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/3x3-grid-selection/20260710-DSC09429.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04003.jpg">
-          <img src="assets/images/3x3-grid-selection/20260728-DSC04003.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+        <div class="sortable-item" data-id="assets/images/20260710-DSC09332.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260710-DSC09332.jpg">
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04017.jpg">
-          <img src="assets/images/3x3-grid-selection/20260728-DSC04017.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+        <div class="sortable-item" data-id="assets/images/20260710-DSC09400.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260710-DSC09400.jpg">
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04046.jpg">
-          <img src="assets/images/3x3-grid-selection/20260728-DSC04046.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
-        </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04091.jpg">
-          <img src="assets/images/3x3-grid-selection/20260728-DSC04091.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
-        </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04114.jpg">
-          <img src="assets/images/3x3-grid-selection/20260728-DSC04114.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
-        </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04598.jpg">
-          <img src="assets/images/3x3-grid-selection/20260728-DSC04598.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
-        </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260804-DSC05446.jpg">
-          <img src="assets/images/3x3-grid-selection/20260804-DSC05446.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
-        </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06665.jpg">
-          <img src="assets/images/3x3-grid-selection/20260806-DSC06665.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
-        </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06695.jpg">
-          <img src="assets/images/3x3-grid-selection/20260806-DSC06695.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
-        </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06698.jpg">
-          <img src="assets/images/3x3-grid-selection/20260806-DSC06698.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
-        </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06712.jpg">
-          <img src="assets/images/3x3-grid-selection/20260806-DSC06712.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
-        </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06753.jpg">
-          <img src="assets/images/3x3-grid-selection/20260806-DSC06753.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
-        </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00151.jpg">
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00151.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/3x3-grid-selection/20260808-DSC00151.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00696.jpg">
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00696.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/3x3-grid-selection/20260808-DSC00696.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00782.jpg">
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00782.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/3x3-grid-selection/20260808-DSC00782.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00908.jpg">
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00908.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/3x3-grid-selection/20260808-DSC00908.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260711-DSC09896.jpg">
-          <img src="assets/images/3x3-grid-selection/20260711-DSC09896.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00821.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260808-DSC00821.jpg">
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260804-DSC05811.jpg">
-          <img src="assets/images/3x3-grid-selection/20260804-DSC05811.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04003.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260728-DSC04003.jpg">
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06215.jpg">
-          <img src="assets/images/3x3-grid-selection/20260806-DSC06215.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+        <div class="sortable-item" data-id="assets/images/wfwfwfwfwf (2).jpg">
+          <div class="orientation-badge badge-h">H</div>
+          <img src="assets/images/wfwfwfwfwf (2).jpg">
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06253.jpg">
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04598.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/3x3-grid-selection/20260728-DSC04598.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04168.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260728-DSC04168.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04146.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260728-DSC04146.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04265.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260728-DSC04265.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04616.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260728-DSC04616.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04557.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260728-DSC04557.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04585.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260728-DSC04585.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC03957.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260728-DSC03957.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06253.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/3x3-grid-selection/20260806-DSC06253.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06457.jpg">
-          <img src="assets/images/3x3-grid-selection/20260806-DSC06457.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06215.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/3x3-grid-selection/20260806-DSC06215.jpg">
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00044.jpg">
-          <img src="assets/images/3x3-grid-selection/20260808-DSC00044.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+        <div class="sortable-item" data-id="assets/images/20260806-DSC06753.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260806-DSC06753.jpg">
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00300.jpg">
-          <img src="assets/images/3x3-grid-selection/20260808-DSC00300.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+        <div class="sortable-item" data-id="assets/images/20260806-DSC06695.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260806-DSC06695.jpg">
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260814-DSC07999.jpg">
-          <img src="assets/images/3x3-grid-selection/20260814-DSC07999.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+        <div class="sortable-item" data-id="assets/images/20260806-DSC06698.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260806-DSC06698.jpg">
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260818-DSC08839.jpg">
-          <img src="assets/images/3x3-grid-selection/20260818-DSC08839.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260804-DSC05446.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/3x3-grid-selection/20260804-DSC05446.jpg">
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260818-DSC08851.jpg">
-          <img src="assets/images/3x3-grid-selection/20260818-DSC08851.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05410.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260804-DSC05410.jpg">
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260818-DSC08854.jpg">
-          <img src="assets/images/3x3-grid-selection/20260818-DSC08854.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05820.jpg">
+          <div class="orientation-badge badge-h">H</div>
+          <img src="assets/images/20260804-DSC05820.jpg">
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260711-DSC09918.jpg">
-          <img src="assets/images/3x3-grid-selection/20260711-DSC09918.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05486.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260804-DSC05486.jpg">
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260711-DSC09946.jpg">
-          <img src="assets/images/3x3-grid-selection/20260711-DSC09946.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05471.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260804-DSC05471.jpg">
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260626-DSC08130.jpg">
-          <img src="assets/images/3x3-grid-selection/20260626-DSC08130.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05692.jpg">
+          <div class="orientation-badge badge-h">H</div>
+          <img src="assets/images/20260804-DSC05692.jpg">
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260626-DSC08145.jpg">
-          <img src="assets/images/3x3-grid-selection/20260626-DSC08145.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05657.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260804-DSC05657.jpg">
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260626-DSC08235.jpg">
-          <img src="assets/images/3x3-grid-selection/20260626-DSC08235.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05648.jpg">
+          <div class="orientation-badge badge-h">H</div>
+          <img src="assets/images/20260804-DSC05648.jpg">
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/20260626-DSC08324.jpg">
-          <img src="assets/images/3x3-grid-selection/20260626-DSC08324.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05718.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260804-DSC05718.jpg">
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/DSC02118.jpg">
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05582.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260804-DSC05582.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/DSC02118.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/3x3-grid-selection/DSC02118.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/DSC02156.jpg">
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/DSC02156.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/3x3-grid-selection/DSC02156.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/DSC02269.jpg">
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/DSC02269.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/3x3-grid-selection/DSC02269.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item active-item" data-id="assets/images/3x3-grid-selection/DSC02282.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC02138.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/DSC02138.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/DSC02282.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/3x3-grid-selection/DSC02282.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn replace-btn">⇄ Replace</button>
-            <button class="ctrl-btn remove-btn">X Remove</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
       </div>
     </div>
 
     <div>
-      <div class="pane-header" style="color:#888; border-color:#222;">Unused Pool <span class="pane-subtitle">Hover to add to active grid.</span></div>
+      <div class="pane-header" style="color:#888; border-color:#222;">Unused Pool <span class="pane-subtitle">229 available photos.</span></div>
       <div class="sortable-grid" id="unusedGrid" style="--cols: 8;">
         
-        <div class="sortable-item unused-item" data-id="assets/images/20140101-DSC08617.jpg">
+        <div class="sortable-item" data-id="assets/images/20140101-DSC08617.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20140101-DSC08617.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20140101-DSC08689.jpg">
+        <div class="sortable-item" data-id="assets/images/20140101-DSC08689.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/20140101-DSC08689.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20140101-DSC08694.jpg">
+        <div class="sortable-item" data-id="assets/images/20140101-DSC08694.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20140101-DSC08694.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20140101-DSC09042.jpg">
+        <div class="sortable-item" data-id="assets/images/20140101-DSC09042.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20140101-DSC09042.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20140101-DSC09122.jpg">
+        <div class="sortable-item" data-id="assets/images/20140101-DSC09122.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20140101-DSC09122.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20140101-DSC09159.jpg">
+        <div class="sortable-item" data-id="assets/images/20140101-DSC09159.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/20140101-DSC09159.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20140101-DSC09166.jpg">
+        <div class="sortable-item" data-id="assets/images/20140101-DSC09166.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20140101-DSC09166.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20140101-DSC09194.jpg">
+        <div class="sortable-item" data-id="assets/images/20140101-DSC09194.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20140101-DSC09194.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20140101-DSC09207.jpg">
+        <div class="sortable-item" data-id="assets/images/20140101-DSC09207.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20140101-DSC09207.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20140101-DSC09212.jpg">
+        <div class="sortable-item" data-id="assets/images/20140101-DSC09212.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/20140101-DSC09212.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20140101-DSC09213.jpg">
+        <div class="sortable-item" data-id="assets/images/20140101-DSC09213.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/20140101-DSC09213.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260531-DSC03398-Edit.jpg">
+        <div class="sortable-item" data-id="assets/images/20260531-DSC03398-Edit.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260531-DSC03398-Edit.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260531-DSC03418.jpg">
+        <div class="sortable-item" data-id="assets/images/20260531-DSC03418.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/20260531-DSC03418.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260531-DSC03427-Edit.jpg">
+        <div class="sortable-item" data-id="assets/images/20260531-DSC03427-Edit.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260531-DSC03427-Edit.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260531-DSC03438-Edit.jpg">
+        <div class="sortable-item" data-id="assets/images/20260531-DSC03438-Edit.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260531-DSC03438-Edit.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260607-DSC04716.jpg">
+        <div class="sortable-item" data-id="assets/images/20260607-DSC04716.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/20260607-DSC04716.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260618-DSC07360-Edit.jpg">
+        <div class="sortable-item" data-id="assets/images/20260618-DSC07360-Edit.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/20260618-DSC07360-Edit.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260621-DSC07667.jpg">
+        <div class="sortable-item" data-id="assets/images/20260621-DSC07667.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/20260621-DSC07667.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260621-DSC07671-Edit.jpg">
+        <div class="sortable-item" data-id="assets/images/20260621-DSC07671-Edit.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/20260621-DSC07671-Edit.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260621-DSC07673.jpg">
+        <div class="sortable-item" data-id="assets/images/20260621-DSC07673.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/20260621-DSC07673.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260621-DSC07679.jpg">
+        <div class="sortable-item" data-id="assets/images/20260621-DSC07679.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/20260621-DSC07679.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260621-DSC07686.jpg">
+        <div class="sortable-item" data-id="assets/images/20260621-DSC07686.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/20260621-DSC07686.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260621-DSC07688-Edit.jpg">
+        <div class="sortable-item" data-id="assets/images/20260621-DSC07688-Edit.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/20260621-DSC07688-Edit.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260626-DSC08130.jpg">
+        <div class="sortable-item" data-id="assets/images/20260626-DSC08130.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/20260626-DSC08130.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260626-DSC08145.jpg">
+        <div class="sortable-item" data-id="assets/images/20260626-DSC08145.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/20260626-DSC08145.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260626-DSC08235.jpg">
+        <div class="sortable-item" data-id="assets/images/20260626-DSC08235.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/20260626-DSC08235.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260626-DSC08324.jpg">
+        <div class="sortable-item" data-id="assets/images/20260626-DSC08324.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/20260626-DSC08324.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260710-DSC09249.jpg">
+        <div class="sortable-item" data-id="assets/images/20260710-DSC09249.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/20260710-DSC09249.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260710-DSC09297.jpg">
+        <div class="sortable-item" data-id="assets/images/20260710-DSC09297.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260710-DSC09297.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260710-DSC09321.jpg">
+        <div class="sortable-item" data-id="assets/images/20260710-DSC09321.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260710-DSC09321.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260710-DSC09332.jpg">
-          <img src="assets/images/20260710-DSC09332.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
-        </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260710-DSC09344.jpg">
+        <div class="sortable-item" data-id="assets/images/20260710-DSC09344.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260710-DSC09344.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260710-DSC09384.jpg">
+        <div class="sortable-item" data-id="assets/images/20260710-DSC09384.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260710-DSC09384.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260710-DSC09396.jpg">
+        <div class="sortable-item" data-id="assets/images/20260710-DSC09396.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260710-DSC09396.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260710-DSC09400.jpg">
-          <img src="assets/images/20260710-DSC09400.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
-        </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260710-DSC09429.jpg">
+        <div class="sortable-item" data-id="assets/images/20260710-DSC09429.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260710-DSC09429.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260710-DSC09544.jpg">
+        <div class="sortable-item" data-id="assets/images/20260710-DSC09544.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260710-DSC09544.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260710-DSC09643.jpg">
+        <div class="sortable-item" data-id="assets/images/20260710-DSC09643.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260710-DSC09643.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260711-DSC00036.jpg">
+        <div class="sortable-item" data-id="assets/images/20260711-DSC00036.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260711-DSC00036.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260711-DSC00050.jpg">
+        <div class="sortable-item" data-id="assets/images/20260711-DSC00050.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260711-DSC00050.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260711-DSC00064.jpg">
+        <div class="sortable-item" data-id="assets/images/20260711-DSC00064.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260711-DSC00064.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260711-DSC09896.jpg">
+        <div class="sortable-item" data-id="assets/images/20260711-DSC09896.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260711-DSC09896.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260711-DSC09905.jpg">
+        <div class="sortable-item" data-id="assets/images/20260711-DSC09905.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260711-DSC09905.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260711-DSC09918.jpg">
+        <div class="sortable-item" data-id="assets/images/20260711-DSC09918.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260711-DSC09918.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260711-DSC09946.jpg">
+        <div class="sortable-item" data-id="assets/images/20260711-DSC09946.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260711-DSC09946.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260711-DSC09970.jpg">
+        <div class="sortable-item" data-id="assets/images/20260711-DSC09970.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260711-DSC09970.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260719-DSC09680.jpg">
+        <div class="sortable-item" data-id="assets/images/20260719-DSC09680.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260719-DSC09680.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260725-DSC02281.jpg">
+        <div class="sortable-item" data-id="assets/images/20260725-DSC02281.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/20260725-DSC02281.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260727-DSC02938.jpg">
+        <div class="sortable-item" data-id="assets/images/20260727-DSC02938.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/20260727-DSC02938.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260727-DSC03453.jpg">
+        <div class="sortable-item" data-id="assets/images/20260727-DSC03453.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260727-DSC03453.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC03957.jpg">
-          <img src="assets/images/20260728-DSC03957.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
-        </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC03999.jpg">
+        <div class="sortable-item" data-id="assets/images/20260728-DSC03999.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260728-DSC03999.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04003.jpg">
-          <img src="assets/images/20260728-DSC04003.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
-        </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04017.jpg">
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04017.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260728-DSC04017.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04035.jpg">
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04035.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260728-DSC04035.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04046.jpg">
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04046.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260728-DSC04046.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04091.jpg">
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04091.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260728-DSC04091.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04114.jpg">
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04114.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260728-DSC04114.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04146.jpg">
-          <img src="assets/images/20260728-DSC04146.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
-        </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04168.jpg">
-          <img src="assets/images/20260728-DSC04168.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
-        </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04251.jpg">
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04251.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260728-DSC04251.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04265.jpg">
-          <img src="assets/images/20260728-DSC04265.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
-        </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04318.jpg">
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04318.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260728-DSC04318.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04488.jpg">
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04488.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260728-DSC04488.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04493.jpg">
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04493.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260728-DSC04493.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04511.jpg">
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04511.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260728-DSC04511.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04557.jpg">
-          <img src="assets/images/20260728-DSC04557.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
-        </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04558.jpg">
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04558.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260728-DSC04558.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04559.jpg">
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04559.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260728-DSC04559.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04585.jpg">
-          <img src="assets/images/20260728-DSC04585.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
-        </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04598.jpg">
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04598.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260728-DSC04598.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04616.jpg">
-          <img src="assets/images/20260728-DSC04616.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
-        </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04734.jpg">
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04734.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260728-DSC04734.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04766.jpg">
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04766.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260728-DSC04766.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260728-DSC04772.jpg">
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04772.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/20260728-DSC04772.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05410.jpg">
-          <img src="assets/images/20260804-DSC05410.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
-        </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05434.jpg">
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05434.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260804-DSC05434.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05446-2.jpg">
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05446-2.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260804-DSC05446-2.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05466.jpg">
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05466.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/20260804-DSC05466.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05471.jpg">
-          <img src="assets/images/20260804-DSC05471.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
-        </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05484.jpg">
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05484.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260804-DSC05484.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05486.jpg">
-          <img src="assets/images/20260804-DSC05486.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
-        </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05582.jpg">
-          <img src="assets/images/20260804-DSC05582.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
-        </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05648.jpg">
-          <img src="assets/images/20260804-DSC05648.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
-        </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05657.jpg">
-          <img src="assets/images/20260804-DSC05657.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
-        </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05689.jpg">
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05689.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260804-DSC05689.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05692.jpg">
-          <img src="assets/images/20260804-DSC05692.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
-        </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05706.jpg">
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05706.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260804-DSC05706.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05718.jpg">
-          <img src="assets/images/20260804-DSC05718.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
-        </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05806.jpg">
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05806.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260804-DSC05806.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05811.jpg">
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05811.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260804-DSC05811.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05820.jpg">
-          <img src="assets/images/20260804-DSC05820.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
-        </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260804-DSC05918.jpg">
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05918.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260804-DSC05918.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260806-DSC06215.jpg">
+        <div class="sortable-item" data-id="assets/images/20260806-DSC06215.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260806-DSC06215.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260806-DSC06253.jpg">
+        <div class="sortable-item" data-id="assets/images/20260806-DSC06253.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260806-DSC06253.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260806-DSC06457.jpg">
+        <div class="sortable-item" data-id="assets/images/20260806-DSC06457.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260806-DSC06457.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260806-DSC06665.jpg">
+        <div class="sortable-item" data-id="assets/images/20260806-DSC06665.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260806-DSC06665.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260806-DSC06695.jpg">
-          <img src="assets/images/20260806-DSC06695.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
-        </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260806-DSC06698.jpg">
-          <img src="assets/images/20260806-DSC06698.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
-        </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260806-DSC06712.jpg">
+        <div class="sortable-item" data-id="assets/images/20260806-DSC06712.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260806-DSC06712.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260806-DSC06753.jpg">
-          <img src="assets/images/20260806-DSC06753.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
-        </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00044.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00044.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC00044.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00149.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00149.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC00149.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00151.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00151.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC00151.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00173.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00173.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC00173.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00300.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00300.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC00300.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00352.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00352.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC00352.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00696.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00696.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC00696.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00700.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00700.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC00700.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00726.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00726.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC00726.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00727.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00727.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC00727.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00782.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00782.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC00782.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00821.jpg">
-          <img src="assets/images/20260808-DSC00821.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
-        </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00842.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00842.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/20260808-DSC00842.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00850.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00850.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC00850.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00854.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00854.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC00854.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00856.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00856.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC00856.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00859.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00859.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC00859.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00860.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00860.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC00860.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00861.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00861.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC00861.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00908.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00908.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC00908.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC00915.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00915.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC00915.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC01172.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC01172.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC01172.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09746.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09746.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC09746.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09809.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09809.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC09809.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09822.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09822.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC09822.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09840.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09840.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC09840.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09854.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09854.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC09854.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09860.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09860.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC09860.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09863.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09863.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC09863.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09865.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09865.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC09865.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09866.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09866.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC09866.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09868.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09868.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC09868.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09874.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09874.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC09874.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09913.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09913.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC09913.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09920.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09920.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC09920.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09928.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09928.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC09928.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09935.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09935.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/20260808-DSC09935.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09942.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09942.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC09942.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09943.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09943.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC09943.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09973.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09973.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC09973.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09974.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09974.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC09974.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260808-DSC09978.jpg">
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09978.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC09978.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260814-DSC07789.jpg">
+        <div class="sortable-item" data-id="assets/images/20260814-DSC07789.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260814-DSC07789.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260814-DSC07791.jpg">
+        <div class="sortable-item" data-id="assets/images/20260814-DSC07791.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260814-DSC07791.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260814-DSC07794.jpg">
+        <div class="sortable-item" data-id="assets/images/20260814-DSC07794.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260814-DSC07794.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260814-DSC07828.jpg">
+        <div class="sortable-item" data-id="assets/images/20260814-DSC07828.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260814-DSC07828.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260814-DSC07907.jpg">
+        <div class="sortable-item" data-id="assets/images/20260814-DSC07907.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260814-DSC07907.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260814-DSC07911.jpg">
+        <div class="sortable-item" data-id="assets/images/20260814-DSC07911.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260814-DSC07911.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260814-DSC07912.jpg">
+        <div class="sortable-item" data-id="assets/images/20260814-DSC07912.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260814-DSC07912.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260814-DSC07917.jpg">
+        <div class="sortable-item" data-id="assets/images/20260814-DSC07917.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260814-DSC07917.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260814-DSC07973.jpg">
+        <div class="sortable-item" data-id="assets/images/20260814-DSC07973.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260814-DSC07973.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260814-DSC07997.jpg">
+        <div class="sortable-item" data-id="assets/images/20260814-DSC07997.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260814-DSC07997.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260814-DSC07999.jpg">
+        <div class="sortable-item" data-id="assets/images/20260814-DSC07999.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260814-DSC07999.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260818-DSC08839.jpg">
+        <div class="sortable-item" data-id="assets/images/20260818-DSC08065.jpg">
+          <div class="orientation-badge badge-h">H</div>
+          <img src="assets/images/20260818-DSC08065.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260818-DSC08137.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260818-DSC08137.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260818-DSC08142.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260818-DSC08142.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260818-DSC08323.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260818-DSC08323.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260818-DSC08676.jpg">
+          <div class="orientation-badge badge-h">H</div>
+          <img src="assets/images/20260818-DSC08676.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260818-DSC08682.jpg">
+          <div class="orientation-badge badge-h">H</div>
+          <img src="assets/images/20260818-DSC08682.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260818-DSC08839.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260818-DSC08839.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260818-DSC08851.jpg">
+        <div class="sortable-item" data-id="assets/images/20260818-DSC08851.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260818-DSC08851.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/20260818-DSC08854.jpg">
+        <div class="sortable-item" data-id="assets/images/20260818-DSC08854.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260818-DSC08854.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/3x3-grid-selection/wfwfwfwf.jpg">
+        <div class="sortable-item" data-id="assets/images/20260818-DSC08904.jpg">
+          <div class="orientation-badge badge-h">H</div>
+          <img src="assets/images/20260818-DSC08904.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260626-DSC08130.jpg">
+          <div class="orientation-badge badge-h">H</div>
+          <img src="assets/images/3x3-grid-selection/20260626-DSC08130.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260626-DSC08145.jpg">
+          <div class="orientation-badge badge-h">H</div>
+          <img src="assets/images/3x3-grid-selection/20260626-DSC08145.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260626-DSC08235.jpg">
+          <div class="orientation-badge badge-h">H</div>
+          <img src="assets/images/3x3-grid-selection/20260626-DSC08235.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260626-DSC08324.jpg">
+          <div class="orientation-badge badge-h">H</div>
+          <img src="assets/images/3x3-grid-selection/20260626-DSC08324.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260711-DSC09896.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/3x3-grid-selection/20260711-DSC09896.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260711-DSC09918.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/3x3-grid-selection/20260711-DSC09918.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260711-DSC09946.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/3x3-grid-selection/20260711-DSC09946.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04003.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/3x3-grid-selection/20260728-DSC04003.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04017.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/3x3-grid-selection/20260728-DSC04017.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04046.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/3x3-grid-selection/20260728-DSC04046.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04091.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/3x3-grid-selection/20260728-DSC04091.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04114.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/3x3-grid-selection/20260728-DSC04114.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260804-DSC05811.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/3x3-grid-selection/20260804-DSC05811.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06457.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/3x3-grid-selection/20260806-DSC06457.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06665.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/3x3-grid-selection/20260806-DSC06665.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06695.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/3x3-grid-selection/20260806-DSC06695.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06698.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/3x3-grid-selection/20260806-DSC06698.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06712.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/3x3-grid-selection/20260806-DSC06712.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06753.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/3x3-grid-selection/20260806-DSC06753.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00044.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/3x3-grid-selection/20260808-DSC00044.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00300.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/3x3-grid-selection/20260808-DSC00300.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260814-DSC07999.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/3x3-grid-selection/20260814-DSC07999.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260818-DSC08839.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/3x3-grid-selection/20260818-DSC08839.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260818-DSC08851.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/3x3-grid-selection/20260818-DSC08851.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260818-DSC08854.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/3x3-grid-selection/20260818-DSC08854.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/wfwfwfwf.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/3x3-grid-selection/wfwfwfwf.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/3x3-grid-selection/wfwfwfwwf (2).jpg">
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/wfwfwfwwf (2).jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/3x3-grid-selection/wfwfwfwwf (2).jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/3x3-grid-selection/wfwfwfwwf.jpg">
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/wfwfwfwwf.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/3x3-grid-selection/wfwfwfwwf.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC01752.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC01752.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC01752.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC01811.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC01811.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC01811.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC02025.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC02025.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC02025.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC02118.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC02118.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC02118.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC02138.jpg">
-          <img src="assets/images/DSC02138.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
-        </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC02156.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC02156.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC02156.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC02170.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC02170.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/DSC02170.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC02238.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC02238.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/DSC02238.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC02269.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC02269.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC02269.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC02270.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC02270.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC02270.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC02282.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC02282.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC02282.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC02294.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC02294.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC02294.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC02297.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC02297.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC02297.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC02336.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC02336.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC02336.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC02337.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC02337.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC02337.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC02346.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC02346.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC02346.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC02788.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC02788.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC02788.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC02865.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC02865.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/DSC02865.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC02908.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC02908.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC02908.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC02921.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC02921.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC02921.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC02925.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC02925.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC02925.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC02928.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC02928.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC02928.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC02937.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC02937.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/DSC02937.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC02938.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC02938.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/DSC02938.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC02958.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC02958.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC02958.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC02975.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC02975.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC02975.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC02977.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC02977.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC02977.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC02991.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC02991.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC02991.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC02994.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC02994.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/DSC02994.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC03009.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC03009.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC03009.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC03016.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC03016.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC03016.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC03017.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC03017.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC03017.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC03149.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC03149.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC03149.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC03165.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC03165.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC03165.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC03198.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC03198.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC03198.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/DSC03455.jpg">
+        <div class="sortable-item" data-id="assets/images/DSC03455.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC03455.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/dwd (2).jpg">
+        <div class="sortable-item" data-id="assets/images/dwd (2).jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/dwd (2).jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/dwd.jpg">
+        <div class="sortable-item" data-id="assets/images/dwd.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/dwd.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/dwdw.jpg">
+        <div class="sortable-item" data-id="assets/images/dwdw.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/dwdw.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/efewew.jpg">
+        <div class="sortable-item" data-id="assets/images/efewew.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/efewew.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/ergreg.jpg">
+        <div class="sortable-item" data-id="assets/images/ergreg.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/ergreg.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/ergregr.jpg">
+        <div class="sortable-item" data-id="assets/images/ergregr.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/ergregr.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/fewfefwefw.jpg">
+        <div class="sortable-item" data-id="assets/images/fewfefwefw.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/fewfefwefw.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/fwfwfw.jpg">
+        <div class="sortable-item" data-id="assets/images/fwfwfw.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/fwfwfw.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/fwfwfwf.jpg">
+        <div class="sortable-item" data-id="assets/images/fwfwfwf.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/fwfwfwf.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/fwfwfwfw.jpg">
+        <div class="sortable-item" data-id="assets/images/fwfwfwfw.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/fwfwfwfw.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/fwfwfwfwfw.jpg">
+        <div class="sortable-item" data-id="assets/images/fwfwfwfwfw.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/fwfwfwfwfw.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/gergerg.jpg">
+        <div class="sortable-item" data-id="assets/images/gergerg.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/gergerg.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/greg.jpg">
+        <div class="sortable-item" data-id="assets/images/greg.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/greg.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/greger.jpg">
+        <div class="sortable-item" data-id="assets/images/greger.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/greger.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/miguel-avatar.jpg">
+        <div class="sortable-item" data-id="assets/images/miguel-avatar.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/miguel-avatar.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/miguel-portrait-1.jpg">
+        <div class="sortable-item" data-id="assets/images/miguel-portrait-1.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/miguel-portrait-1.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/miguel-portrait-bench.jpg">
+        <div class="sortable-item" data-id="assets/images/miguel-portrait-bench.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/miguel-portrait-bench.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/miguel-portrait-camera-close.jpg">
+        <div class="sortable-item" data-id="assets/images/miguel-portrait-camera-close.jpg">
+          <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/miguel-portrait-camera-close.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/wfwfwfw (2).jpg">
+        <div class="sortable-item" data-id="assets/images/wfwfwfw (2).jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/wfwfwfw (2).jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/wfwfwfw.jpg">
+        <div class="sortable-item" data-id="assets/images/wfwfwfw.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/wfwfwfw.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/wfwfwfwf.jpg">
+        <div class="sortable-item" data-id="assets/images/wfwfwfwf.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/wfwfwfwf.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/wfwfwfwfwf (2).jpg">
-          <img src="assets/images/wfwfwfwfwf (2).jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
-        </div>
-        <div class="sortable-item unused-item" data-id="assets/images/wfwfwfwfwf.jpg">
+        <div class="sortable-item" data-id="assets/images/wfwfwfwfwf.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/wfwfwfwfwf.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/wfwfwfwwf (2).jpg">
+        <div class="sortable-item" data-id="assets/images/wfwfwfwwf (2).jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/wfwfwfwwf (2).jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/wfwfwfwwf.jpg">
+        <div class="sortable-item" data-id="assets/images/wfwfwfwwf.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/wfwfwfwwf.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
-        <div class="sortable-item unused-item" data-id="assets/images/wfwwfwf.jpg">
+        <div class="sortable-item" data-id="assets/images/wfwwfwf.jpg">
+          <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/wfwwfwf.jpg">
-          <div class="item-controls">
-            <button class="ctrl-btn add-btn">+ Add</button>
-          </div>
+          <div class="item-controls"></div>
         </div>
       </div>
     </div>
   </div>
   
-  <!-- Replace Modal -->
   <div class="modal-overlay" id="replaceModal">
     <div class="modal-header">
       <h2>Select photo to swap in:</h2>
@@ -1721,7 +1463,7 @@
     const closeModal = document.getElementById('closeModal');
     let targetReplaceItem = null;
     
-    // Sortable JS setup
+    // Sortable JS setup (Tetris fix: Using grid with align-items: start maintains DOM flow!)
     new Sortable(activeGrid, { group: 'shared', animation: 150, delay: 50, delayOnTouchOnly: true,
       onAdd: function (evt) { changeItemState(evt.item, 'active'); } 
     });
@@ -1733,21 +1475,20 @@
       activeGrid.style.setProperty('--cols', e.target.value);
     });
 
-    // Helper to swap innerHTML controls when moved between grids
+    // Setup initial controls
+    Array.from(activeGrid.children).forEach(el => changeItemState(el, 'active'));
+    Array.from(unusedGrid.children).forEach(el => changeItemState(el, 'unused'));
+
     function changeItemState(itemEl, state) {
       const controls = itemEl.querySelector('.item-controls');
       if (state === 'active') {
-        itemEl.classList.remove('unused-item');
-        itemEl.classList.add('active-item');
         controls.innerHTML = '<button class="ctrl-btn replace-btn">⇄ Replace</button> <button class="ctrl-btn remove-btn">X Remove</button>';
       } else {
-        itemEl.classList.remove('active-item');
-        itemEl.classList.add('unused-item');
         controls.innerHTML = '<button class="ctrl-btn add-btn">+ Add</button>';
       }
     }
 
-    // Event Delegation for dynamically changing buttons
+    // Event Delegation
     document.body.addEventListener('click', (e) => {
       const itemEl = e.target.closest('.sortable-item');
       if (!itemEl) return;
@@ -1766,15 +1507,16 @@
       }
     });
     
-    // Modal Logic
+    // Modal
     function openReplaceModal() {
       modalGrid.innerHTML = '';
       const unusedItems = Array.from(unusedGrid.children);
       unusedItems.forEach(item => {
         const id = item.getAttribute('data-id');
+        const badgeHTML = item.querySelector('.orientation-badge') ? item.querySelector('.orientation-badge').outerHTML : '';
         const mItem = document.createElement('div');
         mItem.className = 'modal-item';
-        mItem.innerHTML = `<img src="${id}">`;
+        mItem.innerHTML = badgeHTML + `<img src="${id}">`;
         mItem.onclick = () => performReplace(id, item);
         modalGrid.appendChild(mItem);
       });
@@ -1786,18 +1528,35 @@
     function performReplace(newId, unusedEl) {
       if (!targetReplaceItem) return;
       
-      // Swap IDs
       const oldId = targetReplaceItem.getAttribute('data-id');
+      const oldBadge = targetReplaceItem.querySelector('.orientation-badge');
+      const newBadge = unusedEl.querySelector('.orientation-badge');
+      
+      // Swap IDs
       targetReplaceItem.setAttribute('data-id', newId);
       targetReplaceItem.querySelector('img').src = newId;
+      if(newBadge) {
+          if(oldBadge) targetReplaceItem.replaceChild(newBadge.cloneNode(true), oldBadge);
+          else targetReplaceItem.insertBefore(newBadge.cloneNode(true), targetReplaceItem.firstChild);
+      } else if (oldBadge) {
+          oldBadge.remove();
+      }
       
       unusedEl.setAttribute('data-id', oldId);
       unusedEl.querySelector('img').src = oldId;
+      if(oldBadge) {
+          const uOldBadge = unusedEl.querySelector('.orientation-badge');
+          if(uOldBadge) unusedEl.replaceChild(oldBadge.cloneNode(true), uOldBadge);
+          else unusedEl.insertBefore(oldBadge.cloneNode(true), unusedEl.firstChild);
+      } else {
+          const uOldBadge = unusedEl.querySelector('.orientation-badge');
+          if(uOldBadge) uOldBadge.remove();
+      }
       
       replaceModal.classList.remove('active');
     }
 
-    // Export Logic
+    // Export
     const exportBtn = document.getElementById('exportBtn');
     exportBtn.addEventListener('click', () => {
       const activeIds = Array.from(activeGrid.children).map(el => el.getAttribute('data-id'));
