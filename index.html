@@ -276,14 +276,10 @@
     const grid = document.querySelector('.portfolio-grid');
     
     // Set initial grid size
-    grid.style.columns = slider.value;
+    grid.style.setProperty('--cols', slider.value);
     
     slider.addEventListener('input', (e) => {
-      // Invert slider so sliding RIGHT makes images BIGGER (fewer columns)
-      // Wait, slider is 2 to 8 columns. Usually slider right = bigger photos = fewer columns.
-      // Or slider right = more columns = smaller photos. Let's just set columns directly for now.
-      // If the user wants smaller photos by default, 5 columns is small.
-      grid.style.columns = e.target.value;
+      grid.style.setProperty('--cols', e.target.value);
     });
 
   </script>

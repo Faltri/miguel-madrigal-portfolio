@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CMS Editor 4.0 | Miguel Madrigal</title>
+  <title>CMS Editor 5.0 | Miguel Madrigal</title>
   <style>
     body { background: #111; color: #fff; font-family: sans-serif; padding-top: 100px; margin: 0; }
     * { box-sizing: border-box; }
@@ -30,16 +30,20 @@
     .sortable-grid {
       display: grid;
       grid-template-columns: repeat(var(--cols, 5), 1fr);
-      align-items: start; /* CRITICAL: Allows items to be their natural height instead of stretching */
+      align-items: start;
       gap: 15px; min-height: 200px; background: rgba(255,255,255,0.02);
       border: 2px dashed #333; padding: 15px; border-radius: 8px;
     }
     
-    .sortable-item { position: relative; cursor: grab; border-radius: 4px; background: #222; overflow: hidden; }
+    .sortable-item { position: relative; cursor: grab; border-radius: 4px; background: #222; overflow: hidden; transition: 0.2s transform; }
     .sortable-item img { 
-      width: 100%; 
-      height: auto; /* Show true aspect ratio! */
-      display: block; pointer-events: none; 
+      width: 100%; height: auto; display: block; pointer-events: none; 
+    }
+    
+    /* MULTI-DRAG SELECTED STYLING */
+    .sortable-selected {
+      box-shadow: 0 0 0 4px #00a8ff;
+      transform: scale(0.95);
     }
     
     .orientation-badge {
@@ -74,7 +78,7 @@
 <body>
 
   <div class="editor-topbar">
-    <div class="editor-title">Editor 4.0: True Aspect Ratios</div>
+    <div class="editor-title">Editor 5.0: Multi-Drag</div>
     <div class="nav-controls">
       <div class="slider-container">
         <span>Columns:</span>
@@ -86,7 +90,7 @@
 
   <div class="panes-container">
     <div>
-      <div class="pane-header">Active Portfolio <span class="pane-subtitle">Live on website. True aspect ratios shown.</span></div>
+      <div class="pane-header">Active Portfolio <span class="pane-subtitle">Cmd/Ctrl+Click to multi-select. Shift+Click for row select.</span></div>
       <div class="sortable-grid" id="activeGrid" style="--cols: 5;">
         
         <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260710-DSC09297.jpg">
@@ -144,9 +148,9 @@
           <img src="assets/images/20260728-DSC04003.jpg">
           <div class="item-controls"></div>
         </div>
-        <div class="sortable-item" data-id="assets/images/wfwfwfwfwf (2).jpg">
-          <div class="orientation-badge badge-h">H</div>
-          <img src="assets/images/wfwfwfwfwf (2).jpg">
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04017.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260728-DSC04017.jpg">
           <div class="item-controls"></div>
         </div>
         <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04598.jpg">
@@ -224,9 +228,9 @@
           <img src="assets/images/20260804-DSC05410.jpg">
           <div class="item-controls"></div>
         </div>
-        <div class="sortable-item" data-id="assets/images/20260804-DSC05820.jpg">
-          <div class="orientation-badge badge-h">H</div>
-          <img src="assets/images/20260804-DSC05820.jpg">
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260804-DSC05811.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/3x3-grid-selection/20260804-DSC05811.jpg">
           <div class="item-controls"></div>
         </div>
         <div class="sortable-item" data-id="assets/images/20260804-DSC05486.jpg">
@@ -239,24 +243,24 @@
           <img src="assets/images/20260804-DSC05471.jpg">
           <div class="item-controls"></div>
         </div>
-        <div class="sortable-item" data-id="assets/images/20260804-DSC05692.jpg">
-          <div class="orientation-badge badge-h">H</div>
-          <img src="assets/images/20260804-DSC05692.jpg">
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05718.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260804-DSC05718.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05706.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260804-DSC05706.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05689.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260804-DSC05689.jpg">
           <div class="item-controls"></div>
         </div>
         <div class="sortable-item" data-id="assets/images/20260804-DSC05657.jpg">
           <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260804-DSC05657.jpg">
-          <div class="item-controls"></div>
-        </div>
-        <div class="sortable-item" data-id="assets/images/20260804-DSC05648.jpg">
-          <div class="orientation-badge badge-h">H</div>
-          <img src="assets/images/20260804-DSC05648.jpg">
-          <div class="item-controls"></div>
-        </div>
-        <div class="sortable-item" data-id="assets/images/20260804-DSC05718.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/20260804-DSC05718.jpg">
           <div class="item-controls"></div>
         </div>
         <div class="sortable-item" data-id="assets/images/20260804-DSC05582.jpg">
@@ -289,11 +293,161 @@
           <img src="assets/images/3x3-grid-selection/DSC02282.jpg">
           <div class="item-controls"></div>
         </div>
+        <div class="sortable-item" data-id="assets/images/DSC02346.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/DSC02346.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/DSC02297.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/DSC02297.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/DSC02336.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/DSC02336.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/DSC02337.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/DSC02337.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/DSC01752.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/DSC01752.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260711-DSC09918.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260711-DSC09918.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260711-DSC09946.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260711-DSC09946.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260711-DSC09896.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260711-DSC09896.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260711-DSC09970.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260711-DSC09970.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260711-DSC00050.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260711-DSC00050.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260818-DSC08137.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260818-DSC08137.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260818-DSC08839.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260818-DSC08839.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260818-DSC08323.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260818-DSC08323.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260818-DSC08854.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260818-DSC08854.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260818-DSC08851.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260818-DSC08851.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09913.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260808-DSC09913.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09809.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260808-DSC09809.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09978.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260808-DSC09978.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09942.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260808-DSC09942.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09974.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/20260808-DSC09974.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/DSC03009.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/DSC03009.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/DSC03198.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/DSC03198.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/DSC02908.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/DSC02908.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/DSC03149.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/DSC03149.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/DSC02925.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/DSC02925.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/DSC03017.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/DSC03017.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/DSC02958.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/DSC02958.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/DSC02991.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/DSC02991.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/DSC02975.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/DSC02975.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/DSC02921.jpg">
+          <div class="orientation-badge badge-v">V</div>
+          <img src="assets/images/DSC02921.jpg">
+          <div class="item-controls"></div>
+        </div>
       </div>
     </div>
 
     <div>
-      <div class="pane-header" style="color:#888; border-color:#222;">Unused Pool <span class="pane-subtitle">229 available photos.</span></div>
+      <div class="pane-header" style="color:#888; border-color:#222;">Unused Pool <span class="pane-subtitle">199 available photos.</span></div>
       <div class="sortable-grid" id="unusedGrid" style="--cols: 8;">
         
         <div class="sortable-item" data-id="assets/images/20140101-DSC08617.jpg">
@@ -481,39 +635,14 @@
           <img src="assets/images/20260711-DSC00036.jpg">
           <div class="item-controls"></div>
         </div>
-        <div class="sortable-item" data-id="assets/images/20260711-DSC00050.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/20260711-DSC00050.jpg">
-          <div class="item-controls"></div>
-        </div>
         <div class="sortable-item" data-id="assets/images/20260711-DSC00064.jpg">
           <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260711-DSC00064.jpg">
           <div class="item-controls"></div>
         </div>
-        <div class="sortable-item" data-id="assets/images/20260711-DSC09896.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/20260711-DSC09896.jpg">
-          <div class="item-controls"></div>
-        </div>
         <div class="sortable-item" data-id="assets/images/20260711-DSC09905.jpg">
           <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260711-DSC09905.jpg">
-          <div class="item-controls"></div>
-        </div>
-        <div class="sortable-item" data-id="assets/images/20260711-DSC09918.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/20260711-DSC09918.jpg">
-          <div class="item-controls"></div>
-        </div>
-        <div class="sortable-item" data-id="assets/images/20260711-DSC09946.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/20260711-DSC09946.jpg">
-          <div class="item-controls"></div>
-        </div>
-        <div class="sortable-item" data-id="assets/images/20260711-DSC09970.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/20260711-DSC09970.jpg">
           <div class="item-controls"></div>
         </div>
         <div class="sortable-item" data-id="assets/images/20260719-DSC09680.jpg">
@@ -539,11 +668,6 @@
         <div class="sortable-item" data-id="assets/images/20260728-DSC03999.jpg">
           <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260728-DSC03999.jpg">
-          <div class="item-controls"></div>
-        </div>
-        <div class="sortable-item" data-id="assets/images/20260728-DSC04017.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/20260728-DSC04017.jpg">
           <div class="item-controls"></div>
         </div>
         <div class="sortable-item" data-id="assets/images/20260728-DSC04035.jpg">
@@ -641,14 +765,14 @@
           <img src="assets/images/20260804-DSC05484.jpg">
           <div class="item-controls"></div>
         </div>
-        <div class="sortable-item" data-id="assets/images/20260804-DSC05689.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/20260804-DSC05689.jpg">
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05648.jpg">
+          <div class="orientation-badge badge-h">H</div>
+          <img src="assets/images/20260804-DSC05648.jpg">
           <div class="item-controls"></div>
         </div>
-        <div class="sortable-item" data-id="assets/images/20260804-DSC05706.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/20260804-DSC05706.jpg">
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05692.jpg">
+          <div class="orientation-badge badge-h">H</div>
+          <img src="assets/images/20260804-DSC05692.jpg">
           <div class="item-controls"></div>
         </div>
         <div class="sortable-item" data-id="assets/images/20260804-DSC05806.jpg">
@@ -659,6 +783,11 @@
         <div class="sortable-item" data-id="assets/images/20260804-DSC05811.jpg">
           <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260804-DSC05811.jpg">
+          <div class="item-controls"></div>
+        </div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05820.jpg">
+          <div class="orientation-badge badge-h">H</div>
+          <img src="assets/images/20260804-DSC05820.jpg">
           <div class="item-controls"></div>
         </div>
         <div class="sortable-item" data-id="assets/images/20260804-DSC05918.jpg">
@@ -801,11 +930,6 @@
           <img src="assets/images/20260808-DSC09746.jpg">
           <div class="item-controls"></div>
         </div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC09809.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/20260808-DSC09809.jpg">
-          <div class="item-controls"></div>
-        </div>
         <div class="sortable-item" data-id="assets/images/20260808-DSC09822.jpg">
           <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC09822.jpg">
@@ -851,11 +975,6 @@
           <img src="assets/images/20260808-DSC09874.jpg">
           <div class="item-controls"></div>
         </div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC09913.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/20260808-DSC09913.jpg">
-          <div class="item-controls"></div>
-        </div>
         <div class="sortable-item" data-id="assets/images/20260808-DSC09920.jpg">
           <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC09920.jpg">
@@ -871,11 +990,6 @@
           <img src="assets/images/20260808-DSC09935.jpg">
           <div class="item-controls"></div>
         </div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC09942.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/20260808-DSC09942.jpg">
-          <div class="item-controls"></div>
-        </div>
         <div class="sortable-item" data-id="assets/images/20260808-DSC09943.jpg">
           <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC09943.jpg">
@@ -884,16 +998,6 @@
         <div class="sortable-item" data-id="assets/images/20260808-DSC09973.jpg">
           <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260808-DSC09973.jpg">
-          <div class="item-controls"></div>
-        </div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC09974.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/20260808-DSC09974.jpg">
-          <div class="item-controls"></div>
-        </div>
-        <div class="sortable-item" data-id="assets/images/20260808-DSC09978.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/20260808-DSC09978.jpg">
           <div class="item-controls"></div>
         </div>
         <div class="sortable-item" data-id="assets/images/20260814-DSC07789.jpg">
@@ -956,19 +1060,9 @@
           <img src="assets/images/20260818-DSC08065.jpg">
           <div class="item-controls"></div>
         </div>
-        <div class="sortable-item" data-id="assets/images/20260818-DSC08137.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/20260818-DSC08137.jpg">
-          <div class="item-controls"></div>
-        </div>
         <div class="sortable-item" data-id="assets/images/20260818-DSC08142.jpg">
           <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/20260818-DSC08142.jpg">
-          <div class="item-controls"></div>
-        </div>
-        <div class="sortable-item" data-id="assets/images/20260818-DSC08323.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/20260818-DSC08323.jpg">
           <div class="item-controls"></div>
         </div>
         <div class="sortable-item" data-id="assets/images/20260818-DSC08676.jpg">
@@ -979,21 +1073,6 @@
         <div class="sortable-item" data-id="assets/images/20260818-DSC08682.jpg">
           <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/20260818-DSC08682.jpg">
-          <div class="item-controls"></div>
-        </div>
-        <div class="sortable-item" data-id="assets/images/20260818-DSC08839.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/20260818-DSC08839.jpg">
-          <div class="item-controls"></div>
-        </div>
-        <div class="sortable-item" data-id="assets/images/20260818-DSC08851.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/20260818-DSC08851.jpg">
-          <div class="item-controls"></div>
-        </div>
-        <div class="sortable-item" data-id="assets/images/20260818-DSC08854.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/20260818-DSC08854.jpg">
           <div class="item-controls"></div>
         </div>
         <div class="sortable-item" data-id="assets/images/20260818-DSC08904.jpg">
@@ -1059,11 +1138,6 @@
         <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04114.jpg">
           <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/3x3-grid-selection/20260728-DSC04114.jpg">
-          <div class="item-controls"></div>
-        </div>
-        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260804-DSC05811.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/3x3-grid-selection/20260804-DSC05811.jpg">
           <div class="item-controls"></div>
         </div>
         <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06457.jpg">
@@ -1141,11 +1215,6 @@
           <img src="assets/images/3x3-grid-selection/wfwfwfwwf.jpg">
           <div class="item-controls"></div>
         </div>
-        <div class="sortable-item" data-id="assets/images/DSC01752.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/DSC01752.jpg">
-          <div class="item-controls"></div>
-        </div>
         <div class="sortable-item" data-id="assets/images/DSC01811.jpg">
           <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC01811.jpg">
@@ -1196,26 +1265,6 @@
           <img src="assets/images/DSC02294.jpg">
           <div class="item-controls"></div>
         </div>
-        <div class="sortable-item" data-id="assets/images/DSC02297.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/DSC02297.jpg">
-          <div class="item-controls"></div>
-        </div>
-        <div class="sortable-item" data-id="assets/images/DSC02336.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/DSC02336.jpg">
-          <div class="item-controls"></div>
-        </div>
-        <div class="sortable-item" data-id="assets/images/DSC02337.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/DSC02337.jpg">
-          <div class="item-controls"></div>
-        </div>
-        <div class="sortable-item" data-id="assets/images/DSC02346.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/DSC02346.jpg">
-          <div class="item-controls"></div>
-        </div>
         <div class="sortable-item" data-id="assets/images/DSC02788.jpg">
           <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC02788.jpg">
@@ -1224,21 +1273,6 @@
         <div class="sortable-item" data-id="assets/images/DSC02865.jpg">
           <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/DSC02865.jpg">
-          <div class="item-controls"></div>
-        </div>
-        <div class="sortable-item" data-id="assets/images/DSC02908.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/DSC02908.jpg">
-          <div class="item-controls"></div>
-        </div>
-        <div class="sortable-item" data-id="assets/images/DSC02921.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/DSC02921.jpg">
-          <div class="item-controls"></div>
-        </div>
-        <div class="sortable-item" data-id="assets/images/DSC02925.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/DSC02925.jpg">
           <div class="item-controls"></div>
         </div>
         <div class="sortable-item" data-id="assets/images/DSC02928.jpg">
@@ -1256,24 +1290,9 @@
           <img src="assets/images/DSC02938.jpg">
           <div class="item-controls"></div>
         </div>
-        <div class="sortable-item" data-id="assets/images/DSC02958.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/DSC02958.jpg">
-          <div class="item-controls"></div>
-        </div>
-        <div class="sortable-item" data-id="assets/images/DSC02975.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/DSC02975.jpg">
-          <div class="item-controls"></div>
-        </div>
         <div class="sortable-item" data-id="assets/images/DSC02977.jpg">
           <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC02977.jpg">
-          <div class="item-controls"></div>
-        </div>
-        <div class="sortable-item" data-id="assets/images/DSC02991.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/DSC02991.jpg">
           <div class="item-controls"></div>
         </div>
         <div class="sortable-item" data-id="assets/images/DSC02994.jpg">
@@ -1281,34 +1300,14 @@
           <img src="assets/images/DSC02994.jpg">
           <div class="item-controls"></div>
         </div>
-        <div class="sortable-item" data-id="assets/images/DSC03009.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/DSC03009.jpg">
-          <div class="item-controls"></div>
-        </div>
         <div class="sortable-item" data-id="assets/images/DSC03016.jpg">
           <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC03016.jpg">
           <div class="item-controls"></div>
         </div>
-        <div class="sortable-item" data-id="assets/images/DSC03017.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/DSC03017.jpg">
-          <div class="item-controls"></div>
-        </div>
-        <div class="sortable-item" data-id="assets/images/DSC03149.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/DSC03149.jpg">
-          <div class="item-controls"></div>
-        </div>
         <div class="sortable-item" data-id="assets/images/DSC03165.jpg">
           <div class="orientation-badge badge-v">V</div>
           <img src="assets/images/DSC03165.jpg">
-          <div class="item-controls"></div>
-        </div>
-        <div class="sortable-item" data-id="assets/images/DSC03198.jpg">
-          <div class="orientation-badge badge-v">V</div>
-          <img src="assets/images/DSC03198.jpg">
           <div class="item-controls"></div>
         </div>
         <div class="sortable-item" data-id="assets/images/DSC03455.jpg">
@@ -1421,6 +1420,11 @@
           <img src="assets/images/wfwfwfwf.jpg">
           <div class="item-controls"></div>
         </div>
+        <div class="sortable-item" data-id="assets/images/wfwfwfwfwf (2).jpg">
+          <div class="orientation-badge badge-h">H</div>
+          <img src="assets/images/wfwfwfwfwf (2).jpg">
+          <div class="item-controls"></div>
+        </div>
         <div class="sortable-item" data-id="assets/images/wfwfwfwfwf.jpg">
           <div class="orientation-badge badge-h">H</div>
           <img src="assets/images/wfwfwfwfwf.jpg">
@@ -1453,7 +1457,7 @@
     <div class="modal-grid" id="modalGrid"></div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
   <script>
     const activeGrid = document.getElementById('activeGrid');
     const unusedGrid = document.getElementById('unusedGrid');
@@ -1463,13 +1467,22 @@
     const closeModal = document.getElementById('closeModal');
     let targetReplaceItem = null;
     
-    // Sortable JS setup (Tetris fix: Using grid with align-items: start maintains DOM flow!)
-    new Sortable(activeGrid, { group: 'shared', animation: 150, delay: 50, delayOnTouchOnly: true,
+    // Sortable JS setup WITH MULTIDRAG
+    const sortableConfig = { 
+      group: 'shared', 
+      animation: 150, 
+      delay: 50, 
+      delayOnTouchOnly: true,
+      multiDrag: true, // Enable MultiDrag
+      selectedClass: 'sortable-selected', // The class applied to selected items
+      fallbackTolerance: 3, 
       onAdd: function (evt) { changeItemState(evt.item, 'active'); } 
-    });
-    new Sortable(unusedGrid, { group: 'shared', animation: 150, delay: 50, delayOnTouchOnly: true,
+    };
+
+    new Sortable(activeGrid, sortableConfig);
+    new Sortable(unusedGrid, Object.assign({}, sortableConfig, { 
       onAdd: function (evt) { changeItemState(evt.item, 'unused'); } 
-    });
+    }));
     
     colSlider.addEventListener('input', (e) => {
       activeGrid.style.setProperty('--cols', e.target.value);
@@ -1527,32 +1540,11 @@
     
     function performReplace(newId, unusedEl) {
       if (!targetReplaceItem) return;
-      
       const oldId = targetReplaceItem.getAttribute('data-id');
-      const oldBadge = targetReplaceItem.querySelector('.orientation-badge');
-      const newBadge = unusedEl.querySelector('.orientation-badge');
-      
-      // Swap IDs
       targetReplaceItem.setAttribute('data-id', newId);
       targetReplaceItem.querySelector('img').src = newId;
-      if(newBadge) {
-          if(oldBadge) targetReplaceItem.replaceChild(newBadge.cloneNode(true), oldBadge);
-          else targetReplaceItem.insertBefore(newBadge.cloneNode(true), targetReplaceItem.firstChild);
-      } else if (oldBadge) {
-          oldBadge.remove();
-      }
-      
       unusedEl.setAttribute('data-id', oldId);
       unusedEl.querySelector('img').src = oldId;
-      if(oldBadge) {
-          const uOldBadge = unusedEl.querySelector('.orientation-badge');
-          if(uOldBadge) unusedEl.replaceChild(oldBadge.cloneNode(true), uOldBadge);
-          else unusedEl.insertBefore(oldBadge.cloneNode(true), unusedEl.firstChild);
-      } else {
-          const uOldBadge = unusedEl.querySelector('.orientation-badge');
-          if(uOldBadge) uOldBadge.remove();
-      }
-      
       replaceModal.classList.remove('active');
     }
 
@@ -1561,7 +1553,6 @@
     exportBtn.addEventListener('click', () => {
       const activeIds = Array.from(activeGrid.children).map(el => el.getAttribute('data-id'));
       const json = JSON.stringify(activeIds, null, 2);
-      
       navigator.clipboard.writeText(json).then(() => {
         const originalText = exportBtn.innerText;
         exportBtn.innerText = 'Copied!';

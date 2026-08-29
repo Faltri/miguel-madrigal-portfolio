@@ -130,9 +130,11 @@ body {
 }
 
 .portfolio-grid {
-  columns: 5; /* Default column count as requested for smaller photos */
-  column-gap: 10px;
-  transition: columns 0.3s ease;
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 5), 1fr);
+  align-items: start;
+  gap: 10px;
+  transition: all 0.3s ease;
 }
 
 .project-card {
@@ -181,8 +183,8 @@ body {
     padding: 140px 10px 80px; /* Adjust top padding for stacked navbar */
   }
   .portfolio-grid {
-    columns: 2 !important; /* Force 2 columns on mobile so it's not tiny */
-    column-gap: 8px;
+    --cols: 2 !important; /* Force 2 columns on mobile so it's not tiny */
+    gap: 8px;
   }
   .project-card {
     margin-bottom: 8px;
