@@ -124,7 +124,31 @@ body {
   transform: scale(1.3);
 }
 
-/* Inquiries Button */
+/* Inquiries Button & Lang Toggle */
+.lang-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.lang-toggle-btn:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.lang-flag {
+  font-size: 1rem;
+}
+
 .inquiries-btn {
   font-size: 0.9rem;
   font-weight: 500;

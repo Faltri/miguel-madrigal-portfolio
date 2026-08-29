@@ -18,6 +18,10 @@
         <span class="slider-label i18n" data-ja="グリッドサイズ">Grid Size</span>
         <input type="range" id="grid-slider" min="2" max="8" value="3" class="grid-slider">
       </div>
+      <button class="lang-toggle-btn" id="langToggle">
+        <span class="lang-text">JA</span>
+        <span class="lang-flag">🇯🇵</span>
+      </button>
       <a href="https://ig.me/m/migumadrigal" target="_blank" class="inquiries-btn i18n" data-ja="撮影のご相談・ご依頼">Send me a DM</a>
     </div>
   </nav>
@@ -267,29 +271,62 @@
 
   <!-- SCRIPTS -->
   <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js">
-    // Universal Language Detection
+    // Universal Language Detection & Manual Toggle
     document.addEventListener("DOMContentLoaded", () => {
-      const userLang = navigator.language || navigator.userLanguage;
-      if (userLang.toLowerCase().includes('ja')) {
-        const translatableElements = document.querySelectorAll('.i18n[data-ja]');
+      const translatableElements = document.querySelectorAll('.i18n[data-ja]');
+      
+      // Save original English text to data-en before any translation happens
+      translatableElements.forEach(el => {
+        if(el.children.length > 0) {
+          const textNode = Array.from(el.childNodes).find(n => n.nodeType === Node.TEXT_NODE && n.nodeValue.trim() !== '');
+          if(textNode) el.setAttribute('data-en', textNode.nodeValue.trim());
+        } else {
+          el.setAttribute('data-en', el.textContent.trim());
+        }
+      });
+
+      let currentLang = 'en';
+      const langToggleBtn = document.getElementById('langToggle');
+      const langText = langToggleBtn.querySelector('.lang-text');
+      const langFlag = langToggleBtn.querySelector('.lang-flag');
+
+      function setLanguage(lang) {
+        currentLang = lang;
+        if (lang === 'ja') {
+          langText.textContent = 'EN';
+          langFlag.textContent = '🇺🇸';
+        } else {
+          langText.textContent = 'JA';
+          langFlag.textContent = '🇯🇵';
+        }
+
         translatableElements.forEach(el => {
-          // If the element has SVG or child elements, we only want to replace text.
-          // For buttons with an SVG icon, we replace the last child text node.
+          const targetText = el.getAttribute(lang === 'ja' ? 'data-ja' : 'data-en');
+          if (!targetText) return;
+
           if(el.children.length > 0) {
-            // It has HTML inside (like the SVG). Let's recreate it cleanly.
             const svg = el.querySelector('svg');
             if(svg) {
               el.innerHTML = '';
               el.appendChild(svg);
-              el.appendChild(document.createTextNode(' ' + el.getAttribute('data-ja')));
-            } else {
-              el.textContent = el.getAttribute('data-ja');
+              el.appendChild(document.createTextNode(' ' + targetText));
             }
           } else {
-            el.textContent = el.getAttribute('data-ja');
+            el.textContent = targetText;
           }
         });
       }
+
+      // Auto-detect on load
+      const userLang = navigator.language || navigator.userLanguage;
+      if (userLang.toLowerCase().includes('ja')) {
+        setLanguage('ja');
+      }
+
+      // Manual Toggle
+      langToggleBtn.addEventListener('click', () => {
+        setLanguage(currentLang === 'en' ? 'ja' : 'en');
+      });
     });
 
   </script>
