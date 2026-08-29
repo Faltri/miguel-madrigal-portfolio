@@ -18,9 +18,8 @@
         <span class="slider-label i18n" data-ja="グリッドサイズ">Grid Size</span>
         <input type="range" id="grid-slider" min="2" max="8" value="3" class="grid-slider">
       </div>
-      <button class="lang-toggle-btn" id="langToggle">
-        <span class="lang-text">JA</span>
-        <span class="lang-flag">🇯🇵</span>
+      <button class="lang-toggle-btn" id="langToggle" title="Switch Language">
+        <img src="https://flagcdn.com/w40/jp.png" alt="Switch to Japanese" class="flag-icon" id="langFlagImg">
       </button>
       <a href="https://ig.me/m/migumadrigal" target="_blank" class="inquiries-btn i18n" data-ja="撮影のご相談・ご依頼">Send me a DM</a>
     </div>
@@ -287,17 +286,16 @@
 
       let currentLang = 'en';
       const langToggleBtn = document.getElementById('langToggle');
-      const langText = langToggleBtn.querySelector('.lang-text');
-      const langFlag = langToggleBtn.querySelector('.lang-flag');
+      const langFlagImg = document.getElementById('langFlagImg');
 
       function setLanguage(lang) {
         currentLang = lang;
         if (lang === 'ja') {
-          langText.textContent = 'EN';
-          langFlag.textContent = '🇺🇸';
+          langFlagImg.src = 'https://flagcdn.com/w40/us.png';
+          langFlagImg.alt = 'Switch to English';
         } else {
-          langText.textContent = 'JA';
-          langFlag.textContent = '🇯🇵';
+          langFlagImg.src = 'https://flagcdn.com/w40/jp.png';
+          langFlagImg.alt = 'Switch to Japanese';
         }
 
         translatableElements.forEach(el => {
