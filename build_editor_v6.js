@@ -174,7 +174,7 @@ const editorHTML = `<!DOCTYPE html>
     <div class="nav-controls">
       <div class="slider-container">
         <span>Columns:</span>
-        <input type="range" id="colSlider" min="2" max="8" value="5">
+        <input type="range" id="colSlider" min="2" max="8" value="3">
       </div>
       <button class="btn" id="btnLoadVersions">Load</button>
       <button class="btn" id="btnSaveVersion">Save</button>
@@ -185,7 +185,7 @@ const editorHTML = `<!DOCTYPE html>
   <div class="panes-container">
     <div>
       <div class="pane-header">Active Portfolio <span class="pane-subtitle">Cmd/Ctrl+Click to multi-select. Shift+Click for row select.</span></div>
-      <div class="sortable-grid" id="activeGrid" style="--cols: 5;">
+      <div class="sortable-grid" id="activeGrid" style="--cols: 3;">
         ${activeImages.map(img => buildItem(img)).join('')}
       </div>
     </div>
