@@ -77,10 +77,12 @@ body {
 }
 
 /* Slider UI */
-@keyframes subtle-nudge {
-  0%, 90% { transform: translateX(0); }
-  92%, 96% { transform: translateX(-4px); }
-  94%, 98% { transform: translateX(4px); }
+@keyframes attention-bounce {
+  0%, 85% { transform: translateX(0); }
+  88% { transform: translateX(-8px) scale(1.02); }
+  91% { transform: translateX(8px) scale(1.02); }
+  94% { transform: translateX(-6px) scale(1.02); }
+  97% { transform: translateX(6px) scale(1.02); }
   100% { transform: translateX(0); }
 }
 
@@ -88,7 +90,7 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-  animation: subtle-nudge 5s infinite;
+  animation: attention-bounce 4s infinite;
 }
 
 .slider-label {
