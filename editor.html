@@ -57,8 +57,9 @@
     
     /* Make grid sortable */
     .sortable-grid {
-      columns: 5;
-      column-gap: 10px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 15px;
       max-width: 1400px;
       margin: 0 auto;
       padding: 0 40px 80px;
@@ -80,7 +81,8 @@
     
     .sortable-item img {
       width: 100%;
-      height: auto;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
       display: block;
       border-radius: 4px;
       pointer-events: none; /* prevents dragging the actual img element */
@@ -145,7 +147,6 @@
     <div class="sortable-item" data-id="assets/images/3x3-grid-selection/DSC02156.jpg"><img src="assets/images/3x3-grid-selection/DSC02156.jpg"></div>
     <div class="sortable-item" data-id="assets/images/3x3-grid-selection/DSC02269.jpg"><img src="assets/images/3x3-grid-selection/DSC02269.jpg"></div>
     <div class="sortable-item" data-id="assets/images/3x3-grid-selection/DSC02282.jpg"><img src="assets/images/3x3-grid-selection/DSC02282.jpg"></div>
-"><img src="${img}"></div>`).join('\n    ')}
   </div>
 
   <!-- SortableJS library -->
