@@ -6,11 +6,11 @@ const curatedImages = [
   "assets/images/3x3-grid-selection/20260710-DSC09429.jpg",
   "assets/images/20260710-DSC09332.jpg",
   "assets/images/20260710-DSC09400.jpg",
-  "assets/images/3x3-grid-selection/20260808-DSC00151.jpg",
-  "assets/images/3x3-grid-selection/20260808-DSC00696.jpg",
-  "assets/images/3x3-grid-selection/20260808-DSC00782.jpg",
-  "assets/images/3x3-grid-selection/20260808-DSC00908.jpg",
-  "assets/images/20260808-DSC00821.jpg",
+  "assets/images/20260818-DSC08137.jpg",
+  "assets/images/20260818-DSC08839.jpg",
+  "assets/images/20260818-DSC08323.jpg",
+  "assets/images/20260818-DSC08854.jpg",
+  "assets/images/20260818-DSC08851.jpg",
   "assets/images/20260728-DSC04003.jpg",
   "assets/images/20260728-DSC04017.jpg",
   "assets/images/3x3-grid-selection/20260728-DSC04598.jpg",
@@ -51,11 +51,11 @@ const curatedImages = [
   "assets/images/20260711-DSC09896.jpg",
   "assets/images/20260711-DSC09970.jpg",
   "assets/images/20260711-DSC00050.jpg",
-  "assets/images/20260818-DSC08137.jpg",
-  "assets/images/20260818-DSC08839.jpg",
-  "assets/images/20260818-DSC08323.jpg",
-  "assets/images/20260818-DSC08854.jpg",
-  "assets/images/20260818-DSC08851.jpg",
+  "assets/images/3x3-grid-selection/20260808-DSC00151.jpg",
+  "assets/images/3x3-grid-selection/20260808-DSC00696.jpg",
+  "assets/images/3x3-grid-selection/20260808-DSC00782.jpg",
+  "assets/images/3x3-grid-selection/20260808-DSC00908.jpg",
+  "assets/images/20260808-DSC00821.jpg",
   "assets/images/20260808-DSC09913.jpg",
   "assets/images/20260808-DSC09809.jpg",
   "assets/images/20260808-DSC09978.jpg",
@@ -90,4 +90,4 @@ const endIndex = index.indexOf(endMarker);
 index = index.substring(0, index.indexOf(startMarker)) + startMarker + '\n' + htmlStr + '    </div>\n  ' + endMarker + index.substring(endIndex + endMarker.length);
 
 fs.writeFileSync('index.html', index);
-console.log('Applied final user curation layout. Total photos: ' + curatedImages.length);
+console.log('Applied NEW user curation layout (05:04). Total photos: ' + curatedImages.length);
