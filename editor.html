@@ -10,14 +10,16 @@
   <style>
     body {
       background: #111;
-      padding-top: 100px; /* space for the top bar */
+      padding-top: 100px;
+      color: #fff;
+      font-family: sans-serif;
     }
     
     .editor-topbar {
       position: fixed;
       top: 0; left: 0; right: 0;
       height: 80px;
-      background: rgba(0,0,0,0.9);
+      background: rgba(0,0,0,0.95);
       border-bottom: 1px solid #333;
       display: flex;
       justify-content: space-between;
@@ -29,7 +31,6 @@
     .editor-title {
       font-size: 1.2rem;
       font-weight: bold;
-      color: #fff;
     }
     
     .export-btn {
@@ -44,40 +45,52 @@
       transition: 0.2s ease;
     }
     
-    .export-btn:hover {
-      background: #ccc;
-    }
+    .export-btn:hover { background: #ccc; }
     
-    .editor-instructions {
-      text-align: center;
-      color: #888;
-      margin-bottom: 30px;
-      font-size: 0.9rem;
-    }
-    
-    /* Make grid sortable */
-    .sortable-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 15px;
+    .panes-container {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      padding: 0 40px 80px;
       max-width: 1400px;
       margin: 0 auto;
-      padding: 0 40px 80px;
+    }
+
+    .pane-header {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #333;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .pane-subtitle {
+      font-size: 0.9rem;
+      color: #888;
+      font-weight: normal;
+    }
+    
+    .sortable-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 15px;
+      min-height: 200px;
+      background: rgba(255,255,255,0.02);
+      border: 2px dashed #333;
+      padding: 15px;
+      border-radius: 8px;
     }
     
     .sortable-item {
       display: block;
-      break-inside: avoid;
-      margin-bottom: 10px;
       cursor: grab;
       position: relative;
     }
     
-    .sortable-item:active {
-      cursor: grabbing;
-      opacity: 0.8;
-      transform: scale(0.98);
-    }
+    .sortable-item:active { cursor: grabbing; opacity: 0.8; transform: scale(0.95); }
     
     .sortable-item img {
       width: 100%;
@@ -85,14 +98,10 @@
       object-fit: cover;
       display: block;
       border-radius: 4px;
-      pointer-events: none; /* prevents dragging the actual img element */
+      pointer-events: none;
     }
     
-    /* SortableJS Ghost styling */
-    .sortable-ghost {
-      opacity: 0.4;
-      background: #333;
-    }
+    .sortable-ghost { opacity: 0.4; background: #333; }
   </style>
 </head>
 <body>
@@ -101,91 +110,326 @@
     <div class="editor-title">Visual Layout Editor</div>
     <button class="export-btn" id="exportBtn">Export Curation</button>
   </div>
-  
-  <div class="editor-instructions">
-    Click and drag the photos to change their order.<br>When you are finished, click the Export button and paste the result to your developer.
-  </div>
 
-  <div class="sortable-grid" id="photoGrid">
+  <div class="panes-container">
+    <!-- ACTIVE GRID -->
+    <div>
+      <div class="pane-header">
+        Active Grid
+        <span class="pane-subtitle">These photos will appear on your website. Drag to reorder.</span>
+      </div>
+      <div class="sortable-grid" id="activeGrid">
         <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260710-DSC09297.jpg"><img src="assets/images/3x3-grid-selection/20260710-DSC09297.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260710-DSC09321.jpg"><img src="assets/images/3x3-grid-selection/20260710-DSC09321.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260710-DSC09429.jpg"><img src="assets/images/3x3-grid-selection/20260710-DSC09429.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04003.jpg"><img src="assets/images/3x3-grid-selection/20260728-DSC04003.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04017.jpg"><img src="assets/images/3x3-grid-selection/20260728-DSC04017.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04046.jpg"><img src="assets/images/3x3-grid-selection/20260728-DSC04046.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04091.jpg"><img src="assets/images/3x3-grid-selection/20260728-DSC04091.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04114.jpg"><img src="assets/images/3x3-grid-selection/20260728-DSC04114.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04598.jpg"><img src="assets/images/3x3-grid-selection/20260728-DSC04598.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260804-DSC05446.jpg"><img src="assets/images/3x3-grid-selection/20260804-DSC05446.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06665.jpg"><img src="assets/images/3x3-grid-selection/20260806-DSC06665.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06695.jpg"><img src="assets/images/3x3-grid-selection/20260806-DSC06695.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06698.jpg"><img src="assets/images/3x3-grid-selection/20260806-DSC06698.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06712.jpg"><img src="assets/images/3x3-grid-selection/20260806-DSC06712.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06753.jpg"><img src="assets/images/3x3-grid-selection/20260806-DSC06753.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00151.jpg"><img src="assets/images/3x3-grid-selection/20260808-DSC00151.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00696.jpg"><img src="assets/images/3x3-grid-selection/20260808-DSC00696.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00782.jpg"><img src="assets/images/3x3-grid-selection/20260808-DSC00782.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00908.jpg"><img src="assets/images/3x3-grid-selection/20260808-DSC00908.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260711-DSC09896.jpg"><img src="assets/images/3x3-grid-selection/20260711-DSC09896.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260804-DSC05811.jpg"><img src="assets/images/3x3-grid-selection/20260804-DSC05811.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06215.jpg"><img src="assets/images/3x3-grid-selection/20260806-DSC06215.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06253.jpg"><img src="assets/images/3x3-grid-selection/20260806-DSC06253.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06457.jpg"><img src="assets/images/3x3-grid-selection/20260806-DSC06457.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00044.jpg"><img src="assets/images/3x3-grid-selection/20260808-DSC00044.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00300.jpg"><img src="assets/images/3x3-grid-selection/20260808-DSC00300.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260814-DSC07999.jpg"><img src="assets/images/3x3-grid-selection/20260814-DSC07999.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260818-DSC08839.jpg"><img src="assets/images/3x3-grid-selection/20260818-DSC08839.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260818-DSC08851.jpg"><img src="assets/images/3x3-grid-selection/20260818-DSC08851.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260818-DSC08854.jpg"><img src="assets/images/3x3-grid-selection/20260818-DSC08854.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260711-DSC09918.jpg"><img src="assets/images/3x3-grid-selection/20260711-DSC09918.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260711-DSC09946.jpg"><img src="assets/images/3x3-grid-selection/20260711-DSC09946.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260626-DSC08130.jpg"><img src="assets/images/3x3-grid-selection/20260626-DSC08130.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260626-DSC08145.jpg"><img src="assets/images/3x3-grid-selection/20260626-DSC08145.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260626-DSC08235.jpg"><img src="assets/images/3x3-grid-selection/20260626-DSC08235.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260626-DSC08324.jpg"><img src="assets/images/3x3-grid-selection/20260626-DSC08324.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/DSC02118.jpg"><img src="assets/images/3x3-grid-selection/DSC02118.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/DSC02156.jpg"><img src="assets/images/3x3-grid-selection/DSC02156.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/DSC02269.jpg"><img src="assets/images/3x3-grid-selection/DSC02269.jpg"></div>
-    <div class="sortable-item" data-id="assets/images/3x3-grid-selection/DSC02282.jpg"><img src="assets/images/3x3-grid-selection/DSC02282.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260710-DSC09321.jpg"><img src="assets/images/3x3-grid-selection/20260710-DSC09321.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260710-DSC09429.jpg"><img src="assets/images/3x3-grid-selection/20260710-DSC09429.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04003.jpg"><img src="assets/images/3x3-grid-selection/20260728-DSC04003.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04017.jpg"><img src="assets/images/3x3-grid-selection/20260728-DSC04017.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04046.jpg"><img src="assets/images/3x3-grid-selection/20260728-DSC04046.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04091.jpg"><img src="assets/images/3x3-grid-selection/20260728-DSC04091.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04114.jpg"><img src="assets/images/3x3-grid-selection/20260728-DSC04114.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260728-DSC04598.jpg"><img src="assets/images/3x3-grid-selection/20260728-DSC04598.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260804-DSC05446.jpg"><img src="assets/images/3x3-grid-selection/20260804-DSC05446.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06665.jpg"><img src="assets/images/3x3-grid-selection/20260806-DSC06665.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06695.jpg"><img src="assets/images/3x3-grid-selection/20260806-DSC06695.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06698.jpg"><img src="assets/images/3x3-grid-selection/20260806-DSC06698.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06712.jpg"><img src="assets/images/3x3-grid-selection/20260806-DSC06712.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06753.jpg"><img src="assets/images/3x3-grid-selection/20260806-DSC06753.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00151.jpg"><img src="assets/images/3x3-grid-selection/20260808-DSC00151.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00696.jpg"><img src="assets/images/3x3-grid-selection/20260808-DSC00696.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00782.jpg"><img src="assets/images/3x3-grid-selection/20260808-DSC00782.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00908.jpg"><img src="assets/images/3x3-grid-selection/20260808-DSC00908.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260711-DSC09896.jpg"><img src="assets/images/3x3-grid-selection/20260711-DSC09896.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260804-DSC05811.jpg"><img src="assets/images/3x3-grid-selection/20260804-DSC05811.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06215.jpg"><img src="assets/images/3x3-grid-selection/20260806-DSC06215.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06253.jpg"><img src="assets/images/3x3-grid-selection/20260806-DSC06253.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260806-DSC06457.jpg"><img src="assets/images/3x3-grid-selection/20260806-DSC06457.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00044.jpg"><img src="assets/images/3x3-grid-selection/20260808-DSC00044.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260808-DSC00300.jpg"><img src="assets/images/3x3-grid-selection/20260808-DSC00300.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260814-DSC07999.jpg"><img src="assets/images/3x3-grid-selection/20260814-DSC07999.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260818-DSC08839.jpg"><img src="assets/images/3x3-grid-selection/20260818-DSC08839.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260818-DSC08851.jpg"><img src="assets/images/3x3-grid-selection/20260818-DSC08851.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260818-DSC08854.jpg"><img src="assets/images/3x3-grid-selection/20260818-DSC08854.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260711-DSC09918.jpg"><img src="assets/images/3x3-grid-selection/20260711-DSC09918.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260711-DSC09946.jpg"><img src="assets/images/3x3-grid-selection/20260711-DSC09946.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260626-DSC08130.jpg"><img src="assets/images/3x3-grid-selection/20260626-DSC08130.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260626-DSC08145.jpg"><img src="assets/images/3x3-grid-selection/20260626-DSC08145.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260626-DSC08235.jpg"><img src="assets/images/3x3-grid-selection/20260626-DSC08235.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/20260626-DSC08324.jpg"><img src="assets/images/3x3-grid-selection/20260626-DSC08324.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/DSC02118.jpg"><img src="assets/images/3x3-grid-selection/DSC02118.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/DSC02156.jpg"><img src="assets/images/3x3-grid-selection/DSC02156.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/DSC02269.jpg"><img src="assets/images/3x3-grid-selection/DSC02269.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/DSC02282.jpg"><img src="assets/images/3x3-grid-selection/DSC02282.jpg"></div>
+      </div>
+    </div>
+
+    <!-- UNUSED PHOTOS -->
+    <div>
+      <div class="pane-header" style="color: #888; border-color: #222;">
+        Unused Photos
+        <span class="pane-subtitle">Drag these UP into the Active Grid to add them, or drag active photos DOWN here to delete them.</span>
+      </div>
+      <div class="sortable-grid" id="unusedGrid">
+        <div class="sortable-item" data-id="assets/images/20140101-DSC08617.jpg"><img src="assets/images/20140101-DSC08617.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20140101-DSC08689.jpg"><img src="assets/images/20140101-DSC08689.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20140101-DSC08694.jpg"><img src="assets/images/20140101-DSC08694.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20140101-DSC09042.jpg"><img src="assets/images/20140101-DSC09042.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20140101-DSC09122.jpg"><img src="assets/images/20140101-DSC09122.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20140101-DSC09159.jpg"><img src="assets/images/20140101-DSC09159.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20140101-DSC09166.jpg"><img src="assets/images/20140101-DSC09166.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20140101-DSC09194.jpg"><img src="assets/images/20140101-DSC09194.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20140101-DSC09207.jpg"><img src="assets/images/20140101-DSC09207.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20140101-DSC09212.jpg"><img src="assets/images/20140101-DSC09212.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20140101-DSC09213.jpg"><img src="assets/images/20140101-DSC09213.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260531-DSC03398-Edit.jpg"><img src="assets/images/20260531-DSC03398-Edit.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260531-DSC03418.jpg"><img src="assets/images/20260531-DSC03418.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260531-DSC03427-Edit.jpg"><img src="assets/images/20260531-DSC03427-Edit.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260531-DSC03438-Edit.jpg"><img src="assets/images/20260531-DSC03438-Edit.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260607-DSC04716.jpg"><img src="assets/images/20260607-DSC04716.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260618-DSC07360-Edit.jpg"><img src="assets/images/20260618-DSC07360-Edit.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260621-DSC07667.jpg"><img src="assets/images/20260621-DSC07667.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260621-DSC07671-Edit.jpg"><img src="assets/images/20260621-DSC07671-Edit.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260621-DSC07673.jpg"><img src="assets/images/20260621-DSC07673.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260621-DSC07679.jpg"><img src="assets/images/20260621-DSC07679.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260621-DSC07686.jpg"><img src="assets/images/20260621-DSC07686.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260621-DSC07688-Edit.jpg"><img src="assets/images/20260621-DSC07688-Edit.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260626-DSC08130.jpg"><img src="assets/images/20260626-DSC08130.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260626-DSC08145.jpg"><img src="assets/images/20260626-DSC08145.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260626-DSC08235.jpg"><img src="assets/images/20260626-DSC08235.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260626-DSC08324.jpg"><img src="assets/images/20260626-DSC08324.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260710-DSC09249.jpg"><img src="assets/images/20260710-DSC09249.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260710-DSC09297.jpg"><img src="assets/images/20260710-DSC09297.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260710-DSC09321.jpg"><img src="assets/images/20260710-DSC09321.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260710-DSC09332.jpg"><img src="assets/images/20260710-DSC09332.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260710-DSC09344.jpg"><img src="assets/images/20260710-DSC09344.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260710-DSC09384.jpg"><img src="assets/images/20260710-DSC09384.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260710-DSC09396.jpg"><img src="assets/images/20260710-DSC09396.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260710-DSC09400.jpg"><img src="assets/images/20260710-DSC09400.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260710-DSC09429.jpg"><img src="assets/images/20260710-DSC09429.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260710-DSC09544.jpg"><img src="assets/images/20260710-DSC09544.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260710-DSC09643.jpg"><img src="assets/images/20260710-DSC09643.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260711-DSC00036.jpg"><img src="assets/images/20260711-DSC00036.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260711-DSC00050.jpg"><img src="assets/images/20260711-DSC00050.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260711-DSC00064.jpg"><img src="assets/images/20260711-DSC00064.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260711-DSC09896.jpg"><img src="assets/images/20260711-DSC09896.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260711-DSC09905.jpg"><img src="assets/images/20260711-DSC09905.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260711-DSC09918.jpg"><img src="assets/images/20260711-DSC09918.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260711-DSC09946.jpg"><img src="assets/images/20260711-DSC09946.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260711-DSC09970.jpg"><img src="assets/images/20260711-DSC09970.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260719-DSC09680.jpg"><img src="assets/images/20260719-DSC09680.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260725-DSC02281.jpg"><img src="assets/images/20260725-DSC02281.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260727-DSC02938.jpg"><img src="assets/images/20260727-DSC02938.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260727-DSC03453.jpg"><img src="assets/images/20260727-DSC03453.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC03957.jpg"><img src="assets/images/20260728-DSC03957.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC03999.jpg"><img src="assets/images/20260728-DSC03999.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04003.jpg"><img src="assets/images/20260728-DSC04003.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04017.jpg"><img src="assets/images/20260728-DSC04017.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04035.jpg"><img src="assets/images/20260728-DSC04035.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04046.jpg"><img src="assets/images/20260728-DSC04046.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04091.jpg"><img src="assets/images/20260728-DSC04091.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04114.jpg"><img src="assets/images/20260728-DSC04114.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04146.jpg"><img src="assets/images/20260728-DSC04146.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04168.jpg"><img src="assets/images/20260728-DSC04168.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04251.jpg"><img src="assets/images/20260728-DSC04251.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04265.jpg"><img src="assets/images/20260728-DSC04265.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04318.jpg"><img src="assets/images/20260728-DSC04318.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04488.jpg"><img src="assets/images/20260728-DSC04488.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04493.jpg"><img src="assets/images/20260728-DSC04493.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04511.jpg"><img src="assets/images/20260728-DSC04511.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04557.jpg"><img src="assets/images/20260728-DSC04557.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04558.jpg"><img src="assets/images/20260728-DSC04558.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04559.jpg"><img src="assets/images/20260728-DSC04559.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04585.jpg"><img src="assets/images/20260728-DSC04585.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04598.jpg"><img src="assets/images/20260728-DSC04598.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04616.jpg"><img src="assets/images/20260728-DSC04616.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04734.jpg"><img src="assets/images/20260728-DSC04734.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04766.jpg"><img src="assets/images/20260728-DSC04766.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260728-DSC04772.jpg"><img src="assets/images/20260728-DSC04772.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05410.jpg"><img src="assets/images/20260804-DSC05410.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05434.jpg"><img src="assets/images/20260804-DSC05434.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05446-2.jpg"><img src="assets/images/20260804-DSC05446-2.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05466.jpg"><img src="assets/images/20260804-DSC05466.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05471.jpg"><img src="assets/images/20260804-DSC05471.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05484.jpg"><img src="assets/images/20260804-DSC05484.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05486.jpg"><img src="assets/images/20260804-DSC05486.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05582.jpg"><img src="assets/images/20260804-DSC05582.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05648.jpg"><img src="assets/images/20260804-DSC05648.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05657.jpg"><img src="assets/images/20260804-DSC05657.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05689.jpg"><img src="assets/images/20260804-DSC05689.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05692.jpg"><img src="assets/images/20260804-DSC05692.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05706.jpg"><img src="assets/images/20260804-DSC05706.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05718.jpg"><img src="assets/images/20260804-DSC05718.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05806.jpg"><img src="assets/images/20260804-DSC05806.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05811.jpg"><img src="assets/images/20260804-DSC05811.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05820.jpg"><img src="assets/images/20260804-DSC05820.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260804-DSC05918.jpg"><img src="assets/images/20260804-DSC05918.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260806-DSC06215.jpg"><img src="assets/images/20260806-DSC06215.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260806-DSC06253.jpg"><img src="assets/images/20260806-DSC06253.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260806-DSC06457.jpg"><img src="assets/images/20260806-DSC06457.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260806-DSC06665.jpg"><img src="assets/images/20260806-DSC06665.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260806-DSC06695.jpg"><img src="assets/images/20260806-DSC06695.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260806-DSC06698.jpg"><img src="assets/images/20260806-DSC06698.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260806-DSC06712.jpg"><img src="assets/images/20260806-DSC06712.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260806-DSC06753.jpg"><img src="assets/images/20260806-DSC06753.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00044.jpg"><img src="assets/images/20260808-DSC00044.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00149.jpg"><img src="assets/images/20260808-DSC00149.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00151.jpg"><img src="assets/images/20260808-DSC00151.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00173.jpg"><img src="assets/images/20260808-DSC00173.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00300.jpg"><img src="assets/images/20260808-DSC00300.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00352.jpg"><img src="assets/images/20260808-DSC00352.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00696.jpg"><img src="assets/images/20260808-DSC00696.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00700.jpg"><img src="assets/images/20260808-DSC00700.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00726.jpg"><img src="assets/images/20260808-DSC00726.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00727.jpg"><img src="assets/images/20260808-DSC00727.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00782.jpg"><img src="assets/images/20260808-DSC00782.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00821.jpg"><img src="assets/images/20260808-DSC00821.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00842.jpg"><img src="assets/images/20260808-DSC00842.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00850.jpg"><img src="assets/images/20260808-DSC00850.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00854.jpg"><img src="assets/images/20260808-DSC00854.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00856.jpg"><img src="assets/images/20260808-DSC00856.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00859.jpg"><img src="assets/images/20260808-DSC00859.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00860.jpg"><img src="assets/images/20260808-DSC00860.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00861.jpg"><img src="assets/images/20260808-DSC00861.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00908.jpg"><img src="assets/images/20260808-DSC00908.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC00915.jpg"><img src="assets/images/20260808-DSC00915.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC01172.jpg"><img src="assets/images/20260808-DSC01172.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09746.jpg"><img src="assets/images/20260808-DSC09746.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09809.jpg"><img src="assets/images/20260808-DSC09809.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09822.jpg"><img src="assets/images/20260808-DSC09822.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09840.jpg"><img src="assets/images/20260808-DSC09840.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09854.jpg"><img src="assets/images/20260808-DSC09854.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09860.jpg"><img src="assets/images/20260808-DSC09860.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09863.jpg"><img src="assets/images/20260808-DSC09863.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09865.jpg"><img src="assets/images/20260808-DSC09865.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09866.jpg"><img src="assets/images/20260808-DSC09866.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09868.jpg"><img src="assets/images/20260808-DSC09868.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09874.jpg"><img src="assets/images/20260808-DSC09874.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09913.jpg"><img src="assets/images/20260808-DSC09913.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09920.jpg"><img src="assets/images/20260808-DSC09920.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09928.jpg"><img src="assets/images/20260808-DSC09928.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09935.jpg"><img src="assets/images/20260808-DSC09935.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09942.jpg"><img src="assets/images/20260808-DSC09942.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09943.jpg"><img src="assets/images/20260808-DSC09943.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09973.jpg"><img src="assets/images/20260808-DSC09973.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09974.jpg"><img src="assets/images/20260808-DSC09974.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260808-DSC09978.jpg"><img src="assets/images/20260808-DSC09978.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260814-DSC07789.jpg"><img src="assets/images/20260814-DSC07789.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260814-DSC07791.jpg"><img src="assets/images/20260814-DSC07791.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260814-DSC07794.jpg"><img src="assets/images/20260814-DSC07794.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260814-DSC07828.jpg"><img src="assets/images/20260814-DSC07828.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260814-DSC07907.jpg"><img src="assets/images/20260814-DSC07907.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260814-DSC07911.jpg"><img src="assets/images/20260814-DSC07911.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260814-DSC07912.jpg"><img src="assets/images/20260814-DSC07912.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260814-DSC07917.jpg"><img src="assets/images/20260814-DSC07917.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260814-DSC07973.jpg"><img src="assets/images/20260814-DSC07973.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260814-DSC07997.jpg"><img src="assets/images/20260814-DSC07997.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260814-DSC07999.jpg"><img src="assets/images/20260814-DSC07999.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260818-DSC08839.jpg"><img src="assets/images/20260818-DSC08839.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260818-DSC08851.jpg"><img src="assets/images/20260818-DSC08851.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/20260818-DSC08854.jpg"><img src="assets/images/20260818-DSC08854.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/wfwfwfwf.jpg"><img src="assets/images/3x3-grid-selection/wfwfwfwf.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/wfwfwfwwf (2).jpg"><img src="assets/images/3x3-grid-selection/wfwfwfwwf (2).jpg"></div>
+        <div class="sortable-item" data-id="assets/images/3x3-grid-selection/wfwfwfwwf.jpg"><img src="assets/images/3x3-grid-selection/wfwfwfwwf.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC01752.jpg"><img src="assets/images/DSC01752.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC01811.jpg"><img src="assets/images/DSC01811.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC02025.jpg"><img src="assets/images/DSC02025.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC02118.jpg"><img src="assets/images/DSC02118.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC02138.jpg"><img src="assets/images/DSC02138.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC02156.jpg"><img src="assets/images/DSC02156.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC02170.jpg"><img src="assets/images/DSC02170.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC02238.jpg"><img src="assets/images/DSC02238.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC02269.jpg"><img src="assets/images/DSC02269.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC02270.jpg"><img src="assets/images/DSC02270.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC02282.jpg"><img src="assets/images/DSC02282.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC02294.jpg"><img src="assets/images/DSC02294.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC02297.jpg"><img src="assets/images/DSC02297.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC02336.jpg"><img src="assets/images/DSC02336.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC02337.jpg"><img src="assets/images/DSC02337.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC02346.jpg"><img src="assets/images/DSC02346.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC02788.jpg"><img src="assets/images/DSC02788.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC02865.jpg"><img src="assets/images/DSC02865.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC02908.jpg"><img src="assets/images/DSC02908.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC02921.jpg"><img src="assets/images/DSC02921.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC02925.jpg"><img src="assets/images/DSC02925.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC02928.jpg"><img src="assets/images/DSC02928.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC02937.jpg"><img src="assets/images/DSC02937.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC02938.jpg"><img src="assets/images/DSC02938.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC02958.jpg"><img src="assets/images/DSC02958.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC02975.jpg"><img src="assets/images/DSC02975.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC02977.jpg"><img src="assets/images/DSC02977.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC02991.jpg"><img src="assets/images/DSC02991.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC02994.jpg"><img src="assets/images/DSC02994.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC03009.jpg"><img src="assets/images/DSC03009.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC03016.jpg"><img src="assets/images/DSC03016.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC03017.jpg"><img src="assets/images/DSC03017.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC03149.jpg"><img src="assets/images/DSC03149.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC03165.jpg"><img src="assets/images/DSC03165.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC03198.jpg"><img src="assets/images/DSC03198.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/DSC03455.jpg"><img src="assets/images/DSC03455.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/dwd (2).jpg"><img src="assets/images/dwd (2).jpg"></div>
+        <div class="sortable-item" data-id="assets/images/dwd.jpg"><img src="assets/images/dwd.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/dwdw.jpg"><img src="assets/images/dwdw.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/efewew.jpg"><img src="assets/images/efewew.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/ergreg.jpg"><img src="assets/images/ergreg.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/ergregr.jpg"><img src="assets/images/ergregr.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/fewfefwefw.jpg"><img src="assets/images/fewfefwefw.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/fwfwfw.jpg"><img src="assets/images/fwfwfw.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/fwfwfwf.jpg"><img src="assets/images/fwfwfwf.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/fwfwfwfw.jpg"><img src="assets/images/fwfwfwfw.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/fwfwfwfwfw.jpg"><img src="assets/images/fwfwfwfwfw.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/gergerg.jpg"><img src="assets/images/gergerg.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/greg.jpg"><img src="assets/images/greg.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/greger.jpg"><img src="assets/images/greger.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/miguel-avatar.jpg"><img src="assets/images/miguel-avatar.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/miguel-portrait-1.jpg"><img src="assets/images/miguel-portrait-1.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/miguel-portrait-bench.jpg"><img src="assets/images/miguel-portrait-bench.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/miguel-portrait-camera-close.jpg"><img src="assets/images/miguel-portrait-camera-close.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/wfwfwfw (2).jpg"><img src="assets/images/wfwfwfw (2).jpg"></div>
+        <div class="sortable-item" data-id="assets/images/wfwfwfw.jpg"><img src="assets/images/wfwfwfw.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/wfwfwfwf.jpg"><img src="assets/images/wfwfwfwf.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/wfwfwfwfwf (2).jpg"><img src="assets/images/wfwfwfwfwf (2).jpg"></div>
+        <div class="sortable-item" data-id="assets/images/wfwfwfwfwf.jpg"><img src="assets/images/wfwfwfwfwf.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/wfwfwfwwf (2).jpg"><img src="assets/images/wfwfwfwwf (2).jpg"></div>
+        <div class="sortable-item" data-id="assets/images/wfwfwfwwf.jpg"><img src="assets/images/wfwfwfwwf.jpg"></div>
+        <div class="sortable-item" data-id="assets/images/wfwwfwf.jpg"><img src="assets/images/wfwwfwf.jpg"></div>
+      </div>
+    </div>
   </div>
 
-  <!-- SortableJS library -->
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-  
   <script>
-    // Initialize Sortable
-    const grid = document.getElementById('photoGrid');
-    const sortable = new Sortable(grid, {
+    const activeGrid = document.getElementById('activeGrid');
+    const unusedGrid = document.getElementById('unusedGrid');
+    
+    const sortableOptions = {
+      group: 'shared', // set both lists to same group
       animation: 150,
       ghostClass: 'sortable-ghost',
-      delay: 50, // slight delay helps distinguish drag from click
+      delay: 50,
       delayOnTouchOnly: true
-    });
+    };
     
-    // Export Logic
+    const activeSortable = new Sortable(activeGrid, sortableOptions);
+    new Sortable(unusedGrid, sortableOptions);
+    
     const exportBtn = document.getElementById('exportBtn');
     
     exportBtn.addEventListener('click', () => {
-      // Get the current order of the data-id attributes
-      const order = sortable.toArray();
-      
-      // Convert to JSON
+      // ONLY grab the images from the Active Grid!
+      const order = activeSortable.toArray();
       const json = JSON.stringify(order, null, 2);
       
-      // Copy to clipboard
       navigator.clipboard.writeText(json).then(() => {
         const originalText = exportBtn.innerText;
         exportBtn.innerText = 'Copied to Clipboard!';
         exportBtn.style.background = '#4CAF50';
         exportBtn.style.color = '#fff';
-        
         setTimeout(() => {
           exportBtn.innerText = originalText;
           exportBtn.style.background = '#fff';
           exportBtn.style.color = '#000';
         }, 3000);
       }).catch(err => {
-        alert('Failed to copy. Please manually copy this text:\n\n' + json);
+        alert('Failed to copy. Please copy manually:\n\n' + json);
       });
     });
   </script>

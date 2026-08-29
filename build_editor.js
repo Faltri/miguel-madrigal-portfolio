@@ -122,7 +122,7 @@ const editorHTML = `<!DOCTYPE html>
   </div>
 
   <div class="sortable-grid" id="photoGrid">
-    \${images.map(img => \`<div class="sortable-item" data-id="\${img}"><img src="\${img}"></div>\`).join('\\n    ')}
+    ${images.map(img => \`<div class="sortable-item" data-id="\${img}"><img src="\${img}"></div>\`).join('\\n    ')}
   </div>
 
   <!-- SortableJS library -->
