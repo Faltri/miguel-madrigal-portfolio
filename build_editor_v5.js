@@ -109,7 +109,7 @@ const editorHTML = `<!DOCTYPE html>
     
     .sortable-item { position: relative; cursor: grab; border-radius: 4px; background: #222; overflow: hidden; transition: 0.2s transform; }
     .sortable-item img { 
-      width: 100%; height: auto; display: block; pointer-events: none; 
+      width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block; pointer-events: none; 
     }
     
     /* MULTI-DRAG SELECTED STYLING */
