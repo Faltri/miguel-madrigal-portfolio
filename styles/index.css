@@ -121,7 +121,63 @@ body {
 }
 
 /* =============================================
-   2. PORTFOLIO GRID
+   2. HERO SECTION
+   ============================================= */
+.hero-section {
+  padding: 160px 40px 60px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 8px;
+  color: var(--color-accent);
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  margin-bottom: 24px;
+}
+
+.hero-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #aaa;
+  margin-bottom: 32px;
+  font-style: italic;
+}
+
+.hero-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--color-accent);
+  color: #000;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 14px 28px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.hero-cta-btn:hover {
+  background: #ccc;
+  transform: translateY(-2px);
+}
+
+/* =============================================
+   3. PORTFOLIO GRID
    ============================================= */
 .portfolio {
   padding: 100px 40px 80px; /* Top padding to clear navbar */
@@ -154,7 +210,7 @@ body {
 }
 
 /* =============================================
-   3. SCROLL ANIMATIONS (Reveal Up)
+   4. SCROLL ANIMATIONS (Reveal Up)
    ============================================= */
 .reveal-up {
   opacity: 0;
@@ -168,8 +224,24 @@ body {
 }
 
 /* =============================================
-   4. MOBILE RESPONSIVENESS
+   5. MOBILE RESPONSIVENESS & FOOTER
    ============================================= */
+.footer-section {
+  text-align: center;
+  padding: 60px 20px 40px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.copyright {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
 @media (max-width: 768px) {
   .nav-bar {
     padding: 0 20px;
@@ -179,8 +251,14 @@ body {
     padding-bottom: 16px;
     gap: 16px;
   }
+  .hero-section {
+    padding: 180px 20px 40px;
+  }
+  .hero-title {
+    font-size: 2.5rem;
+  }
   .portfolio {
-    padding: 140px 10px 80px; /* Adjust top padding for stacked navbar */
+    padding: 20px 10px 80px; /* Reduced top padding since hero takes up space */
   }
   .portfolio-grid {
     --cols: 2 !important; /* Force 2 columns on mobile so it's not tiny */
