@@ -18,9 +18,14 @@
         <span class="slider-label i18n" data-ja="グリッドサイズ">Grid Size</span>
         <input type="range" id="grid-slider" min="2" max="8" value="3" class="grid-slider">
       </div>
-      <button class="lang-toggle-btn" id="langToggle" title="Switch Language">
-        <img src="https://flagcdn.com/w40/jp.png" alt="Switch to Japanese" class="flag-icon" id="langFlagImg">
-      </button>
+      <div class="lang-switcher">
+        <button class="lang-toggle-btn active" id="langEn" title="English">
+          <img src="https://flagcdn.com/w40/us.png" alt="English" class="flag-icon">
+        </button>
+        <button class="lang-toggle-btn" id="langJa" title="Japanese">
+          <img src="https://flagcdn.com/w40/jp.png" alt="Japanese" class="flag-icon">
+        </button>
+      </div>
       <a href="https://ig.me/m/migumadrigal" target="_blank" class="inquiries-btn i18n" data-ja="撮影のご相談・ご依頼">Send me a DM</a>
     </div>
   </nav>
@@ -269,7 +274,8 @@
   </footer>
 
   <!-- SCRIPTS -->
-  <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js">
+  <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
+  <script>
     // Universal Language Detection & Manual Toggle
     document.addEventListener("DOMContentLoaded", () => {
       const translatableElements = document.querySelectorAll('.i18n[data-ja]');
@@ -285,17 +291,19 @@
       });
 
       let currentLang = 'en';
-      const langToggleBtn = document.getElementById('langToggle');
-      const langFlagImg = document.getElementById('langFlagImg');
+      const btnEn = document.getElementById('langEn');
+      const btnJa = document.getElementById('langJa');
 
       function setLanguage(lang) {
         currentLang = lang;
+        
+        // Update active states
         if (lang === 'ja') {
-          langFlagImg.src = 'https://flagcdn.com/w40/us.png';
-          langFlagImg.alt = 'Switch to English';
+          btnJa.classList.add('active');
+          btnEn.classList.remove('active');
         } else {
-          langFlagImg.src = 'https://flagcdn.com/w40/jp.png';
-          langFlagImg.alt = 'Switch to Japanese';
+          btnEn.classList.add('active');
+          btnJa.classList.remove('active');
         }
 
         translatableElements.forEach(el => {
@@ -322,9 +330,8 @@
       }
 
       // Manual Toggle
-      langToggleBtn.addEventListener('click', () => {
-        setLanguage(currentLang === 'en' ? 'ja' : 'en');
-      });
+      btnEn.addEventListener('click', () => setLanguage('en'));
+      btnJa.addEventListener('click', () => setLanguage('ja'));
     });
 
   </script>

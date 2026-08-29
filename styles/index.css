@@ -125,6 +125,12 @@ body {
 }
 
 /* Inquiries Button & Lang Toggle */
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .lang-toggle-btn {
   display: flex;
   align-items: center;
@@ -133,16 +139,23 @@ body {
   border: none;
   padding: 0;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  opacity: 0.4; /* Inactive state */
 }
 
 .lang-toggle-btn:hover {
   transform: scale(1.15);
+  opacity: 0.8;
+}
+
+.lang-toggle-btn.active {
+  opacity: 1;
+  transform: scale(1.1);
 }
 
 .flag-icon {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   object-fit: cover;
   box-shadow: 0 0 0 2px rgba(255,255,255,0.2);
