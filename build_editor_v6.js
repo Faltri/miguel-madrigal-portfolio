@@ -46,7 +46,9 @@ const imgRegex = /<img src="([^"]+)"/g;
 let match;
 let activeImages = [];
 while ((match = imgRegex.exec(indexHTML)) !== null) {
-  activeImages.push(match[1]);
+  if (!match[1].includes('flagcdn.com')) {
+    activeImages.push(match[1]);
+  }
 }
 activeImages = [...new Set(activeImages)];
 

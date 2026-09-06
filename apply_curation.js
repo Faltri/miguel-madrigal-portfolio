@@ -1,6 +1,15 @@
 const fs = require('fs');
 
 const curatedImages = [
+  "assets/images/20260902-DSC09875.jpg",
+  "assets/images/20260902-DSC09630.jpg",
+  "assets/images/20260902-DSC09985.jpg",
+  "assets/images/20260902-DSC09660.jpg",
+  "assets/images/20260902-DSC00195.jpg",
+  "assets/images/20260902-DSC09763.jpg",
+  "assets/images/20260902-DSC00317.jpg",
+  "assets/images/20260902-DSC00285.jpg",
+  "assets/images/20260902-DSC00242.jpg",
   "assets/images/3x3-grid-selection/20260710-DSC09297.jpg",
   "assets/images/3x3-grid-selection/20260710-DSC09321.jpg",
   "assets/images/3x3-grid-selection/20260710-DSC09429.jpg",
@@ -75,6 +84,9 @@ const curatedImages = [
 
 let htmlStr = '';
 curatedImages.forEach(img => {
+  // Ignore flag CDN links that were accidentally included in the active grid
+  if (img.includes('flagcdn.com')) return;
+  
   htmlStr += `      <a href="${img}" class="project-card glightbox reveal-up" data-gallery="portfolio">
         <img src="${img}" alt="Miguel Madrigal Photography" class="project-img">
       </a>\n`;
@@ -90,4 +102,4 @@ const endIndex = index.indexOf(endMarker);
 index = index.substring(0, index.indexOf(startMarker)) + startMarker + '\n' + htmlStr + '    </div>\n  ' + endMarker + index.substring(endIndex + endMarker.length);
 
 fs.writeFileSync('index.html', index);
-console.log('Applied NEW user curation layout (05:04). Total photos: ' + curatedImages.length);
+console.log('Applied NEW user curation layout (81 photos).');
