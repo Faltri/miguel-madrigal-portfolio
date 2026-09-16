@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JDM Dealership | V3 Minimalist</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #121212;
+      --bg-lighter: #18181b; /* Zinc 900 */
+      --card-bg: #121212;
+      
+      --text-main: #ffffff;
+      --text-muted: #a1a1aa; /* Zinc 400 */
+      
+      --accent: #ea580c; /* JDM Orange */
+      --accent-hover: #c2410c;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* SOLID NAV */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      background-color: var(--bg-dark);
+      border-bottom: 1px solid #27272a; /* Subtle separator */
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.05em;
+    }
+    .logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover {
+      color: var(--text-main);
+    }
+
+    .contact-pills {
+      display: flex;
+      gap: 1rem;
+    }
+    .contact-pill {
+      background: transparent;
+      border: 1px solid #3f3f46;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-main);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .contact-pill:hover {
+      border-color: var(--text-main);
+    }
+
+    /* MAIN CONTAINER */
+    main {
+      padding: 4rem;
+      max-width: 1600px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* HERO / INTRO */
+    .hero {
+      margin-bottom: 4rem;
+      max-width: 800px;
+    }
+    .hero h1 {
+      font-size: 4rem;
+      font-weight: 700;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.03em;
+    }
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      font-weight: 400;
+      line-height: 1.6;
+      max-width: 600px;
+    }
+
+    /* SERVICES NAVIGATION (Minimalist horizontal list) */
+    .services-nav {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 4rem;
+      border-bottom: 1px solid #27272a;
+      padding-bottom: 1rem;
+    }
+    .services-nav span {
+      color: var(--text-main);
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .services-nav span.muted {
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    /* SECTION HEADERS */
+    section {
+      margin-bottom: 6rem;
+      scroll-margin-top: 6rem;
+    }
+    .section-header {
+      margin-bottom: 2rem;
+      border-bottom: 1px solid #27272a;
+      padding-bottom: 1rem;
+    }
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    /* ------------------------------ */
+    /* RENTAL FLEET GRID              */
+    /* ------------------------------ */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem 1.5rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      cursor: pointer; /* Suggests interactivity */
+    }
+
+    .card-img-wrapper {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      background: var(--bg-lighter);
+    }
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .card:hover img {
+      transform: scale(1.02);
+    }
+
+    .card-content {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      pointer-events: none; /* Let the card handle clicks */
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.5rem;
+    }
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+    .price {
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-align: right;
+    }
+    .price-label {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .tags {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .tag {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .tag.mt {
+      color: var(--accent);
+    }
+
+    /* ------------------------------ */
+    /* TOURS & ROUTES (Text Rows)     */
+    /* ------------------------------ */
+    .route-row {
+      display: grid;
+      grid-template-columns: 2fr 3fr 1fr;
+      align-items: center;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid #27272a;
+      transition: background 0.2s;
+    }
+    .route-row:hover {
+      background: rgba(255,255,255,0.02);
+    }
+    .route-row:last-child {
+      border-bottom: none;
+    }
+    .route-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+    .route-meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 0.25rem;
+    }
+    .route-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+    .route-price {
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-align: right;
+    }
+    
+    .bespoke-box {
+      margin-top: 2rem;
+      padding: 2rem;
+      background: var(--bg-lighter);
+      border-left: 4px solid var(--accent);
+    }
+    .bespoke-box h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    .bespoke-box p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* ------------------------------ */
+    /* ABOUT US SECTION               */
+    /* ------------------------------ */
+    .about-intro {
+      font-size: 1.5rem;
+      font-weight: 500;
+      line-height: 1.5;
+      margin-bottom: 3rem;
+      max-width: 800px;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+    .about-item h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+    .about-item p {
+      color: var(--text-muted);
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    /* ------------------------------ */
+    /* MODAL SYSTEM                   */
+    /* ------------------------------ */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-content {
+      background: var(--bg-dark);
+      width: 100%;
+      max-width: 800px;
+      border: 1px solid #27272a;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+    }
+    .modal-overlay.active .modal-content {
+      transform: translateY(0);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(0,0,0,0.5);
+      color: #fff;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background: var(--bg-lighter);
+    }
+
+    .modal-details {
+      padding: 3rem 2rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .modal-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .modal-price {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+    
+    .modal-cta-group {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .btn-action {
+      width: 100%;
+      padding: 1rem;
+      border: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      transition: opacity 0.2s;
+    }
+    .btn-action:hover {
+      opacity: 0.9;
+    }
+    .btn-whatsapp {
+      background: #25D366; /* WhatsApp Green */
+      color: #000;
+    }
+    .btn-instagram {
+      background: #E1306C; /* Instagram Pink/Red */
+      color: #fff;
+    }
+
+
+    @media (max-width: 1400px) {
+      .grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 1024px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      header { padding: 1.5rem 2rem; }
+      main { padding: 2rem; }
+      .hero h1 { font-size: 3rem; }
+      .route-row { grid-template-columns: 1fr; gap: 0.5rem; padding: 1rem 0; }
+      .route-price { text-align: left; margin-top: 0.5rem; color: #fff;}
+    }
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .modal-content { grid-template-columns: 1fr; max-width: 90%; max-height: 90vh; overflow-y: auto;}
+      .modal-img { aspect-ratio: 16/9; }
+    }
+    @media (max-width: 640px) {
+      .grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .services-nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo"><span>JDM</span>FOCUS</div>
+    <nav class="nav-links">
+      <a href="#fleet">Rental Fleet</a>
+      <a href="#tours">Guided Tours & Routes</a>
+      <a href="#about">About Us</a>
+    </nav>
+    <div class="contact-pills">
+      <a href="#" class="contact-pill">WhatsApp</a>
+      <a href="#" class="contact-pill">Instagram</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Drive the JDM you've always dreamed of.</h1>
+      <p>Immerse yourself into the true world of JDM culture with our authentic, driver-focused experiences across Tokyo and beyond.</p>
+    </section>
+
+    <!-- Minimalist Services List -->
+    <div class="services-nav">
+      <span>Our Services:</span>
+      <span class="muted">Iconic Rentals</span>
+      <span class="muted">&bull;</span>
+      <span class="muted">Driver Tours</span>
+      <span class="muted">&bull;</span>
+      <span class="muted">Pre-Planned Routes</span>
+      <span class="muted">&bull;</span>
+      <span class="muted">Automotive Photography</span>
+    </div>
+
+    <!-- RENTAL FLEET -->
+    <section id="fleet">
+      <div class="section-header">
+        <h2 class="section-title">Available Fleet</h2>
+      </div>
+
+      <div class="grid">
+        
+        <!-- GTR34 -->
+        <div class="card" onclick="openModal(this)">
+          <div class="card-img-wrapper">
+            <img src="https://ofhqrgoubqeoxadzygvy.supabase.co/storage/v1/object/sign/car-images/veilside-rx7/1783735493585-_____20260711110051_71_1274.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV85OTdiZGE3Ni03ZTJiLTRmODMtYWQ1MS05ZTJlMzlmZTY2YmMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXItaW1hZ2VzL3ZlaWxzaWRlLXJ4Ny8xNzgzNzM1NDkzNTg1LV9fX19fMjAyNjA3MTExMTAwNTFfNzFfMTI3NC5qcGciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgzNzM1NDk4LCJleHAiOjIwOTkwOTU0OTh9.NyMO8KCzcgPLt3oWDGESIOeJSARWKifYBw4xF0hZOuk" alt="GTR34">
+          </div>
+          <div class="card-content">
+            <div class="card-header">
+              <h3 class="card-title">Nissan GTR34</h3>
+              <div class="price">¥78,000<span class="price-label">per day</span></div>
+            </div>
+            <div class="tags">
+              <span class="tag mt">Manual (MT)</span>
+              <span class="tag">JDM Classic</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- GTR R35 Silver -->
+        <div class="card" onclick="openModal(this)">
+          <div class="card-img-wrapper">
+            <img src="https://ofhqrgoubqeoxadzygvy.supabase.co/storage/v1/object/sign/car-images/lbwk-gtr-red/1784094944490-_____20260715145440_88_1274.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV85OTdiZGE3Ni03ZTJiLTRmODMtYWQ1MS05ZTJlMzlmZTY2YmMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXItaW1hZ2VzL2xid2stZ3RyLXJlZC8xNzg0MDk0OTQ0NDkwLV9fX19fMjAyNjA3MTUxNDU0NDBfODhfMTI3NC5qcGciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg0MDk0OTQ0LCJleHAiOjIwOTk0NTQ5NDR9.wOGmnkslMZTKydt16MdIcuUrMOUF6-ijdy87VGRUpm8" alt="GTR R35 Silver">
+          </div>
+          <div class="card-content">
+            <div class="card-header">
+              <h3 class="card-title">Nissan GT-R R35</h3>
+              <div class="price">¥48,000<span class="price-label">per day</span></div>
+            </div>
+            <div class="tags">
+              <span class="tag">Silver</span>
+              <span class="tag">Supercar</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- GTR R35 White -->
+        <div class="card" onclick="openModal(this)">
+          <div class="card-img-wrapper">
+            <img src="https://ofhqrgoubqeoxadzygvy.supabase.co/storage/v1/object/sign/car-images/lbwk-gtr-white/1784099860274-IMG_5208.JPG?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV85OTdiZGE3Ni03ZTJiLTRmODMtYWQ1MS05ZTJlMzlmZTY2YmMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXItaW1hZ2VzL2xid2stZ3RyLXdoaXRlLzE3ODQwOTk4NjAyNzQtSU1HXzUyMDguSlBHIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4NDA5OTg2MywiZXhwIjoyMDk5NDU5ODYzfQ.OL4TsH6ag3o8Uy2YeLmz4rr1z80VvZME6Eq-j8fXGfU" alt="GTR R35 White">
+          </div>
+          <div class="card-content">
+            <div class="card-header">
+              <h3 class="card-title">Nissan GT-R R35</h3>
+              <div class="price">¥58,000<span class="price-label">per day</span></div>
+            </div>
+            <div class="tags">
+              <span class="tag">White</span>
+              <span class="tag">Supercar</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skyline R34 GTT Paul -->
+        <div class="card" onclick="openModal(this)">
+          <div class="card-img-wrapper">
+            <img src="https://ofhqrgoubqeoxadzygvy.supabase.co/storage/v1/object/sign/car-images/lbwk-r34/1784108972414-_____20260715184824_111_1274.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV85OTdiZGE3Ni03ZTJiLTRmODMtYWQ1MS05ZTJlMzlmZTY2YmMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXItaW1hZ2VzL2xid2stcjM0LzE3ODQxMDg5NzI0MTQtX19fX18yMDI2MDcxNTE4NDgyNF8xMTFfMTI3NC5qcGciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg0MTA4OTcyLCJleHAiOjIwOTk0Njg5NzJ9.mHXBsaugXlHvgpmQcwrNzvM4yPAeplyhEcTdUvKeshE" alt="Skyline R34 GTT">
+          </div>
+          <div class="card-content">
+            <div class="card-header">
+              <h3 class="card-title">Skyline R34 GTT</h3>
+              <div class="price">¥28,000<span class="price-label">per day</span></div>
+            </div>
+            <div class="tags">
+              <span class="tag mt">Manual (MT)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Honda NSX -->
+        <div class="card" onclick="openModal(this)">
+          <div class="card-img-wrapper">
+            <img src="https://ofhqrgoubqeoxadzygvy.supabase.co/storage/v1/object/sign/car-images/skyline-r32/1786207400222-_____20260809013617_127_1274.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV85OTdiZGE3Ni03ZTJiLTRmODMtYWQ1MS05ZTJlMzlmZTY2YmMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXItaW1hZ2VzL3NreWxpbmUtcjMyLzE3ODYyMDc0MDAyMjItX19fX18yMDI2MDgwOTAxMzYxN18xMjdfMTI3NC5qcGciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg2MjA3NDA5LCJleHAiOjIxMDE1Njc0MDl9.argqQ3B-oa_Nk5tpZG7WMLZjwVBhw61KZ6TEACWn9CU" alt="Honda NSX">
+          </div>
+          <div class="card-content">
+            <div class="card-header">
+              <h3 class="card-title">Honda NSX</h3>
+              <div class="price">¥58,000<span class="price-label">per day</span></div>
+            </div>
+            <div class="tags">
+              <span class="tag">Legend</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- RX7 FD3S -->
+        <div class="card" onclick="openModal(this)">
+          <div class="card-img-wrapper">
+            <img src="https://ofhqrgoubqeoxadzygvy.supabase.co/storage/v1/object/sign/car-images/supra-jza80/1786209291024-_____20260809020532_141_1274.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV85OTdiZGE3Ni03ZTJiLTRmODMtYWQ1MS05ZTJlMzlmZTY2YmMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXItaW1hZ2VzL3N1cHJhLWp6YTgwLzE3ODYyMDkyOTEwMjQtX19fX18yMDI2MDgwOTAyMDUzMl8xNDFfMTI3NC5qcGciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg2MjA5Mjk2LCJleHAiOjIxMDE1NjkyOTZ9.1t4Z1FnoDOThmVxoJ20p-Al_PRvhfq0F6IrClDiHJrM" alt="RX7 FD3S">
+          </div>
+          <div class="card-content">
+            <div class="card-header">
+              <h3 class="card-title">Mazda RX7 FD3S</h3>
+              <div class="price">¥48,000<span class="price-label">per day</span></div>
+            </div>
+            <div class="tags">
+              <span class="tag mt">Manual (MT)</span>
+              <span class="tag">Rotary</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- S2000 -->
+        <div class="card" onclick="openModal(this)">
+          <div class="card-img-wrapper">
+            <img src="https://ofhqrgoubqeoxadzygvy.supabase.co/storage/v1/object/sign/car-images/silvia-s15/1786211672900-_____20260809020521_139_1274.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV85OTdiZGE3Ni03ZTJiLTRmODMtYWQ1MS05ZTJlMzlmZTY2YmMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXItaW1hZ2VzL3NpbHZpYS1zMTUvMTc4NjIxMTY3MjkwMC1fX19fXzIwMjYwODA5MDIwNTIxXzEzOV8xMjc0LmpwZyIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODYyMTE2NzQsImV4cCI6MjEwMTU3MTY3NH0.qRJmd0RAoi9ShhjtufpL3vISrTR4FvpRXg0c5y6Z1oE" alt="S2000">
+          </div>
+          <div class="card-content">
+            <div class="card-header">
+              <h3 class="card-title">Honda S2000 (SUKI)</h3>
+              <div class="price">¥38,000<span class="price-label">per day</span></div>
+            </div>
+            <div class="tags">
+              <span class="tag mt">Manual (MT)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Huracán -->
+        <div class="card" onclick="openModal(this)">
+          <div class="card-img-wrapper">
+            <img src="https://static.wixstatic.com/media/92912e_b1cba88da0674ac7a7b86341b60e7096~mv2.jpg/v1/fill/w_900,h_900,al_c,q_85,enc_auto/file.jpg" alt="Huracán">
+          </div>
+          <div class="card-content">
+            <div class="card-header">
+              <h3 class="card-title">Lamborghini Huracán</h3>
+              <div class="price">¥99,000<span class="price-label">per hour</span></div>
+            </div>
+            <div class="tags">
+              <span class="tag">Exotic</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOURS & ROUTES -->
+    <section id="tours">
+      <div class="section-header">
+        <h2 class="section-title">Charter &middot; Driver-Guided Tours</h2>
+      </div>
+      <p style="color: var(--text-muted); margin-bottom: 2rem;">From neon flyovers to coastal passes — pick a road worth driving. Four curated routes, from Shibuya neon to the lakes of Fuji.</p>
+      
+      <div class="route-list">
+        
+        <div class="route-row">
+          <div>
+            <h3 class="route-title">01. Shibuya Drive</h3>
+            <div class="route-meta">Minato &rarr; Shibuya &bull; ≈ 1 Hour | 15 KM</div>
+          </div>
+          <div class="route-desc">Tokyo's most iconic neon streets.</div>
+          <div class="route-price">From ¥58,000 <span style="font-size: 0.8rem; color: #a1a1aa; font-weight: 400;">/ Car</span></div>
+        </div>
+
+        <div class="route-row">
+          <div>
+            <h3 class="route-title">02. Daikoku PA Tour</h3>
+            <div class="route-meta">Tokyo &rarr; Yokohama Wangan &bull; ≈ 2 Hours | 40 KM</div>
+          </div>
+          <div class="route-desc">Wangan Highway & Daikoku PA Meetup.</div>
+          <div class="route-price">From ¥78,000 <span style="font-size: 0.8rem; color: #a1a1aa; font-weight: 400;">/ Vehicle</span></div>
+        </div>
+
+        <div class="route-row">
+          <div>
+            <h3 class="route-title">03. Hakone &amp; Kamakura</h3>
+            <div class="route-meta">Tokyo &rarr; Kanagawa &bull; ≈ 4 Hours | 90 KM</div>
+          </div>
+          <div class="route-desc">Mountain passes, Fuji views, and coastal cruises.</div>
+          <div class="route-price">From ¥98,000 <span style="font-size: 0.8rem; color: #a1a1aa; font-weight: 400;">/ Vehicle</span></div>
+        </div>
+
+        <div class="route-row">
+          <div>
+            <h3 class="route-title">04. Mt. Fuji Tour</h3>
+            <div class="route-meta">Tokyo &rarr; Fuji Five Lakes &bull; ≈ 6 Hours | 180 KM</div>
+          </div>
+          <div class="route-desc">Lake reflections and snow-capped Fuji.</div>
+          <div class="route-price">From ¥98,000 <span style="font-size: 0.8rem; color: #a1a1aa; font-weight: 400;">/ Car</span></div>
+        </div>
+
+      </div>
+
+      <div class="bespoke-box">
+        <h3>Design your own tour route</h3>
+        <p>Tell us the spots, timing and vibe you want. Our drivers will plan a bespoke route — neon city, mountain passes, coastline, all stitched together.</p>
+      </div>
+    </section>
+
+    <!-- ABOUT US -->
+    <section id="about">
+      <div class="section-header">
+        <h2 class="section-title">About Us</h2>
+      </div>
+      <div class="about-intro">
+        Choose us not just for the price, but for an authentically guaranteed JDM culture experience.
+      </div>
+
+      <div class="about-grid">
+        <div class="about-item">
+          <h3>A true understanding of JDM culture</h3>
+          <p>From classic models to custom culture, from underground car meets to legendary routes—Eight years in the market, we promise to bring you the most authentic, professional JDM experience.</p>
+        </div>
+        <div class="about-item">
+          <h3>Great mechanical condition</h3>
+          <p>Every vehicle is carefully selected and well prepared. We ensure each car is in excellent mechanical condition, so every start, every shift, and every drive can deliver confidence and excitement.</p>
+        </div>
+        <div class="about-item">
+          <h3>Expert team, attentive service</h3>
+          <p>From the moment your journey begins, we'll be with you every step of the way. From vehicle overview and route suggestions to any unexpected situations, we provide prompt, professional assistance.</p>
+        </div>
+        <div class="about-item">
+          <h3>More than just a rental</h3>
+          <p>We offer far more than just a rental car—we provide a complete, one-stop JDM experience. We combine driving, travel, photography and Japanese car culture into one unforgettable journey.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL STRUCTURE -->
+  <div class="modal-overlay" id="carModal" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal(event)">&times;</button>
+      <div style="height: 100%;">
+        <img src="" alt="Car Image" class="modal-img" id="modalImg">
+      </div>
+      <div class="modal-details">
+        <h2 class="modal-title" id="modalTitle">Car Title</h2>
+        <div class="modal-price" id="modalPrice">¥0</div>
+        
+        <div class="modal-cta-group">
+          <button class="btn-action btn-whatsapp">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Contact via WhatsApp
+          </button>
+          <button class="btn-action btn-instagram">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            Contact via Instagram
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openModal(cardElement) {
+      const img = cardElement.querySelector('img').src;
+      const title = cardElement.querySelector('.card-title').innerText;
+      const price = cardElement.querySelector('.price').innerHTML; // Keep innerHTML to keep the span layout
+
+      document.getElementById('modalImg').src = img;
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalPrice').innerHTML = price;
+
+      const overlay = document.getElementById('carModal');
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden'; // prevent background scroll
+    }
+
+    function closeModal(event) {
+      // Only close if clicking the overlay or close button, not inner content
+      const overlay = document.getElementById('carModal');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  </script>
+
+</body>
+</html>

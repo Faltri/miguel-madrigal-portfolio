@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JDM Dealership | V2 Glassmorphism</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0a0a0a;
+      --bg-gradient: radial-gradient(circle at 80% 20%, #1f1d24 0%, #0a0a0a 60%);
+      --glass-bg: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-highlight: rgba(255, 255, 255, 0.15);
+      
+      --text-main: #ffffff;
+      --text-muted: #9ca3af;
+      
+      --accent: #f97316;
+      --accent-hover: #ea580c;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    body {
+      background: var(--bg-dark);
+      background-image: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* GLASS NAV */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 4rem;
+      background: rgba(10, 10, 10, 0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+    }
+    
+    .logo {
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      font-style: italic;
+    }
+    .logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover {
+      color: var(--text-main);
+    }
+
+    .contact-pills {
+      display: flex;
+      gap: 0.75rem;
+    }
+    .contact-pill {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      padding: 0.5rem 1.25rem;
+      border-radius: 99px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .contact-pill:hover {
+      background: var(--glass-highlight);
+      border-color: rgba(255,255,255,0.3);
+    }
+
+    /* MAIN CONTAINER */
+    main {
+      padding: 3rem 4rem;
+      max-width: 1600px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* HERO / INTRO */
+    .hero {
+      margin-bottom: 3rem;
+      text-align: center;
+      max-width: 800px;
+      margin-inline: auto;
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    /* SERVICES & TRUST BAR */
+    .info-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .info-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .info-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--glass-highlight);
+    }
+    .info-icon {
+      background: rgba(249, 115, 22, 0.1);
+      color: var(--accent);
+      padding: 0.75rem;
+      border-radius: 12px;
+      display: flex;
+    }
+    .info-text h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .info-text p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* FLEET GRID */
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    /* GLASS CARD */
+    .card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .card:hover {
+      border-color: var(--glass-highlight);
+      box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+      transform: translateY(-4px);
+    }
+
+    .card-img-wrapper {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 1.25rem;
+      position: relative;
+    }
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card:hover img {
+      transform: scale(1.05);
+    }
+
+    .card-content {
+      padding: 0 0.5rem 0.5rem 0.5rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .tags {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .tag {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--glass-border);
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+    .tag.mt {
+      color: var(--accent);
+      border-color: rgba(249, 115, 22, 0.3);
+      background: rgba(249, 115, 22, 0.05);
+    }
+
+    .card-footer {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid var(--glass-border);
+    }
+    .price {
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+    .price span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1.25rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .btn-primary:hover {
+      background: var(--accent-hover);
+    }
+
+    @media (max-width: 1400px) {
+      .grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 1024px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .info-bar { grid-template-columns: 1fr; }
+      header { padding: 1rem 2rem; }
+      main { padding: 2rem; }
+    }
+    @media (max-width: 640px) {
+      .grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo"><span>JDM</span>FOCUS</div>
+    <nav class="nav-links">
+      <a href="#">Rental</a>
+      <a href="#">Guided Tours</a>
+      <a href="#">Routes</a>
+    </nav>
+    <div class="contact-pills">
+      <a href="#" class="contact-pill">WhatsApp</a>
+      <a href="#" class="contact-pill">Instagram</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Drive the JDM you've always dreamed of.</h1>
+      <p>Immerse yourself into the true world of JDM culture with our authentic, driver-focused experiences across Tokyo and beyond.</p>
+    </section>
+
+    <section class="info-bar">
+      <div class="info-card">
+        <div class="info-icon">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        </div>
+        <div class="info-text">
+          <h3>Full Services</h3>
+          <p>Iconic Rentals, Driver Tours, & Photos.</p>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+        </div>
+        <div class="info-text">
+          <h3>Authentic Culture</h3>
+          <p>Guaranteed true enthusiast experience.</p>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </div>
+        <div class="info-text">
+          <h3>Impeccable Condition</h3>
+          <p>Meticulously maintained performance.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-title">
+      Our Fleet
+    </div>
+
+    <section class="grid">
+      
+      <!-- GTR34 -->
+      <div class="card">
+        <div class="card-img-wrapper">
+          <img src="https://ofhqrgoubqeoxadzygvy.supabase.co/storage/v1/object/sign/car-images/veilside-rx7/1783735493585-_____20260711110051_71_1274.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV85OTdiZGE3Ni03ZTJiLTRmODMtYWQ1MS05ZTJlMzlmZTY2YmMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXItaW1hZ2VzL3ZlaWxzaWRlLXJ4Ny8xNzgzNzM1NDkzNTg1LV9fX19fMjAyNjA3MTExMTAwNTFfNzFfMTI3NC5qcGciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgzNzM1NDk4LCJleHAiOjIwOTkwOTU0OTh9.NyMO8KCzcgPLt3oWDGESIOeJSARWKifYBw4xF0hZOuk" alt="GTR34">
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Nissan GTR34</h3>
+          <div class="tags">
+            <span class="tag mt">MT</span>
+            <span class="tag">JDM Classic</span>
+          </div>
+          <div class="card-footer">
+            <div class="price">¥78,000<span> / day</span></div>
+            <button class="btn-primary">Book</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- GTR R35 Silver -->
+      <div class="card">
+        <div class="card-img-wrapper">
+          <img src="https://ofhqrgoubqeoxadzygvy.supabase.co/storage/v1/object/sign/car-images/lbwk-gtr-red/1784094944490-_____20260715145440_88_1274.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV85OTdiZGE3Ni03ZTJiLTRmODMtYWQ1MS05ZTJlMzlmZTY2YmMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXItaW1hZ2VzL2xid2stZ3RyLXJlZC8xNzg0MDk0OTQ0NDkwLV9fX19fMjAyNjA3MTUxNDU0NDBfODhfMTI3NC5qcGciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg0MDk0OTQ0LCJleHAiOjIwOTk0NTQ5NDR9.wOGmnkslMZTKydt16MdIcuUrMOUF6-ijdy87VGRUpm8" alt="GTR R35 Silver">
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Nissan GT-R R35</h3>
+          <div class="tags">
+            <span class="tag">Silver</span>
+            <span class="tag">Supercar</span>
+          </div>
+          <div class="card-footer">
+            <div class="price">¥48,000<span> / day</span></div>
+            <button class="btn-primary">Book</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- GTR R35 White -->
+      <div class="card">
+        <div class="card-img-wrapper">
+          <img src="https://ofhqrgoubqeoxadzygvy.supabase.co/storage/v1/object/sign/car-images/lbwk-gtr-white/1784099860274-IMG_5208.JPG?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV85OTdiZGE3Ni03ZTJiLTRmODMtYWQ1MS05ZTJlMzlmZTY2YmMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXItaW1hZ2VzL2xid2stZ3RyLXdoaXRlLzE3ODQwOTk4NjAyNzQtSU1HXzUyMDguSlBHIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4NDA5OTg2MywiZXhwIjoyMDk5NDU5ODYzfQ.OL4TsH6ag3o8Uy2YeLmz4rr1z80VvZME6Eq-j8fXGfU" alt="GTR R35 White">
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Nissan GT-R R35</h3>
+          <div class="tags">
+            <span class="tag">White</span>
+            <span class="tag">Supercar</span>
+          </div>
+          <div class="card-footer">
+            <div class="price">¥58,000<span> / day</span></div>
+            <button class="btn-primary">Book</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skyline R34 GTT Paul -->
+      <div class="card">
+        <div class="card-img-wrapper">
+          <img src="https://ofhqrgoubqeoxadzygvy.supabase.co/storage/v1/object/sign/car-images/lbwk-r34/1784108972414-_____20260715184824_111_1274.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV85OTdiZGE3Ni03ZTJiLTRmODMtYWQ1MS05ZTJlMzlmZTY2YmMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXItaW1hZ2VzL2xid2stcjM0LzE3ODQxMDg5NzI0MTQtX19fX18yMDI2MDcxNTE4NDgyNF8xMTFfMTI3NC5qcGciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg0MTA4OTcyLCJleHAiOjIwOTk0Njg5NzJ9.mHXBsaugXlHvgpmQcwrNzvM4yPAeplyhEcTdUvKeshE" alt="Skyline R34 GTT">
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Nissan Skyline R34 GTT Paul</h3>
+          <div class="tags">
+            <span class="tag mt">MT</span>
+          </div>
+          <div class="card-footer">
+            <div class="price">¥28,000<span> / day</span></div>
+            <button class="btn-primary">Book</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Honda NSX -->
+      <div class="card">
+        <div class="card-img-wrapper">
+          <img src="https://ofhqrgoubqeoxadzygvy.supabase.co/storage/v1/object/sign/car-images/skyline-r32/1786207400222-_____20260809013617_127_1274.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV85OTdiZGE3Ni03ZTJiLTRmODMtYWQ1MS05ZTJlMzlmZTY2YmMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXItaW1hZ2VzL3NreWxpbmUtcjMyLzE3ODYyMDc0MDAyMjItX19fX18yMDI2MDgwOTAxMzYxN18xMjdfMTI3NC5qcGciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg2MjA3NDA5LCJleHAiOjIxMDE1Njc0MDl9.argqQ3B-oa_Nk5tpZG7WMLZjwVBhw61KZ6TEACWn9CU" alt="Honda NSX">
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Honda NSX</h3>
+          <div class="tags">
+            <span class="tag">Legend</span>
+          </div>
+          <div class="card-footer">
+            <div class="price">¥58,000<span> / day</span></div>
+            <button class="btn-primary">Book</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RX7 FD3S -->
+      <div class="card">
+        <div class="card-img-wrapper">
+          <img src="https://ofhqrgoubqeoxadzygvy.supabase.co/storage/v1/object/sign/car-images/supra-jza80/1786209291024-_____20260809020532_141_1274.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV85OTdiZGE3Ni03ZTJiLTRmODMtYWQ1MS05ZTJlMzlmZTY2YmMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXItaW1hZ2VzL3N1cHJhLWp6YTgwLzE3ODYyMDkyOTEwMjQtX19fX18yMDI2MDgwOTAyMDUzMl8xNDFfMTI3NC5qcGciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg2MjA5Mjk2LCJleHAiOjIxMDE1NjkyOTZ9.1t4Z1FnoDOThmVxoJ20p-Al_PRvhfq0F6IrClDiHJrM" alt="RX7 FD3S">
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Mazda RX7 FD3S</h3>
+          <div class="tags">
+            <span class="tag mt">MT</span>
+            <span class="tag">Rotary</span>
+          </div>
+          <div class="card-footer">
+            <div class="price">¥48,000<span> / day</span></div>
+            <button class="btn-primary">Book</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- S2000 -->
+      <div class="card">
+        <div class="card-img-wrapper">
+          <img src="https://ofhqrgoubqeoxadzygvy.supabase.co/storage/v1/object/sign/car-images/silvia-s15/1786211672900-_____20260809020521_139_1274.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV85OTdiZGE3Ni03ZTJiLTRmODMtYWQ1MS05ZTJlMzlmZTY2YmMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXItaW1hZ2VzL3NpbHZpYS1zMTUvMTc4NjIxMTY3MjkwMC1fX19fXzIwMjYwODA5MDIwNTIxXzEzOV8xMjc0LmpwZyIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODYyMTE2NzQsImV4cCI6MjEwMTU3MTY3NH0.qRJmd0RAoi9ShhjtufpL3vISrTR4FvpRXg0c5y6Z1oE" alt="S2000">
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Honda S2000 (SUKI)</h3>
+          <div class="tags">
+            <span class="tag mt">MT</span>
+          </div>
+          <div class="card-footer">
+            <div class="price">¥38,000<span> / day</span></div>
+            <button class="btn-primary">Book</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Huracán -->
+      <div class="card">
+        <div class="card-img-wrapper">
+          <img src="https://static.wixstatic.com/media/92912e_b1cba88da0674ac7a7b86341b60e7096~mv2.jpg/v1/fill/w_900,h_900,al_c,q_85,enc_auto/file.jpg" alt="Huracán">
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Lamborghini Huracán LP580-2</h3>
+          <div class="tags">
+            <span class="tag">Exotic</span>
+          </div>
+          <div class="card-footer">
+            <div class="price">¥99,000<span> / hr</span></div>
+            <button class="btn-primary">Book</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+</body>
+</html>
