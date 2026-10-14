@@ -1,0 +1,333 @@
+/* =============================================
+   MIGUEL MADRIGAL ?" V6 ULTRA-MINIMAL GRID
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --color-bg: #070707;
+  --color-text: #f5f5f5;
+  --color-text-muted: #888888;
+  --color-accent: #ffffff;
+  
+  --font-main: 'Inter', -apple-system, sans-serif;
+  --nav-height: 80px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-main);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* =============================================
+   1. NAVIGATION & CONTROLS
+   ============================================= */
+.nav-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  z-index: 1000;
+  background: rgba(7, 7, 7, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  
+  /* Hidden by default, revealed on scroll */
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-100%);
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.nav-bar.scrolled {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.nav-logo {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+/* Slider UI */
+@keyframes attention-bounce {
+  0%, 85% { transform: translateX(0); }
+  88% { transform: translateX(-8px) scale(1.02); }
+  91% { transform: translateX(8px) scale(1.02); }
+  94% { transform: translateX(-6px) scale(1.02); }
+  97% { transform: translateX(6px) scale(1.02); }
+  100% { transform: translateX(0); }
+}
+
+.slider-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: attention-bounce 4s infinite;
+}
+
+.slider-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+}
+
+.grid-slider {
+  -webkit-appearance: none;
+  width: 120px;
+  height: 2px;
+  background: #333;
+  border-radius: 2px;
+  outline: none;
+}
+
+.grid-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.grid-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.3);
+}
+
+/* Inquiries Button & Lang Toggle */
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lang-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  opacity: 0.4; /* Inactive state */
+}
+
+.lang-toggle-btn:hover {
+  transform: scale(1.15);
+  opacity: 0.8;
+}
+
+.lang-toggle-btn.active {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.flag-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.2);
+  display: block;
+}
+
+.inquiries-btn {
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #000;
+  background: #fff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.inquiries-btn:hover {
+  background: #ddd;
+}
+
+/* =============================================
+   2. HERO SECTION
+   ============================================= */
+.hero-section {
+  padding: 80px 40px 60px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 8px;
+  color: var(--color-accent);
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  margin-bottom: 24px;
+}
+
+.hero-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #aaa;
+  margin-bottom: 32px;
+  font-style: italic;
+}
+
+.hero-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--color-accent);
+  color: #000;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 14px 28px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.hero-cta-btn:hover {
+  background: #ccc;
+  transform: translateY(-2px);
+}
+
+/* =============================================
+   3. PORTFOLIO GRID
+   ============================================= */
+.portfolio {
+  padding: 100px 40px 80px; /* Top padding to clear navbar */
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 5), 1fr);
+  align-items: start;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+
+.project-card {
+  display: block;
+  break-inside: avoid;
+  margin-bottom: 10px;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.project-img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  display: block;
+}
+
+/* =============================================
+   4. SCROLL ANIMATIONS (Reveal Up)
+   ============================================= */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.reveal-up.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =============================================
+   5. MOBILE RESPONSIVENESS & FOOTER
+   ============================================= */
+.footer-section {
+  text-align: center;
+  padding: 60px 20px 40px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.copyright {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 768px) {
+  .nav-bar {
+    padding: 0 20px;
+    flex-direction: column;
+    height: auto;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    gap: 16px;
+  }
+  .hero-section {
+    padding: 60px 20px 40px;
+  }
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  .portfolio {
+    padding: 20px 10px 80px; /* Reduced top padding since hero takes up space */
+  }
+  .portfolio-grid {
+    --cols: 2 !important; /* Force 2 columns on mobile so it's not tiny */
+    gap: 8px;
+  }
+  .project-card {
+    margin-bottom: 8px;
+    border-radius: 2px;
+  }
+  .slider-container {
+    display: none; /* Hide slider on mobile, force optimal 2-col */
+  }
+}
